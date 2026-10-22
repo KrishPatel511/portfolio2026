@@ -60,6 +60,10 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710,
 body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf {
   color: #f2f3f5;
 }
+body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gooey-nav {
+  --gn-ink: #f2f3f5 !important;
+  --gn-muted: rgba(242, 243, 245, 0.78) !important;
+}
 body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710:hover,
 body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710.active,
 body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf:hover {

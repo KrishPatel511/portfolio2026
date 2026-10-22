@@ -75,32 +75,14 @@
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* In dark mode the hero is a dark sky, so keep header controls light until scrolled */
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] {
-  --top-color: #0e1013;
-}
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf {
-  color: #f2f3f5;
-}
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gooey-nav {
-  --gn-ink: #f2f3f5 !important;
-  --gn-muted: rgba(242, 243, 245, 0.78) !important;
-}
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710:hover,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710.active,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf:hover {
-  color: hsl(225deg 100% 75%);
-}
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gr874hq,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .f5ggs7,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-first-name,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-last-name {
-  color: hsl(225deg 100% 75%);
-}
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .p16e8bzl,
-[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
-  stroke: #9ca3af;
+/* The hero is a sky in both themes, so while it is still behind the header the header bar takes
+   the sky colour (instead of switching to the white / near-black page colour as soon as you
+   scroll 30px, which showed up as a mismatched strip over the blue). AboutPage sets
+   data-over-hero on <html> while the sky is behind the bar. The header already transitions
+   --top-color, so the change is smooth. Text keeps the normal theme colours throughout. */
+html[data-over-hero="true"] body:has(.ab-page) .h1w8168s,
+html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="true"] {
+  --top-color: var(--color-sky-from);
 }
 
 /* ─── Hero ─────────────────────────────────────────────────────────────── */
@@ -123,7 +105,33 @@
   padding: 8rem 0 7rem 0.25rem;
 }
 
-.ab-hero-text { max-width: 33rem; }
+.ab-hero-inner { pointer-events: none; } /* let the mouse reach the rainbow behind the text column */
+.ab-hero-text { max-width: 33rem; pointer-events: auto; }
+/* While the rainbow is showing (56rem and up) it arcs up from the middle of the hero,
+   so the text column stops short of its left edge. */
+@media (min-width: 56.0625rem) {
+  .ab-hero-text { max-width: min(22rem, calc(50vw - 9.75rem)); }
+}
+
+/* Hero title colour.
+   Dark sky: the title is filled with the light-cyan water texture, shaded grey away from the
+   cursor spotlight, which looks great on the dark background.
+   Light sky: that texture washes out against the blue, so the letters get a clean indigo -> violet
+   -> pink gradient instead (the same hues as the rainbow). The texture fades out underneath it,
+   and everything transitions, so switching theme still crossfades smoothly. */
+.ab-hero-text .masked-heading__source {
+  transition: opacity var(--color-swap-duration) var(--color-swap-timing-function);
+}
+.ab-hero-text .masked-heading__spot {
+  transition: opacity var(--color-swap-duration) var(--color-swap-timing-function);
+}
+[data-color-mode="light"] .ab-hero-text .masked-heading__media {
+  background: linear-gradient(100deg, hsl(236deg 78% 36%) 0%, hsl(262deg 72% 44%) 55%, hsl(322deg 82% 48%) 100%);
+}
+[data-color-mode="light"] .ab-hero-text .masked-heading__source,
+[data-color-mode="light"] .ab-hero-text .masked-heading__spot {
+  opacity: 0;
+}
 
 .ab-hero-text h1 {
   font-family: var(--font-display);
@@ -135,10 +143,10 @@
 }
 
 .ab-hero-text p {
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1.0625rem;
+  line-height: 1.55;
   font-weight: 500;
-  margin: 0 0 1rem;
+  margin: 0 0 0.875rem;
 }
 
 /* Same cloudscape as the home hero: a fixed 5120px-wide outline, centred and anchored to the
@@ -168,36 +176,9 @@
 .ab-cloud-b { fill: var(--ab-cloud-b); }
 .ab-cloud-front { fill: var(--color-background); }
 
-/* Hero mascot + rainbow */
-.ab-hero-stage {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-.ab-hero-stage-back { z-index: 2; }
-.ab-hero-stage-inner { position: absolute; inset: 0; }
-/* Anchored from the page centre (like the cloud outline), so Josh stays in the same dip of the
-   cloud at every window width. */
-.ab-mascot-group {
-  position: absolute;
-  left: 50%;
-  bottom: 6.3rem;
-  width: 137.5px;
-  margin-left: 304px;
-  height: 232px;
-}
-.ab-rainbow {
-  position: absolute;
-  left: 50%;
-  top: -125px;
-  max-width: none;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
+/* Hero mascot (the rainbow art and its configurator live in RainbowArt.css) */
 .ab-mascot-btn {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   padding: 0;
   border: 0;
@@ -206,8 +187,10 @@
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
-.ab-rainbow path { transition: stroke var(--color-swap-duration) var(--color-swap-timing-function); }
 .ab-josh-layer { position: relative; display: block; }
+.ab-josh-layer picture { display: block; }
+.ab-josh-layer picture + picture { position: absolute; top: 0; left: 0; width: 100%; animation: ab-head-in 200ms ease-out both; }
+@keyframes ab-head-in { from { opacity: 0; } to { opacity: 1; } }
 .ab-josh-light {
   position: absolute; inset: 0;
   opacity: 0;
@@ -219,21 +202,11 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.ab-mascot-btn:hover .ab-josh img { transform: translateY(-5px) rotate(-1.5deg); }
 .ab-mascot-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 12px; }
-.ab-josh.cheer { animation: ab-josh-hop 600ms cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes ab-josh-in {
   from { opacity: 0; transform: translateY(26px) scale(0.92); }
   to { opacity: 1; transform: none; }
-}
-@keyframes ab-josh-hop {
-  30% { transform: translateY(-22px) rotate(-3deg); }
-  60% { transform: translateY(0) rotate(2deg); }
-}
-@media (max-width: 56rem) {
-  .ab-hero-stage { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ab-josh { animation: none; }

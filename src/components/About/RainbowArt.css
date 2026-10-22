@@ -1,0 +1,573 @@
+/* ==========================================================================
+   Hero rainbow art + "Rainbow Configurator" (ported from joshwcomeau.com)
+   ========================================================================== */
+
+.ab-hero {
+  --rb-josh-bottom: 6.3rem;
+  /* Josh's canvas sits 44px below his mascot; keep that relationship */
+  --rb-art-bottom: calc(var(--rb-josh-bottom) - 44px);
+}
+
+/* ─── rainbow canvas ───────────────────────────────────────────────────── */
+
+.rb-art {
+  position: absolute;
+  z-index: 2; /* behind the front cloud (3) so the lower ends tuck into it */
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: var(--rb-art-bottom);
+  pointer-events: none;
+  transition: opacity var(--color-swap-duration);
+}
+[data-color-mode="light"] .rb-art { opacity: 0.8; }
+
+.rb-art-wrap {
+  transform: translateX(20.625rem);
+  pointer-events: auto;
+}
+.rb-canvas { display: block; max-width: revert; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-canvas { animation: rb-fade-in 0.6s both 0.4s; }
+}
+
+/* ─── mascot ───────────────────────────────────────────────────────────── */
+
+.rb-mascot {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50rem;
+  bottom: var(--rb-josh-bottom);
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.rb-mascot .ab-mascot-btn { width: 137.5px; height: 232px; }
+.rb-head { display: block; width: 100%; height: auto; }
+
+/* ─── gear ─────────────────────────────────────────────────────────────── */
+
+.rb-gear-pos {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50rem;
+  bottom: var(--rb-josh-bottom);
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.rb-gear-wrap {
+  opacity: 0;
+  transform: scale(0.5) translate(-32px, 64px);
+  pointer-events: none;
+  transition: opacity 0.8s, transform 200s;
+}
+.rb-gear-wrap:focus-within,
+.rb-gear-wrap[data-is-visible="true"] {
+  opacity: 1;
+  transform: scale(1) translate(0);
+  pointer-events: auto;
+  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.53, 0.97);
+}
+.rb-gear {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  color: var(--color-text);
+  /* a soft disc and ring keep the gear readable on both the light and the dark clouds */
+  background: rgb(255 255 255 / 0.16);
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+  border: 1px solid rgb(128 128 128 / 0.45);
+  border: 1px solid color-mix(in srgb, var(--color-text) 32%, transparent);
+  border-radius: 8px;
+  transform: translate(50px, -80px);
+  pointer-events: auto;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.4s, border-color 0.2s, background-color 0.2s;
+  outline-color: var(--color-primary);
+}
+.rb-gear:hover,
+.rb-gear:focus-visible {
+  opacity: 1;
+  border-color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 18%, transparent);
+  transition: opacity 0.2s, border-color 0.2s, background-color 0.2s;
+}
+.rb-gear[data-pressed="true"] { border-width: 3px; transition: opacity 0.4s; }
+.rb-gear-icon {
+  display: block;
+  transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.rb-gear-icon svg { display: block; }
+
+/* ─── panel ────────────────────────────────────────────────────────────── */
+
+.rb-panel-pos {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  top: 8rem;
+  margin: auto;
+  width: 68.75rem;
+  max-width: 100%;
+  padding-inline: 1.399rem;
+  display: flex;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+
+/* The panel keeps the light palette in both themes, like the original. */
+.rb-panel {
+  --panel-padding: 4px;
+  --content-padding: 12px;
+  --control-gray-900: #14191f;
+  --control-gray-800: #2a323c;
+  --control-gray-700: #363f49;
+  --control-gray-500: #5a6572;
+  --control-gray-300: #9198a1;
+  --control-gray-100: #c7ccd1;
+  --control-handle: #fff;
+  --color-background: #e6ebf0;
+  --color-text: #0d1013;
+  --color-gray-300: #c8cad0;
+  --color-gray-400: hsl(225deg 8% 70%);
+  --color-primary: hsl(240deg 95% 62%);
+
+  width: 100%;
+  max-width: 38.75rem;
+  padding: var(--panel-padding);
+  padding-top: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 2px rgba(41, 51, 61, 0.1),
+    0 2px 4px rgba(41, 51, 61, 0.1),
+    0 5px 10px rgba(41, 51, 61, 0.1),
+    0 15px 30px rgba(41, 51, 61, 0.1);
+  text-align: left;
+  pointer-events: auto;
+  animation: rb-fade-in 0.3s;
+  transition: opacity 0.2s 0.1s;
+}
+@media (max-width: 43.75rem) { .rb-panel-pos, .rb-gear-pos { display: none; } }
+@media (max-width: 58rem) {
+  .rb-mascot, .rb-gear-pos { margin: revert; left: revert; right: 64px; }
+}
+
+.rb-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gray-300);
+}
+.rb-panel-header h2 {
+  margin: 0;
+  padding: var(--content-padding);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.rb-close {
+  padding: var(--content-padding);
+  background: none;
+  border: 0;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.rb-close:focus-visible { outline: 3px auto var(--color-primary); outline-offset: -4px; }
+.rb-close-icon { display: block; overflow: visible; stroke: currentColor; }
+.rb-close-icon line { transform-origin: center center; transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+.rb-close-icon[data-booped="true"] line:first-child { transform: rotate(-12deg) scale(1.1); }
+.rb-close-icon[data-booped="true"] line:last-child { transform: rotate(12deg) scale(1.1); }
+.rb-close-icon[data-pressed="true"] line { transform: scale(0.8); }
+
+.rb-panel-content {
+  display: grid;
+  grid-template-columns: 1fr calc(12.875rem + 5px * 2);
+  gap: 12px;
+  padding: var(--content-padding);
+  animation: rb-fade-in 0.3s 0.2s both;
+}
+.rb-column, .rb-row { display: flex; gap: var(--content-padding); }
+.rb-column { flex-direction: column; }
+.rb-row > * { flex: 1 1; }
+
+.rb-panel-footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: var(--content-padding);
+  border-top: 1px solid var(--color-gray-300);
+}
+.rb-note { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; color: var(--color-text); }
+.rb-actions { display: flex; gap: 12px; }
+
+.rb-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--color-text);
+  user-select: none;
+}
+
+/* ─── reveal covers (the panel "opens" when it appears) ─────────────────── */
+
+.rb-cover-shadow,
+.rb-cover { position: absolute; pointer-events: none; }
+.rb-cover-shadow { inset: 0; background: #0c0f12; animation: rb-fade-out 0.9s both; }
+.rb-cover {
+  --duration: 400ms;
+  --curve: cubic-bezier(0.44, 0.22, 0.9, 0.7);
+  left: 0;
+  right: 0;
+  height: 50%;
+  outline: 1px solid var(--color-gray-400);
+  background: var(--color-background);
+  animation: rb-slide-v var(--duration) var(--curve) both;
+}
+.rb-cover-top { --slide-val: calc(-100% - 2px); top: 0; }
+.rb-cover-bottom { --slide-val: calc(100% + 2px); bottom: 0; }
+
+/* ─── slider ───────────────────────────────────────────────────────────── */
+
+.rb-slider {
+  --handle-size: 1.5rem;
+  --handle-color: #fff;
+  --total-height: calc(var(--handle-size) + 4px * 2);
+  --track-size: 2px;
+  --track-color: var(--control-gray-700);
+  --tick-color: var(--control-gray-700);
+  --inline-padding: 2px;
+  position: relative;
+  width: 100%;
+  padding-inline: var(--inline-padding);
+  background: var(--control-gray-900);
+  border-radius: 4px;
+  border: 1px solid var(--color-gray-400);
+  overflow: hidden;
+  overflow: clip;
+}
+.rb-slider:has(input:hover, input:focus-visible) {
+  --tick-color: var(--control-gray-500);
+  --track-color: var(--control-gray-500);
+}
+.rb-slider:has(input:focus-visible) { outline: 3px auto var(--color-primary); outline-offset: 3px; }
+.rb-ticks {
+  position: absolute;
+  --side-gap: calc(var(--handle-size) / 2 + var(--inline-padding) - 1px);
+  top: 2px;
+  bottom: 2px;
+  left: var(--side-gap);
+  right: var(--side-gap);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.rb-tick {
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--tick-color) 0 36%, transparent 36% 64%, var(--tick-color) 64% 100%);
+  border-radius: 4px;
+}
+.rb-range {
+  display: block;
+  width: 100%;
+  height: var(--total-height);
+  margin: 0;
+  background: transparent;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.rb-range:active { cursor: grabbing; }
+.rb-range:focus-visible { outline: none; }
+.rb-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: var(--handle-size);
+  width: var(--handle-size);
+  border-radius: 50px;
+  background: var(--handle-color);
+  transform: translateY(calc(-50% + (var(--track-size) / 2)));
+  border: 2px solid var(--control-gray-900);
+}
+.rb-range::-webkit-slider-runnable-track {
+  height: var(--track-size);
+  background-color: var(--track-color);
+  border-radius: calc(var(--track-size) / 2);
+}
+.rb-range::-moz-range-thumb {
+  height: var(--handle-size);
+  width: var(--handle-size);
+  box-sizing: border-box;
+  border-radius: 50px;
+  background: var(--handle-color);
+  border: 2px solid var(--control-gray-900);
+}
+.rb-range::-moz-range-track {
+  height: var(--track-size);
+  background-color: var(--control-gray-700);
+  border-radius: calc(var(--track-size) / 2);
+}
+
+/* ─── toggle ───────────────────────────────────────────────────────────── */
+
+.rb-toggle-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 2.25rem;
+  background: var(--control-gray-900);
+  border-radius: 4px;
+  border: 1px solid var(--color-gray-400);
+  overflow: hidden;
+  overflow: clip;
+}
+.rb-toggle-row:has(:focus-visible) { outline: 3px auto var(--color-primary); outline-offset: 3px; }
+.rb-toggle {
+  flex: 1 1;
+  position: relative;
+  padding: 4px;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 0.875rem;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.rb-toggle:focus-visible { outline: none; }
+.rb-toggle-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+.rb-toggle[data-is-selected="false"] .rb-toggle-text:hover { background: var(--control-gray-800); }
+.rb-toggle[data-is-selected="true"] .rb-toggle-text { background: var(--control-gray-700); }
+.rb-toggle[data-is-selected="true"] .rb-toggle-text:hover { background: var(--control-gray-500); }
+
+/* ─── 2D pad ───────────────────────────────────────────────────────────── */
+
+.rb-pad {
+  --dot-color: var(--control-gray-700);
+  --dot-opacity: 1;
+  --axis-color: var(--control-gray-700);
+  position: relative;
+  cursor: var(--cursor);
+  touch-action: none;
+  border: 1px solid var(--color-gray-400);
+  border-radius: 4px;
+  overflow: hidden;
+  overflow: clip;
+}
+.rb-pad:has(:active),
+.rb-pad:hover { --dot-color: var(--control-gray-500); --axis-color: var(--control-gray-500); }
+.rb-pad-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--control-gray-900);
+  border-radius: 3px;
+  border: 3px solid var(--control-gray-900);
+}
+.rb-dots { display: block; overflow: visible; width: 100%; height: 100%; border-radius: 4px; border: none; }
+.rb-dots line { stroke-linecap: round; }
+.rb-axis { stroke: var(--axis-color); stroke-width: 2px; }
+.rb-handle-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: var(--cursor);
+}
+.rb-handle-btn:focus { outline: none; }
+.rb-handle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--control-gray-900);
+  transform: translate(-50%, -50%);
+}
+.rb-handle-btn:focus .rb-handle,
+.rb-handle-btn[data-is-dragging="true"] .rb-handle { background: var(--control-handle); }
+.rb-handle-btn:focus-visible .rb-handle { outline: 2px solid #ffd500; outline-offset: 3px; }
+
+/* sliding "doors" that open to reveal the pad */
+.rb-doors {
+  --duration: 700ms;
+  --curve: cubic-bezier(0.66, 0, 0.31, 1.01);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow: clip;
+  border-radius: 3px;
+  pointer-events: none;
+}
+.rb-door-shadow { position: absolute; inset: 0; background: #0c0f12; animation: rb-fade-out 1.2s both; pointer-events: none; }
+.rb-door-wrap {
+  position: absolute;
+  width: calc(50% - 1px);
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  overflow: clip;
+  animation: rb-slide-h var(--duration) var(--curve) both;
+  animation-delay: 0.5s;
+}
+.rb-door-left { --slide-val: calc(-50% - 2px); }
+.rb-door-right { --slide-val: calc(50% + 2px); right: 0; }
+.rb-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  outline: 1px solid var(--color-gray-400);
+  background: var(--color-background);
+  pointer-events: none;
+}
+.rb-door-inner-left { --slide-val: calc(-100% - 2px); left: 50%; border-radius: 0 4px 4px 0; animation: rb-slide-h 0.5s var(--curve) both; }
+.rb-door-outer-left { left: 0; border-radius: 0 6px 6px 0; box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2), 2px 0 4px rgba(0, 0, 0, 0.2); }
+.rb-door-inner-right { --slide-val: calc(100% + 2px); right: 50%; border-radius: 4px 0 0 4px; animation: rb-slide-h 0.5s var(--curve) both; }
+.rb-door-outer-right { right: 0; border-radius: 6px 0 0 6px; box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2), -2px 0 4px rgba(0, 0, 0, 0.2); }
+
+/* ─── push buttons ─────────────────────────────────────────────────────── */
+
+.rb-push { display: flex; flex-direction: column; gap: 8px; width: 6rem; }
+.rb-push-label {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+.rb-push-label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 1px;
+  margin-block: auto;
+  background: var(--control-gray-100);
+}
+.rb-push-label span { position: relative; background: var(--color-background); padding-inline: 6px; }
+.rb-push-wrap { position: relative; width: 100%; height: 2rem; }
+.rb-push-hole {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, var(--control-gray-500), var(--control-gray-900));
+  overflow: hidden;
+  overflow: clip;
+}
+.rb-push-shaft {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 0;
+  display: block;
+  width: calc(100% - 4px);
+  height: 10px;
+  background: linear-gradient(to bottom, var(--button-shaft-top) 82%, var(--button-shaft-bottom) 100%);
+}
+.rb-push-btn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.rb-push-btn:focus-visible { outline: 3px auto var(--color-primary); outline-offset: 3px; border-radius: 4px; }
+.rb-push-top {
+  --y: -3px;
+  position: absolute;
+  height: 100%;
+  left: 2px;
+  right: 2px;
+  bottom: 0;
+  width: calc(100% - 4px);
+  background: radial-gradient(circle at top center, var(--button-top-center), var(--button-top));
+  border-radius: 4px;
+  transform: translateY(var(--y));
+  transition: transform 0.3s;
+  overflow: hidden;
+  overflow: clip;
+}
+.rb-push-top:hover { --y: -5px; }
+.rb-push-top:active { --y: -1px; transition: transform 0s; }
+.rb-push-top::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  right: 2px;
+  height: 25%;
+  background: linear-gradient(to bottom, var(--button-top-highlight), transparent);
+  border-radius: 3px 3px 50% 50%;
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+/* ─── shared keyframes ─────────────────────────────────────────────────── */
+
+@keyframes rb-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rb-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes rb-slide-h { to { transform: translateX(var(--slide-val, 100%)); } }
+@keyframes rb-slide-v { to { transform: translateY(var(--slide-val, 100%)); } }
+
+/* The art is desktop-only, like the original: below this width the hero is just text. */
+@media (max-width: 56rem) {
+  .rb-art, .rb-mascot, .rb-gear-pos, .rb-panel-pos { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-cover, .rb-cover-shadow, .rb-door-wrap, .rb-door, .rb-door-shadow { animation-duration: 1ms; animation-delay: 0s; }
+  .rb-gear-icon, .rb-close-icon line { transition: none; }
+}

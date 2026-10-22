@@ -6,6 +6,7 @@ import { kick, hihat, snare, cowbell } from '../../utils/drumSounds';
 import { useSound } from '../../hooks/useSound';
 import { CLOUD_BACK, CLOUD_MID, CLOUD_FRONT_WIDE } from '../Hero/cloudPaths';
 import { RealMap } from './RealMap';
+import { RainbowArt } from './RainbowArt';
 import MaskedHeading from '../MaskedHeading/MaskedHeading';
 import './AboutPage.css';
 
@@ -800,91 +801,31 @@ const CoursesCard = () => {
   );
 };
 
-/* ─── hero mascot: Josh sitting on the cloud in front of a dashed rainbow ─── */
-
-/* Seven stacked elliptical rings share one dash pattern, so the dashes line up into
-   short multi-coloured streaks. Each ring is nudged along its path for a slight skew. */
-const RAINBOW_LIGHT = ['#1f3a8a', '#2b3fc0', '#4a38cf', '#7b30c8', '#b02fb4', '#e32f93', '#ff3d7d'];
-const RAINBOW_DARK = ['#b78cf5', '#6f8bff', '#2fd0ff', '#35e07b', '#ffe433', '#ff9a2e', '#ff3b3b'];
-const RING_W = 8;
-const RING_STEP = 7;
-const RING_RX = 400;
-const RING_RY = 300;
-const RAINBOW_W = 820;
-const RAINBOW_H = 460;
-const RAINBOW_CX = RAINBOW_W / 2;
-const RAINBOW_CY = 315;
-
-const Rainbow = ({ isDark }) => {
-  const colors = isDark ? RAINBOW_DARK : RAINBOW_LIGHT;
-  return (
-    <svg
-      className="ab-rainbow"
-      width={RAINBOW_W}
-      height={RAINBOW_H}
-      viewBox={`0 0 ${RAINBOW_W} ${RAINBOW_H}`}
-      fill="none"
-      aria-hidden="true"
-    >
-      {colors.map((c, n) => {
-        const rx = RING_RX - n * RING_STEP;
-        const ry = RING_RY - n * RING_STEP;
-        return (
-          <path
-            key={c}
-            d={`M ${RAINBOW_CX - rx} ${RAINBOW_H} V ${RAINBOW_CY} A ${rx} ${ry} 0 0 1 ${RAINBOW_CX + rx} ${RAINBOW_CY} V ${RAINBOW_H}`}
-            stroke={c}
-            strokeWidth={RING_W}
-            strokeLinecap="round"
-            strokeDasharray="0.1 13"
-            strokeDashoffset={n * 2.5}
-          />
-        );
-      })}
-    </svg>
-  );
-};
-
-const HeroMascot = ({ isDark }) => {
-  const [cheer, setCheer] = useState(0);
-  const theme = isDark ? 'dark' : 'light';
-
-  return (
-    <>
-      {/* Rainbow is switched off for now: re-add <Rainbow isDark={isDark} /> inside a
-          .ab-hero-stage-back > .ab-mascot-group wrapper to bring it back. */}
-      <div className="ab-hero-stage" aria-hidden="false">
-      <div className="ab-hero-stage-inner">
-        <div className="ab-mascot-group">
-          <button
-            type="button"
-            className="ab-mascot-btn"
-            onClick={() => { soundFx.playPop(); setCheer((n) => n + 1); }}
-            aria-label="Say hi to Josh"
-          >
-            {/* both themes stay mounted and cross-fade, so switching theme never makes Josh blink */}
-            <span key={cheer} className={cheer ? 'ab-josh cheer' : 'ab-josh'}>
-              {['dark', 'light'].map((t) => (
-                <picture key={t} className={t === 'light' ? 'ab-josh-layer ab-josh-light' : 'ab-josh-layer'}>
-                  <source type="image/webp" srcSet={`/images/josh/josh-happy-${t}.webp`} />
-                  <img src={`/images/josh/josh-happy-${t}.png`} alt={t === theme ? 'A cartoon of me sitting cross-legged on a cloud' : ''} width="137.5" height="232" />
-                </picture>
-              ))}
-            </span>
-          </button>
-        </div>
-      </div>
-      </div>
-    </>
-  );
-};
-
 /* ─── page ───────────────────────────────────────────────────────────────── */
 
 export const AboutPage = () => {
   const { isDark } = useTheme();
 
   useEffect(() => { window.scrollTo({ top: 0 }); }, []);
+
+  // While the hero's sky is still behind the header, let the header bar match it (see AboutPage.css)
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () => {
+      const hero = document.querySelector('.ab-hero');
+      const bottom = hero ? hero.getBoundingClientRect().bottom : 0;
+      // the clouds fill the lower part of the hero, so stop a little before its bottom edge
+      root.dataset.overHero = bottom > 380 ? 'true' : 'false';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      delete root.dataset.overHero;
+    };
+  }, []);
 
   return (
     <main className="ab-page" id="main-content">
@@ -903,7 +844,7 @@ export const AboutPage = () => {
           </svg>
         </div>
 
-        <HeroMascot isDark={isDark} />
+        <RainbowArt isDark={isDark} />
 
         <div className="ab-hero-inner">
           <motion.div

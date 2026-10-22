@@ -1,13 +1,26 @@
+@property --ab-card-bg { syntax: "<color>"; inherits: true; initial-value: hsl(204deg 72% 93%); }
+@property --ab-card-text { syntax: "<color>"; inherits: true; initial-value: hsl(222deg 22% 15%); }
+@property --ab-em { syntax: "<color>"; inherits: true; initial-value: hsl(236deg 62% 33%); }
+@property --ab-link-line { syntax: "<color>"; inherits: true; initial-value: hsl(236deg 80% 55%); }
+@property --ab-outline { syntax: "<color>"; inherits: true; initial-value: #2b2b36; }
+@property --ab-map-sea { syntax: "<color>"; inherits: true; initial-value: hsl(204deg 58% 82%); }
+@property --ab-map-land { syntax: "<color>"; inherits: true; initial-value: hsl(204deg 60% 94%); }
+@property --ab-map-border { syntax: "<color>"; inherits: true; initial-value: hsl(204deg 40% 78%); }
+@property --ab-line { syntax: "<color>"; inherits: true; initial-value: hsl(240deg 85% 52%); }
+@property --ab-pin { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 15% 15%); }
+@property --ab-key-well { syntax: "<color>"; inherits: true; initial-value: hsl(212deg 16% 46%); }
+@property --ab-key-text { syntax: "<color>"; inherits: true; initial-value: hsl(222deg 22% 20%); }
+
 /* ==========================================================================
    About page — dark cloudscape hero + 8-column card grid (light & dark themes)
    ========================================================================== */
 
 .ab-page {
   /* hero */
-  --ab-hero-bg: #0d0f12;
-  --ab-cloud-a: #1e2429;
-  --ab-cloud-b: #2b333b;
-  --ab-hero-text: #e3e6e8;
+  --ab-hero-bg: linear-gradient(180deg, var(--color-sky-from) 0%, var(--color-sky-to) 65%, var(--color-sky-subtle) 100%);
+  --ab-cloud-a: var(--color-cloud-500);
+  --ab-cloud-b: var(--color-cloud-300);
+  --ab-hero-text: var(--color-text);
   /* cards */
   --ab-card-bg: hsl(204deg 72% 93%);
   --ab-card-text: hsl(222deg 22% 15%);
@@ -27,12 +40,22 @@
 
   background: var(--color-background);
   position: relative;
+  transition:
+    --ab-card-bg var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-card-text var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-em var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-link-line var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-outline var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-map-sea var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-map-land var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-map-border var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-line var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-pin var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-key-well var(--color-swap-duration) var(--color-swap-timing-function),
+    --ab-key-text var(--color-swap-duration) var(--color-swap-timing-function);
 }
 
 [data-color-mode="dark"] .ab-page {
-  --ab-hero-bg: #0d0f12;
-  --ab-cloud-a: #262b31;
-  --ab-cloud-b: #1c2126;
   --ab-card-bg: hsl(215deg 36% 15%);
   --ab-card-text: hsl(210deg 18% 92%);
   --ab-em: hsl(345deg 100% 62%);
@@ -52,31 +75,31 @@
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* Header sits on a dark hero in both themes, so keep its controls light until scrolled */
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] {
+/* In dark mode the hero is a dark sky, so keep header controls light until scrolled */
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] {
   --top-color: #0e1013;
 }
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf {
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf {
   color: #f2f3f5;
 }
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gooey-nav {
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gooey-nav {
   --gn-ink: #f2f3f5 !important;
   --gn-muted: rgba(242, 243, 245, 0.78) !important;
 }
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710:hover,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710.active,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf:hover {
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710:hover,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .nvlm710.active,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .w17zbdjf:hover {
   color: hsl(225deg 100% 75%);
 }
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gr874hq,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .f5ggs7,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-first-name,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-last-name {
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .gr874hq,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .f5ggs7,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-first-name,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-last-name {
   color: hsl(225deg 100% 75%);
 }
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .p16e8bzl,
-body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .p16e8bzl,
+[data-color-mode="dark"] body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
   stroke: #9ca3af;
 }
 
@@ -85,12 +108,11 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
 .ab-hero {
   position: relative;
   margin-top: -5rem;
-  min-height: 40.5rem;
+  min-height: 40rem;
   padding: 0 1.399rem;
   background: var(--ab-hero-bg);
   color: var(--ab-hero-text);
   overflow: hidden;
-  transition: background var(--color-swap-duration) var(--color-swap-timing-function);
 }
 
 .ab-hero-inner {
@@ -98,10 +120,10 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
   z-index: 4;
   max-width: 62.5rem;
   margin: 0 auto;
-  padding: 9.5rem 0 7.463rem 0.25rem;
+  padding: 8rem 0 7rem 0.25rem;
 }
 
-.ab-hero-text { max-width: 36rem; }
+.ab-hero-text { max-width: 33rem; }
 
 .ab-hero-text h1 {
   font-family: var(--font-display);
@@ -113,26 +135,109 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
 }
 
 .ab-hero-text p {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.6;
   font-weight: 500;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
 }
 
-.ab-hero-clouds {
+/* Same cloudscape as the home hero: a fixed 5120px-wide outline, centred and anchored to the
+   bottom, so the shapes never stretch or squash when the window is resized or zoomed. */
+.ab-cloud-layer {
   position: absolute;
   left: 0;
-  bottom: -1px;
-  width: 100%;
-  height: 27.985rem;
-  overflow: visible;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   pointer-events: none;
 }
-.ab-hero-clouds-back { z-index: 1; height: 25.1rem; bottom: 1.94rem; }
-.ab-hero-clouds-front { z-index: 3; }
-.ab-cloud-a { fill: var(--ab-cloud-a); transition: fill var(--color-swap-duration); }
-.ab-cloud-b { fill: var(--ab-cloud-b); transition: fill var(--color-swap-duration); }
-.ab-cloud-front { fill: var(--color-background); transition: fill var(--color-swap-duration); }
+.ab-cloud-layer-back { z-index: 1; }
+.ab-cloud-layer-front { z-index: 3; }
+.ab-cloud-svg {
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  min-width: 320rem;
+  max-width: revert;
+  height: 28.5rem;
+  transform: translateY(1px);
+}
+.ab-cloud-a { fill: var(--ab-cloud-a); }
+.ab-cloud-b { fill: var(--ab-cloud-b); }
+.ab-cloud-front { fill: var(--color-background); }
+
+/* Hero mascot + rainbow */
+.ab-hero-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.ab-hero-stage-back { z-index: 2; }
+.ab-hero-stage-inner { position: absolute; inset: 0; }
+/* Anchored from the page centre (like the cloud outline), so Josh stays in the same dip of the
+   cloud at every window width. */
+.ab-mascot-group {
+  position: absolute;
+  left: 50%;
+  bottom: 6.3rem;
+  width: 137.5px;
+  margin-left: 304px;
+  height: 232px;
+}
+.ab-rainbow {
+  position: absolute;
+  left: 50%;
+  top: -125px;
+  max-width: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.ab-mascot-btn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.ab-rainbow path { transition: stroke var(--color-swap-duration) var(--color-swap-timing-function); }
+.ab-josh-layer { position: relative; display: block; }
+.ab-josh-light {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity calc(var(--color-swap-duration) + 0.5s) var(--color-swap-timing-function);
+}
+[data-color-mode="light"] .ab-josh-light { opacity: 1; }
+.ab-josh { position: relative; display: block; filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.28)); animation: ab-josh-in 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both 250ms; }
+.ab-josh img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ab-mascot-btn:hover .ab-josh img { transform: translateY(-5px) rotate(-1.5deg); }
+.ab-mascot-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 12px; }
+.ab-josh.cheer { animation: ab-josh-hop 600ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes ab-josh-in {
+  from { opacity: 0; transform: translateY(26px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ab-josh-hop {
+  30% { transform: translateY(-22px) rotate(-3deg); }
+  60% { transform: translateY(0) rotate(2deg); }
+}
+@media (max-width: 56rem) {
+  .ab-hero-stage { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ab-josh { animation: none; }
+}
 
 /* ─── Grid ─────────────────────────────────────────────────────────────── */
 
@@ -162,8 +267,7 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
   text-align: center;
   font-size: 0.992rem;
   line-height: 1.6;
-  transition: background var(--color-swap-duration), color var(--color-swap-duration),
-    transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms;
+  transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms;
 }
 .ab-card:hover { box-shadow: 0 12px 28px -14px rgb(0 0 0 / 0.45); }
 .ab-card p { margin: 0.84rem 0 0; text-wrap: balance; }
@@ -400,7 +504,11 @@ body:has(.ab-page) .h1w8168s[data-is-over-threshold="false"] .logo-stroke {
   .ab-hero-inner { padding: 6.5rem 0 13.993rem; }
   .ab-hero-text h1 { margin-bottom: 1.866rem; }
   .ab-hero-text p { font-size: 1.026rem; }
-  .ab-hero-clouds { height: 16.791rem; width: 67.164rem; left: calc(50% - 33.582rem); }
+  .ab-cloud-svg {
+    --magic-offset: calc(-50vw + 25rem);
+    height: calc(14rem + 25vw);
+    transform: translate(var(--magic-offset), 1px);
+  }
 }
 
 @media (max-width: 36rem) {

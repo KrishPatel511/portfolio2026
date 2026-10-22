@@ -271,7 +271,21 @@ export const RealMap = ({ isDark, onLocation, onReady }) => {
     state.theme = theme;
     if (state.me) state.me.src = `/images/josh/josh-happy-${theme}.png`;
     if (state.pin) state.pin.innerHTML = PIN_SVG(COLORS[theme].pin);
-    if (state.map) state.map.setStyle(STYLE_URL[theme], { diff: false });
+    if (state.map) {
+      // The new style loads from scratch (diff: false), which would flash the canvas blank.
+      // Dip the map softly instead and bring it back once the new tiles are drawn.
+      const box = boxRef.current;
+      const map = state.map;
+      if (box) { box.style.transition = 'opacity 350ms ease'; box.style.opacity = '0.35'; }
+      const restore = () => {
+        if (!box) return;
+        box.style.opacity = '';
+        setTimeout(() => { box.style.transition = ''; }, 400);
+      };
+      map.once('idle', restore);
+      setTimeout(restore, 3000);
+      map.setStyle(STYLE_URL[theme], { diff: false });
+    }
   }, [isDark]);
 
   return <div ref={boxRef} className="ab-map-gl" />;

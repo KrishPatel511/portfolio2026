@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { soundFx } from '../../utils/soundEffects';
 import { kick, hihat, snare, cowbell } from '../../utils/drumSounds';
 import { useSound } from '../../hooks/useSound';
-import { CLOUD_FRONT } from './cloudData';
+import { CLOUD_BACK, CLOUD_MID, CLOUD_FRONT_WIDE } from '../Hero/cloudPaths';
 import { RealMap } from './RealMap';
 import MaskedHeading from '../MaskedHeading/MaskedHeading';
 import './AboutPage.css';
@@ -800,6 +800,85 @@ const CoursesCard = () => {
   );
 };
 
+/* ─── hero mascot: Josh sitting on the cloud in front of a dashed rainbow ─── */
+
+/* Seven stacked elliptical rings share one dash pattern, so the dashes line up into
+   short multi-coloured streaks. Each ring is nudged along its path for a slight skew. */
+const RAINBOW_LIGHT = ['#1f3a8a', '#2b3fc0', '#4a38cf', '#7b30c8', '#b02fb4', '#e32f93', '#ff3d7d'];
+const RAINBOW_DARK = ['#b78cf5', '#6f8bff', '#2fd0ff', '#35e07b', '#ffe433', '#ff9a2e', '#ff3b3b'];
+const RING_W = 8;
+const RING_STEP = 7;
+const RING_RX = 400;
+const RING_RY = 300;
+const RAINBOW_W = 820;
+const RAINBOW_H = 460;
+const RAINBOW_CX = RAINBOW_W / 2;
+const RAINBOW_CY = 315;
+
+const Rainbow = ({ isDark }) => {
+  const colors = isDark ? RAINBOW_DARK : RAINBOW_LIGHT;
+  return (
+    <svg
+      className="ab-rainbow"
+      width={RAINBOW_W}
+      height={RAINBOW_H}
+      viewBox={`0 0 ${RAINBOW_W} ${RAINBOW_H}`}
+      fill="none"
+      aria-hidden="true"
+    >
+      {colors.map((c, n) => {
+        const rx = RING_RX - n * RING_STEP;
+        const ry = RING_RY - n * RING_STEP;
+        return (
+          <path
+            key={c}
+            d={`M ${RAINBOW_CX - rx} ${RAINBOW_H} V ${RAINBOW_CY} A ${rx} ${ry} 0 0 1 ${RAINBOW_CX + rx} ${RAINBOW_CY} V ${RAINBOW_H}`}
+            stroke={c}
+            strokeWidth={RING_W}
+            strokeLinecap="round"
+            strokeDasharray="0.1 13"
+            strokeDashoffset={n * 2.5}
+          />
+        );
+      })}
+    </svg>
+  );
+};
+
+const HeroMascot = ({ isDark }) => {
+  const [cheer, setCheer] = useState(0);
+  const theme = isDark ? 'dark' : 'light';
+
+  return (
+    <>
+      {/* Rainbow is switched off for now: re-add <Rainbow isDark={isDark} /> inside a
+          .ab-hero-stage-back > .ab-mascot-group wrapper to bring it back. */}
+      <div className="ab-hero-stage" aria-hidden="false">
+      <div className="ab-hero-stage-inner">
+        <div className="ab-mascot-group">
+          <button
+            type="button"
+            className="ab-mascot-btn"
+            onClick={() => { soundFx.playPop(); setCheer((n) => n + 1); }}
+            aria-label="Say hi to Josh"
+          >
+            {/* both themes stay mounted and cross-fade, so switching theme never makes Josh blink */}
+            <span key={cheer} className={cheer ? 'ab-josh cheer' : 'ab-josh'}>
+              {['dark', 'light'].map((t) => (
+                <picture key={t} className={t === 'light' ? 'ab-josh-layer ab-josh-light' : 'ab-josh-layer'}>
+                  <source type="image/webp" srcSet={`/images/josh/josh-happy-${t}.webp`} />
+                  <img src={`/images/josh/josh-happy-${t}.png`} alt={t === theme ? 'A cartoon of me sitting cross-legged on a cloud' : ''} width="137.5" height="232" />
+                </picture>
+              ))}
+            </span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </>
+  );
+};
+
 /* ─── page ───────────────────────────────────────────────────────────────── */
 
 export const AboutPage = () => {
@@ -811,14 +890,20 @@ export const AboutPage = () => {
     <main className="ab-page" id="main-content">
       {/* Hero */}
       <section className="ab-hero">
-        <svg className="ab-hero-clouds ab-hero-clouds-back" viewBox="0 0 1999 454" preserveAspectRatio="none" aria-hidden="true">
-          <path className="ab-cloud-a" d="M824.001 403L875.501 422H1999V63.1446C1977.5 77.3383 1961.18 93.6986 1958 93.5001C1950 93.0001 1946 25.5001 1846 11.5001C1746 -2.49994 1705.5 70.0001 1698.5 69.5001C1691.5 69.0001 1678 -0.499932 1559 0.500068C1440 1.50007 1439.5 117 1432.5 119.5C1425.5 122 1363.5 79.0001 1292 113.5C1220.5 148 1244.5 212 1237.5 216C1230.5 220 1191 172 1106.5 198.5C1022 225 1035 289 1024 291C1013 293 967.001 231.5 875.501 278C784.001 324.5 824.001 403 824.001 403Z" />
-          <path className="ab-cloud-b" d="M925.5 340.5C1010.5 364.432 1005.5 408.5 1005.5 408.5L1065.5 451.5H0V281.079C15.5746 272.042 39.5753 264.56 70.5013 260.5C200.001 243.5 219.003 293.5 227.501 292C236 290.5 257.001 219.5 387.501 233C518.001 246.5 530.002 317.5 540.501 319C551 320.5 601.502 263 695.001 283.5C788.5 304 788.502 352.5 796.501 354.5C804.5 356.5 840.501 316.568 925.5 340.5Z" />
-        </svg>
+        <div className="ab-cloud-layer ab-cloud-layer-back" aria-hidden="true">
+          <svg className="ab-cloud-svg" width="5120" height="456" viewBox="0 0 5120 456" preserveAspectRatio="none" fill="none">
+            <path className="ab-cloud-a" d={CLOUD_BACK} />
+            <path className="ab-cloud-b" d={CLOUD_MID} />
+          </svg>
+        </div>
 
-        <svg className="ab-hero-clouds ab-hero-clouds-front" viewBox="0 0 1920 480" preserveAspectRatio="none" aria-hidden="true">
-          <path className="ab-cloud-front" d={CLOUD_FRONT} />
-        </svg>
+        <div className="ab-cloud-layer ab-cloud-layer-front" aria-hidden="true">
+          <svg className="ab-cloud-svg" width="5120" height="456" viewBox="0 0 5120 456" preserveAspectRatio="none" fill="none">
+            <path className="ab-cloud-front" d={CLOUD_FRONT_WIDE} />
+          </svg>
+        </div>
+
+        <HeroMascot isDark={isDark} />
 
         <div className="ab-hero-inner">
           <motion.div
@@ -846,17 +931,12 @@ export const AboutPage = () => {
               lineHeight={1.1}
               textScale={0.11}
               align="left"
-              style={{ fontFamily: 'var(--font-display)', margin: '0 0 4.45rem' }}
+              style={{ fontFamily: 'var(--font-display)', margin: '0 0 1.5rem' }}
             />
             <p>I write code for the web, and these days for trucks, weighbridges and boom barriers too.</p>
             <p>
-              I&apos;m a Full Stack Developer from Ahmedabad. I went from a React internship at Sufalam Technology, to
-              dashboards at BeyonData Solutions, to building government systems at AMNEX Infotechnologies with React,
-              Next.js, TypeScript and Node.js.
-            </p>
-            <p>
-              These days, I&apos;m the sole developer of a live truck dispatch platform for GMDC Mining, connected to RFID
-              hardware and national systems like Parivahan, FASTag and GST e-Invoice.
+              I&apos;m a Full Stack Developer from Ahmedabad, building government systems with React, Next.js,
+              TypeScript and Node.js. Right now I&apos;m the sole developer of a live truck dispatch platform for GMDC Mining.
             </p>
           </motion.div>
         </div>

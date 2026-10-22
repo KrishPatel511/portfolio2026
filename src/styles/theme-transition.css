@@ -1,0 +1,87 @@
+/* Smooth light <-> dark switch (same technique as joshwcomeau.com).
+   Every colour token is a registered <color> property, so the browser can interpolate it.
+   The tokens swap on <html>, and the transition below tweens them, which animates every
+   gradient, fill, border and text colour that reads them in one go, with no flash. */
+
+@property --color-text { syntax: "<color>"; inherits: true; initial-value: hsl(222deg 22% 15%); }
+@property --color-text-secondary { syntax: "<color>"; inherits: true; initial-value: hsl(222deg 15% 42%); }
+@property --color-text-muted { syntax: "<color>"; inherits: true; initial-value: hsl(222deg 10% 60%); }
+@property --color-background { syntax: "<color>"; inherits: true; initial-value: hsl(0deg 0% 100%); }
+@property --color-blurred-background { syntax: "<color>"; inherits: true; initial-value: hsl(0deg 0% 98% / 0.75); }
+@property --color-muted-background { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 45% 76% / 0.85); }
+@property --color-action { syntax: "<color>"; inherits: true; initial-value: hsl(240deg 95% 62%); }
+@property --color-primary { syntax: "<color>"; inherits: true; initial-value: hsl(240deg 95% 62%); }
+@property --color-primary-hover { syntax: "<color>"; inherits: true; initial-value: hsl(240deg 95% 55%); }
+@property --color-secondary { syntax: "<color>"; inherits: true; initial-value: hsl(333deg 100% 45%); }
+@property --color-tertiary { syntax: "<color>"; inherits: true; initial-value: hsl(255deg 85% 30%); }
+@property --color-decorative { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 75% 65%); }
+@property --color-cloud-100 { syntax: "<color>"; inherits: true; initial-value: hsl(203deg 60% 95%); }
+@property --color-cloud-300 { syntax: "<color>"; inherits: true; initial-value: hsl(202deg 68% 92%); }
+@property --color-cloud-400 { syntax: "<color>"; inherits: true; initial-value: hsl(201deg 60% 86%); }
+@property --color-cloud-500 { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 80% 83%); }
+@property --color-cloud-700 { syntax: "<color>"; inherits: true; initial-value: hsl(210deg 30% 55%); }
+@property --color-sky-from { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 70% 78%); }
+@property --color-sky-to { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 70% 70%); }
+@property --color-sky-subtle { syntax: "<color>"; inherits: true; initial-value: hsl(200deg 90% 88%); }
+@property --color-gray-50 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 40% 98%); }
+@property --color-gray-100 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 25% 94%); }
+@property --color-gray-200 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 16% 88%); }
+@property --color-gray-300 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 8% 80%); }
+@property --color-gray-400 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 8% 70%); }
+@property --color-gray-500 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 7% 60%); }
+@property --color-gray-600 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 15% 50%); }
+@property --color-gray-700 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 12% 40%); }
+@property --color-gray-800 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 20% 30%); }
+@property --color-gray-900 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 25% 20%); }
+@property --color-gray-1000 { syntax: "<color>"; inherits: true; initial-value: hsl(225deg 15% 15%); }
+@property --header-bg { syntax: "<color>"; inherits: true; initial-value: rgba(255, 255, 255, 0.68); }
+@property --header-border { syntax: "<color>"; inherits: true; initial-value: rgba(255, 255, 255, 0.45); }
+@property --header-nav-hover-bg { syntax: "<color>"; inherits: true; initial-value: rgba(79, 70, 229, 0.08); }
+@property --header-icon-hover-bg { syntax: "<color>"; inherits: true; initial-value: rgba(0, 0, 0, 0.05); }
+@property --dropdown-bg { syntax: "<color>"; inherits: true; initial-value: rgba(255, 255, 255, 0.92); }
+@property --dropdown-border { syntax: "<color>"; inherits: true; initial-value: rgba(225, 230, 240, 0.8); }
+
+html {
+  transition:
+    --color-text var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-text-secondary var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-text-muted var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-background var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-blurred-background var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-muted-background var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-action var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-primary var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-primary-hover var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-secondary var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-tertiary var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-decorative var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-cloud-100 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-cloud-300 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-cloud-400 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-cloud-500 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-cloud-700 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-sky-from var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-sky-to var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-sky-subtle var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-50 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-100 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-200 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-300 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-400 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-500 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-600 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-700 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-800 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-900 var(--color-swap-duration) var(--color-swap-timing-function),
+    --color-gray-1000 var(--color-swap-duration) var(--color-swap-timing-function),
+    --header-bg var(--color-swap-duration) var(--color-swap-timing-function),
+    --header-border var(--color-swap-duration) var(--color-swap-timing-function),
+    --header-nav-hover-bg var(--color-swap-duration) var(--color-swap-timing-function),
+    --header-icon-hover-bg var(--color-swap-duration) var(--color-swap-timing-function),
+    --dropdown-bg var(--color-swap-duration) var(--color-swap-timing-function),
+    --dropdown-border var(--color-swap-duration) var(--color-swap-timing-function);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { transition: none; }
+}

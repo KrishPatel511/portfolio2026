@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './tokens.css';
+@import './theme-transition.css';
 
 html {
   overflow-x: hidden;
@@ -14,8 +15,6 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   min-height: 100vh;
-  transition: background-color var(--color-swap-duration) var(--color-swap-timing-function),
-              color var(--color-swap-duration) var(--color-swap-timing-function);
   overflow-x: hidden;
 }
 

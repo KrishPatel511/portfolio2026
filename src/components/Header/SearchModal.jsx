@@ -4,41 +4,15 @@ import { FiSearch, FiX, FiArrowRight, FiFileText } from 'react-icons/fi';
 import { soundFx } from '../../utils/soundEffects';
 
 const SAMPLE_POSTS = [
-  {
-    title: 'An Interactive Guide to Flexbox',
-    category: 'CSS',
-    desc: 'Flexbox is a remarkably powerful layout mode. In this comprehensive interactive tutorial, we’ll build an intuition for how it works.'
-  },
-  {
-    title: 'A Modern CSS Reset',
-    category: 'CSS',
-    desc: 'A tiny, sensible collection of CSS defaults that eliminate weird browser quirks and streamline styling.'
-  },
-  {
-    title: 'An Interactive Guide to CSS Transitions',
-    category: 'Animation',
-    desc: 'CSS transitions are the easiest way to bring interfaces to life. Master timing functions and hardware acceleration.'
-  },
-  {
-    title: 'Brand New Layouts with CSS Subgrid',
-    category: 'CSS',
-    desc: 'Subgrid allows us to extend a grid template down through the DOM tree. Unlocks exciting new layout possibilities.'
-  },
-  {
-    title: 'Springs and Bounces in Native CSS',
-    category: 'Animation',
-    desc: 'The magic of the linear() timing function to model physics-based motion right in native vanilla CSS.'
-  },
-  {
-    title: 'Why React Re-Renders',
-    category: 'React',
-    desc: 'An in-depth explanation of when and why components re-render, and how to optimize without premature useMemo.'
-  },
-  {
-    title: 'Making Sense of React Server Components',
-    category: 'React',
-    desc: 'Demystifying RSCs, streaming SSR, and how client/server boundaries work together seamlessly.'
-  }
+  { title: 'GMDC Mining Dispatch System', category: 'Project', href: '#gmdc', desc: 'Sole developer of a 9-checkpoint government truck dispatch system with RFID, weighbridge and camera integration.' },
+  { title: 'AI GitHub Coding Agent', category: 'Project', href: '#projects', desc: 'Agentic AI that connects Gemini and GitHub APIs to read, analyze, fix, commit and raise pull requests.' },
+  { title: 'Waldor Clinic Website', category: 'Project', href: '#projects', desc: 'Full-stack Next.js 16 site with headless WordPress CMS and 15+ dynamic pages.' },
+  { title: 'AMNEX Infotechnologies', category: 'Experience', href: '#experience', desc: 'Software Developer: government API integrations, AWS deployments, 3+ client projects delivered end-to-end.' },
+  { title: 'BeyonData Solutions', category: 'Experience', href: '#experience', desc: 'Junior Software Developer: 15+ React dashboards and backend automation with stored procedures.' },
+  { title: 'React.js and Next.js', category: 'Skill', href: '#skills', desc: 'Production-grade interfaces with TypeScript, Tailwind CSS, GSAP and Framer Motion.' },
+  { title: 'Node.js and REST APIs', category: 'Skill', href: '#skills', desc: 'Express and NestJS services with JWT authentication and role-based access control.' },
+  { title: 'Contact and Resume', category: 'Contact', href: '#contact', desc: 'Email, LinkedIn, GitHub and a downloadable PDF resume.' },
+  { title: 'Education and Certifications', category: 'Education', href: '#education', desc: 'MCA (2025), BCA (2022), Oracle Cloud Certified Professional, HackerRank SQL.' }
 ];
 
 export const SearchModal = ({ isOpen, onClose }) => {
@@ -95,7 +69,7 @@ export const SearchModal = ({ isOpen, onClose }) => {
               ref={inputRef}
               type="text"
               className="search-input"
-              placeholder="Search tutorials, articles, goodies..."
+              placeholder="Search projects, skills, experience..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -113,7 +87,7 @@ export const SearchModal = ({ isOpen, onClose }) => {
 
           <div className="search-results">
             <div className="search-results-label">
-              {query ? `Results matching "${query}"` : 'Popular Articles & Tutorials'}
+              {query ? `Results matching "${query}"` : 'Quick Links'}
             </div>
 
             {filteredPosts.length === 0 ? (
@@ -123,7 +97,7 @@ export const SearchModal = ({ isOpen, onClose }) => {
                 {filteredPosts.map((post, idx) => (
                   <a
                     key={idx}
-                    href={`#${post.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    href={post.href}
                     className="search-result-item"
                     onClick={() => {
                       soundFx.playPop();

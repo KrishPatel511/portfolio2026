@@ -1,0 +1,15 @@
+.header-splash {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 78%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 78%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* Keep the title text above the ink */
+.pc-page-header > :not(.splash-cursor),
+.pg-header > :not(.splash-cursor) {
+  position: relative;
+  z-index: 1;
+}

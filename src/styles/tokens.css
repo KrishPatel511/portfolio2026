@@ -71,9 +71,9 @@
   --color-text: hsl(210deg 10% 92%);
   --color-text-secondary: hsl(210deg 12% 70%);
   --color-text-muted: hsl(210deg 10% 52%);
-  --color-background: hsl(210deg 15% 7%);
-  --color-blurred-background: hsl(210deg 15% 7% / 0.75);
-  --color-muted-background: hsl(210deg 38% 15% / 0.85);
+  --color-background: #0d0f12;
+  --color-blurred-background: rgba(13, 15, 18, 0.75);
+  --color-muted-background: rgba(14, 22, 32, 0.85);
 
   --color-action: hsl(225deg 100% 75%);
   --color-primary: hsl(225deg 100% 75%);
@@ -82,14 +82,15 @@
   --color-tertiary: hsl(280deg 100% 85%);
   --color-decorative: hsl(200deg 50% 60%);
 
-  --color-cloud-100: hsl(210deg 15% 8%);
-  --color-cloud-300: hsl(212deg 40% 12%);
-  --color-cloud-400: hsl(213deg 40% 14%);
-  --color-cloud-500: hsl(213deg 40% 18%);
-  --color-cloud-700: hsl(210deg 30% 28%);
-  --color-sky-from: hsl(214deg 40% 12%);
-  --color-sky-to: hsl(200deg 50% 20%);
-  --color-sky-subtle: hsl(210deg 40% 18%);
+  /* Calibrated Dark Mode Cloud & Sky Tokens (Slightly lighter, clear cloud curves) */
+  --color-cloud-100: #0e1318;
+  --color-cloud-300: #121e2c;
+  --color-cloud-400: #152434;
+  --color-cloud-500: #192a3e;
+  --color-cloud-700: #6a8caf;
+  --color-sky-from: #142130;
+  --color-sky-to: #24526b;
+  --color-sky-subtle: #1c3246;
 
   --color-gray-50: hsl(210deg 19% 10%);
   --color-gray-100: hsl(210deg 15% 14%);

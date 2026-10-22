@@ -1,0 +1,95 @@
+/* Shared styles for the Contact page and the GMDC case study */
+
+.pg-wrapper {
+  width: 100%;
+  background: var(--color-background);
+  padding: 4.5rem 0 7rem;
+  min-height: 70vh;
+}
+.pg-container { position: relative; z-index: 1; max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+.pg-container--narrow { max-width: 52rem; }
+
+.pg-header { position: relative; margin: -1.5rem -1.5rem 1rem; padding: 1.5rem 1.5rem 2.5rem; }
+.pg-kicker {
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-secondary);
+}
+.pg-title {
+  margin: 0.6rem 0 1rem; font-family: var(--font-heading, inherit); font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.12; color: var(--color-text);
+}
+.pg-sub { max-width: 40rem; font-size: 1.1rem; line-height: 1.65; color: var(--color-text-secondary); margin: 0; }
+
+.pg-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+.pg-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.2rem; border-radius: 999px;
+  font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none;
+  color: var(--color-text); background: transparent; border: 1px solid var(--color-gray-300, #8885);
+  transition: transform 150ms, background 150ms, border-color 150ms;
+}
+.pg-btn:hover { transform: translateY(-2px); border-color: var(--color-primary); color: var(--color-primary); }
+.pg-btn--primary { background: var(--color-primary); border-color: var(--color-primary); color: #0d0f12; }
+.pg-btn--primary:hover { background: var(--color-primary-hover); color: #0d0f12; }
+
+.pg-back {
+  display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
+  color: var(--color-text-secondary); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+}
+.pg-back:hover { color: var(--color-primary); }
+
+/* Contact */
+.pg-contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; align-items: start; }
+.pg-channels { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+.pg-channel {
+  display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1.1rem; border-radius: 14px;
+  background: var(--color-cloud-100); border: 1px solid var(--color-gray-200, #8883);
+  color: var(--color-text); text-decoration: none; transition: transform 150ms, border-color 150ms;
+}
+a.pg-channel:hover { transform: translateY(-2px); border-color: var(--color-primary); }
+.pg-channel-icon {
+  display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 10px;
+  background: var(--color-cloud-300); color: var(--color-primary);
+}
+.pg-channel-label { display: block; font-size: 0.78rem; color: var(--color-text-muted); }
+.pg-channel-value { display: block; font-weight: 600; word-break: break-word; }
+
+.pg-form {
+  display: grid; gap: 1rem; padding: 1.5rem; border-radius: 16px;
+  background: var(--color-cloud-100); border: 1px solid var(--color-gray-200, #8883);
+}
+.pg-form-title { margin: 0; font-size: 1.2rem; color: var(--color-text); }
+.pg-form label { display: grid; gap: 0.35rem; font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
+.pg-form input, .pg-form textarea {
+  font: inherit; padding: 0.7rem 0.85rem; border-radius: 10px; resize: vertical;
+  background: var(--color-background); color: var(--color-text); border: 1px solid var(--color-gray-300, #8885);
+}
+.pg-form input:focus, .pg-form textarea:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.pg-form .pg-btn { justify-self: start; }
+.pg-note { margin: 0; font-size: 0.8rem; color: var(--color-text-muted); }
+
+/* Case study */
+.pg-facts {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 0 0 2rem; padding: 0;
+}
+.pg-facts div { padding: 0.9rem 1.1rem; border-radius: 14px; background: var(--color-cloud-100); border: 1px solid var(--color-gray-200, #8883); }
+.pg-facts dt { font-size: 0.78rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.pg-facts dd { margin: 0.2rem 0 0; font-weight: 600; color: var(--color-text); }
+
+.pg-media { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
+.pg-media-video { grid-column: 1 / -1; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 14px; object-fit: contain; }
+.pg-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }
+
+.pg-block { margin-bottom: 2rem; }
+.pg-block h2 { margin: 0 0 0.6rem; font-size: 1.35rem; color: var(--color-text); }
+.pg-block p { margin: 0; line-height: 1.7; color: var(--color-text-secondary); }
+.pg-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.pg-checks li { display: flex; gap: 0.6rem; line-height: 1.6; color: var(--color-text-secondary); }
+.pg-checks svg { flex: none; margin-top: 0.3rem; color: var(--color-primary); }
+
+@media (max-width: 52rem) {
+  .pg-wrapper { padding-top: 2.5rem; }
+  .pg-contact-grid { grid-template-columns: 1fr; }
+  .pg-facts { grid-template-columns: 1fr; }
+}
+
+.pg-form .pg-submit { justify-self: start; }

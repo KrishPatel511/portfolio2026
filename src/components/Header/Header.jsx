@@ -1,44 +1,75 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Logo } from './Logo';
 import { Navigation } from './Navigation';
-import { DropdownMenu, dropdownData } from './DropdownMenu';
 import { HeaderActions } from './HeaderActions';
 import { SearchModal } from './SearchModal';
+import { MobileMenu } from './MobileMenu';
 import { soundFx } from '../../utils/soundEffects';
 import './Header.css';
 
 export const Header = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverThreshold, setIsOverThreshold] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const headerRef = useRef(null);
+  const slotRef = useRef(null);
 
-  // Detect scroll to enhance glass shadow/border
+  // Scroll behaviour: the header slides away while scrolling down and returns as soon as
+  // you scroll up (always visible near the top of the page).
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+    let lastY = window.scrollY;
+
+    const update = () => {
+      const y = Math.max(0, window.scrollY);
+      const delta = y - lastY;
+      setIsOverThreshold(y > 30);
+
+      if (y <= 30) {
+        setIsHidden(false);
+        lastY = y;
+      } else if (delta > 6 && y > 80) {
+        setIsHidden(true);
+        lastY = y;
+      } else if (delta < -6) {
+        setIsHidden(false);
+        lastY = y;
       }
     };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const onScroll = update;
+    const onHash = () => {
+      lastY = window.scrollY;
+      setIsHidden(false);
+      setIsOverThreshold(window.scrollY > 30);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('hashchange', onHash);
+    const handleOpenSearch = () => setIsSearchOpen(true);
+    window.addEventListener('open-search-modal', handleOpenSearch);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('open-search-modal', handleOpenSearch);
+    };
   }, []);
 
-  // Close dropdown on click outside
+  // The header is fixed, so an in-flow placeholder of the same height keeps the page layout.
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (headerRef.current && !headerRef.current.contains(event.target)) {
-        setActiveMenu(null);
-      }
+    const header = headerRef.current;
+    const slot = slotRef.current;
+    if (!header || !slot) return undefined;
+    const sync = () => {
+      slot.style.height = `${header.offsetHeight}px`;
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(header);
+    return () => ro.disconnect();
   }, []);
 
   const toggleMobileMenu = () => {
@@ -46,48 +77,39 @@ export const Header = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+
   return (
     <>
-      <header
+      <div ref={slotRef} className="header-slot">
+      <div
         ref={headerRef}
-        className={`site-header ${isScrolled ? 'header-scrolled' : ''} ${
-          activeMenu ? 'header-menu-active' : ''
-        }`}
+        data-is-over-threshold={isOverThreshold ? 'true' : 'false'}
+        data-is-hidden={isHidden ? 'true' : 'false'}
+        className="h1w8168s"
+        onFocus={() => setIsHidden(false)}
       >
-        <div className="header-container">
-          {/* Logo */}
-          <div className="header-left">
-            <Logo />
+        <div className="bui2te1" aria-hidden="true" />
+        <div style={{ '--max-width': '68.75rem', position: 'relative' }} className="watium4">
+          <div className="o16qpys8">
+            <header style={{ viewTransitionName: 'site-header' }} className="wisp6v7">
+              {/* Logo (Krish Patel with Doodle W) */}
+              <Logo />
+
+              {/* Desktop Navigation */}
+              <Navigation />
+
+              {/* Actions: Search, Sound, Theme, RSS, Mobile */}
+              <HeaderActions
+                onOpenSearch={() => setIsSearchOpen(true)}
+                onToggleMobile={toggleMobileMenu}
+              />
+            </header>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="header-center">
-            <Navigation activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-          </div>
-
-          {/* Right Action Icons (Search, Sound, Theme, RSS) */}
-          <div className="header-right">
-            <HeaderActions onOpenSearch={() => setIsSearchOpen(true)} />
-
-            {/* Mobile Hamburger Button */}
-            <button
-              type="button"
-              className="mobile-menu-toggle"
-              onClick={toggleMobileMenu}
-              aria-label={isMobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
-            </button>
-          </div>
         </div>
-
-        {/* Desktop Mega-Menu Dropdown */}
-        <DropdownMenu
-          activeMenu={activeMenu}
-          onClose={() => setActiveMenu(null)}
-        />
-      </header>
+      </div>
+      </div>
 
       {/* Interactive Search Modal */}
       <SearchModal
@@ -95,101 +117,12 @@ export const Header = () => {
         onClose={() => setIsSearchOpen(false)}
       />
 
-      {/* Mobile Drawer Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="mobile-drawer-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <motion.div
-              className="mobile-drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="mobile-drawer-header">
-                <Logo />
-                <button
-                  type="button"
-                  className="mobile-close-btn"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <FiX size={22} />
-                </button>
-              </div>
-
-              <div className="mobile-drawer-search">
-                <button
-                  type="button"
-                  className="mobile-search-trigger"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setIsSearchOpen(true);
-                  }}
-                >
-                  <FiSearch size={18} />
-                  <span>Search articles & tools...</span>
-                </button>
-              </div>
-
-              <div className="mobile-nav-groups">
-                {Object.entries(dropdownData).map(([key, data]) => (
-                  <div key={key} className="mobile-group">
-                    <h3 className="mobile-group-title">{data.title}</h3>
-                    <div className="mobile-group-links">
-                      {data.items.map((item, idx) => {
-                        const Icon = item.icon;
-                        return (
-                          <a
-                            key={idx}
-                            href={`#${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                            className="mobile-item-link"
-                            onClick={() => {
-                              soundFx.playPop();
-                              setIsMobileMenuOpen(false);
-                            }}
-                          >
-                            <span
-                              className="mobile-item-icon"
-                              style={{ color: item.color }}
-                            >
-                              <Icon size={18} />
-                            </span>
-                            <div>
-                              <div className="mobile-item-title">{item.title}</div>
-                              <div className="mobile-item-desc">{item.desc}</div>
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-
-                <div className="mobile-group">
-                  <h3 className="mobile-group-title">More</h3>
-                  <a
-                    href="#about"
-                    className="mobile-direct-link"
-                    onClick={() => {
-                      soundFx.playPop();
-                      setIsMobileMenuOpen(false);
-                    }}
-                  >
-                    About Josh Comeau
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile Sidebar Menu */}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+        onOpenSearch={() => setIsSearchOpen(true)}
+      />
     </>
   );
 };

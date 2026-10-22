@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Mobile menu: full-screen sheet. Colours are fixed on purpose, so the menu
+   looks the same in light and dark mode.
+   ========================================================================== */
+
+.mm-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  background: #0f1824;
+  overscroll-behavior: contain;
+  /* Colours the shared Logo component reads */
+  --color-primary: hsl(225deg 100% 75%);
+  --color-secondary: hsl(333deg 100% 65%);
+  --color-text: #e8ecf3;
+}
+
+.mm-top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.25rem;
+  padding: env(safe-area-inset-top) 1rem 0 1.25rem;
+  font-size: 1.5rem;
+}
+
+.mm-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mm-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #e8ecf3;
+  cursor: pointer;
+  transition: background-color 150ms;
+}
+
+.mm-icon-btn:hover,
+.mm-icon-btn:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mm-close {
+  margin-left: 0.4rem;
+}
+
+.mm-sheet-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 0.75rem calc(1rem + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+
+.mm-sheet {
+  background: #ffffff;
+  color: #0d1117;
+  border-radius: 10px;
+  padding: 0 0.5rem 0.5rem;
+  overflow: hidden;
+}
+
+.mm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mm-item {
+  border-bottom: 1px solid #ddd8e8;
+}
+
+.mm-row {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+  min-height: 4.4rem;
+  padding: 0 0.75rem;
+  border: 0;
+  background: transparent;
+  color: #0d1117;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mm-row-label {
+  flex: 1;
+}
+
+.mm-row-icon {
+  flex: none;
+}
+
+.mm-row:active {
+  background: #f1f5fa;
+}
+
+.mm-panel-clip {
+  overflow: hidden;
+}
+
+.mm-panel {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 0.5rem;
+  margin: 0 0 1rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 8px;
+  background: #dbeaf6;
+}
+
+.mm-sub {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 2.9rem;
+  color: #0d1117;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.mm-sub svg {
+  flex: none;
+}
+
+.mm-sub:active {
+  color: #3b4bd6;
+}
+
+/* Sky card with the mascot */
+.mm-sky {
+  position: relative;
+  height: 14.5rem;
+  margin: 1rem 0.5rem 0.5rem;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #9fd0ee;
+}
+
+.mm-sky-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mm-sky-mascot {
+  position: absolute;
+  left: 1rem;
+  top: 2.4rem;
+  width: 7.4rem;
+  height: auto;
+}
+
+.mm-sky-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 4.2rem;
+}
+
+.mm-sky-links {
+  position: absolute;
+  top: 50%;
+  right: 1.1rem;
+  transform: translateY(-50%);
+  z-index: 2;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  text-align: right;
+}
+
+.mm-sky-links a {
+  color: #0d1117;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.mm-sky-links a:active {
+  color: #3b4bd6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-root,
+  .mm-sheet-wrap {
+    transition: none;
+  }
+}

@@ -1,83 +1,35 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiChevronDown } from 'react-icons/fi';
+import React, { useEffect, useState } from 'react';
 import { soundFx } from '../../utils/soundEffects';
+import { NAV_LINKS, getPage, getNavPage } from '../../utils/pages';
 
-export const Navigation = ({ activeMenu, setActiveMenu }) => {
-  const navItems = [
-    { id: 'categories', label: 'Categories', hasDropdown: true },
-    { id: 'courses', label: 'Courses', hasDropdown: true },
-    { id: 'goodies', label: 'Goodies', hasDropdown: true },
-    { id: 'about', label: 'About', hasDropdown: false, href: '#about' }
-  ];
+export const Navigation = () => {
+  const [current, setCurrent] = useState(() => getNavPage(getPage(window.location.hash)));
 
-  const handleMouseEnter = (item) => {
-    if (item.hasDropdown) {
-      if (activeMenu !== item.id) {
-        soundFx.playPop();
-      }
-      setActiveMenu(item.id);
-    } else {
-      setActiveMenu(null);
-    }
-  };
-
-  const handleClick = (item) => {
-    soundFx.playPop();
-    if (item.hasDropdown) {
-      setActiveMenu(activeMenu === item.id ? null : item.id);
-    } else {
-      setActiveMenu(null);
-    }
-  };
+  useEffect(() => {
+    const onHash = () => setCurrent(getNavPage(getPage(window.location.hash)));
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
 
   return (
-    <nav className="site-navigation" aria-label="Main Navigation">
-      <ul className="nav-list">
-        {navItems.map((item) => {
-          const isActive = activeMenu === item.id;
-          return (
-            <li
-              key={item.id}
-              className="nav-item"
-              onMouseEnter={() => handleMouseEnter(item)}
+    <nav className="swt4a33 w1nm8v5u" aria-label="Main Navigation">
+      <ul className="nqxiycd">
+        {NAV_LINKS.map(({ page, label, href }, i) => (
+          <li
+            key={page}
+            className={`lbj2n6v ${i === NAV_LINKS.length - 1 ? 'o17p2a19' : ''}`}
+            data-is-final-nav-item={i === NAV_LINKS.length - 1 ? 'true' : undefined}
+          >
+            <a
+              className={`nvlm710 ${current === page ? 'active' : ''}`}
+              href={href}
+              aria-current={current === page ? 'page' : undefined}
+              onClick={() => soundFx.playPop()}
             >
-              {item.hasDropdown ? (
-                <button
-                  type="button"
-                  className={`nav-button ${isActive ? 'active' : ''}`}
-                  onClick={() => handleClick(item)}
-                  aria-expanded={isActive}
-                  aria-haspopup="true"
-                >
-                  <span className="nav-label">{item.label}</span>
-                  <motion.span
-                    className="nav-chevron"
-                    animate={{ rotate: isActive ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <FiChevronDown size={14} />
-                  </motion.span>
-                  {isActive && (
-                    <motion.div
-                      className="nav-active-pill"
-                      layoutId="activeNavPill"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </button>
-              ) : (
-                <a
-                  href={item.href}
-                  className="nav-button"
-                  onClick={() => soundFx.playPop()}
-                >
-                  <span className="nav-label">{item.label}</span>
-                </a>
-              )}
-            </li>
-          );
-        })}
+              {label}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
   );

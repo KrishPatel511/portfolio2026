@@ -82,7 +82,7 @@ export const Hero = () => {
                 >
                   <img
                     src={isDark ? '/portfolio_image_back_dark.png' : '/portfolio_image_back_light.png'}
-                    alt="Josh W Comeau 3D Character"
+                    alt="Krish Patel 3D character"
                     loading="lazy"
                     className="mascot-img"
                   />

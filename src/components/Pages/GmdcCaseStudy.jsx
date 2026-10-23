@@ -54,6 +54,10 @@ export const GmdcCaseStudy = () => (
         ))}
       </dl>
 
+      <div className="pg-media pg-media--single">
+        <img src="/images/gmdc/GMDC-logo.png" alt="GMDC logo, Fueling the Growth, over a mining landscape at sunset" />
+      </div>
+
       <div className="pg-media">
         <video
           className="pg-media-video"

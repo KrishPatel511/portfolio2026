@@ -40,7 +40,7 @@ const GROUPS = [
       { label: 'All Projects', href: '#projects', Icon: FiGrid },
       { label: 'GMDC Mining', href: '#gmdc', Icon: FiTruck },
       { label: 'AI GitHub Agent', href: '#projects', Icon: FiGitBranch },
-      { label: 'Waldor Clinic', href: '#projects', Icon: FiHeart },
+      { label: 'Auralyx', href: '#waldor', Icon: FiHeart },
     ],
   },
   {

@@ -55,30 +55,48 @@ const PROJECTS = [
     github: null,
     live: null,
     caseStudy: '#gmdc',
+    image: '/images/gmdc/GMDC-logo.png',
     color: '#4f46e5',
     featured: true,
   },
   {
-    id: 'ai-github-agent',
-    title: 'AI GitHub Coding Agent',
-    subtitle: 'React · Node.js · Express · Prisma · Gemini API',
-    desc: 'An autonomous agentic AI system that connects the Gemini API with the GitHub API to explore repositories using natural language and resolve code issues. A multi-step pipeline (read, analyze, fix, commit, raise PR) lets the agent detect bugs, generate fixes and open pull requests without manual intervention.',
-    tech: ['React', 'Node.js', 'Express', 'Prisma', 'Gemini API', 'GitHub API'],
-    github: 'https://github.com/KrishPatel511',
-    live: null,
+    id: 'reposentry',
+    title: 'RepoSentry: AI Coding Agent for GitHub',
+    subtitle: 'React · TypeScript · Node.js · Express · PostgreSQL · Prisma · Gemini API',
+    desc: 'A full-stack AI agent that signs in with GitHub, explores your repositories in plain English, reviews code and fixes bugs on its own. Eight GitHub tools are wired to Gemini function calling, and every fix lands as a commit on one shared branch and a single pull request, never on main.',
+    tech: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Prisma', 'Gemini API', 'GitHub OAuth'],
+    caseStudy: '#reposentry',
+    github: 'https://github.com/KrishPatel511/codepilot.ai',
+    live: 'https://reposentry-ai.vercel.app/',
+    image: '/projects/reposentry.svg',
     color: '#06b6d4',
     featured: true,
   },
   {
-    id: 'waldor-clinic',
-    title: 'Waldor Clinic: Luxury Skin, Hair & Longevity Website',
-    subtitle: 'Next.js 16 · TypeScript · Headless WordPress',
-    desc: 'A full-stack marketing website for a luxury skin, hair and longevity clinic, built with Next.js 16 (App Router) and TypeScript. It has 15+ dynamic pages covering treatments, concerns, blog and product listings, with a headless WordPress backend (WPAPI) for content management.',
-    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Framer Motion', 'WordPress', 'Zod'],
-    github: 'https://github.com/KrishPatel511',
-    live: null,
+    id: 'auralyx',
+    title: 'Auralyx: Luxury Skin, Hair & Longevity Website',
+    subtitle: 'Next.js 16 · React 19 · TypeScript · PostgreSQL · Headless WordPress',
+    desc: 'A production website for a luxury skin, hair and longevity clinic. It has 20 pages including 7 skin-concern and 5 treatment pages, a headless WordPress blog, before-and-after sliders, and secure contact and careers forms saved to PostgreSQL and emailed to the team, with strict security headers and spam protection.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Framer Motion', 'WordPress', 'Prisma', 'Zod'],
+    caseStudy: '#waldor',
+    github: 'https://github.com/KrishPatel511/Auralyx',
+    live: 'https://waldor.vercel.app/',
+    image: '/projects/auralyx.jpg',
     color: '#f43f5e',
-    featured: false,
+    featured: true,
+  },
+  {
+    id: 'portfolio',
+    title: 'Krish Patel Portfolio: An Interactive Developer Experience',
+    subtitle: 'React 19 · Vite · WebGL · GSAP · Framer Motion · MapLibre · Web Audio',
+    desc: 'The portfolio you are viewing, built entirely by hand with no UI kit. It features a WebGL fluid cursor, a generative canvas rainbow, 3D flip cards, a real visitor map, sounds synthesized with the Web Audio API and a smooth animated light and dark theme.',
+    tech: ['React', 'Vite', 'WebGL', 'GSAP', 'Framer Motion', 'MapLibre GL', 'Web Audio', 'CSS Tokens'],
+    caseStudy: '#portfolio',
+    github: 'https://github.com/KrishPatel511/portfolio2026',
+    live: null,
+    image: '/projects/portfolio.jpg',
+    color: '#10b981',
+    featured: true,
   },
 ];
 
@@ -146,7 +164,7 @@ const SKILL_CATEGORIES = [
 
 const SKILL_NOTES = {
   'React.js': 'My main UI library for production apps, including the GMDC checkpoint system.',
-  'Next.js': 'App Router sites with TypeScript, such as the Waldor Clinic website.',
+  'Next.js': 'App Router sites with TypeScript, such as the Auralyx clinic website.',
   TypeScript: 'Typed code for safer, easier-to-maintain frontends and APIs.',
   'JavaScript (ES6+)': 'The language behind everything I build, on the client and the server.',
   'Tailwind CSS': 'Fast, consistent styling for responsive layouts.',
@@ -294,54 +312,46 @@ export const PortfolioContent = ({ page = 'projects' }) => {
               <span className="section-kicker">PROJECTS &amp; WORK</span>
             </header>
 
-            <div className="projects-list">
-              {PROJECTS.map((project) => (
-                <article key={project.id} className={`project-entry ${project.featured ? 'featured' : ''}`}>
-                  {project.featured && <span className="featured-badge">⭐ Featured</span>}
-                  <div className="project-accent-bar" style={{ backgroundColor: project.color }} />
-                  <div className="project-body">
+            <div className="projects-showcase">
+              {PROJECTS.map((project, i) => (
+                <article
+                  key={project.id}
+                  className={`showcase-card ${i % 2 ? 'reverse' : ''}`}
+                  style={{ '--accent': project.color }}
+                >
+                  <div className="showcase-media">
+                    <div className="showcase-frame">
+                      <img src={project.image} alt={`${project.title} preview`} loading="lazy" />
+                    </div>
+                  </div>
+                  <div className="showcase-info">
+                    <span className="showcase-index">
+                      {String(i + 1).padStart(2, '0')}
+                      {project.featured && <em>Featured</em>}
+                    </span>
                     <h2 className="project-title">{project.title}</h2>
                     <p className="project-subtitle">{project.subtitle}</p>
                     <p className="project-desc">{project.desc}</p>
-
                     <div className="project-tech-tags">
                       {project.tech.map((t) => (
                         <span key={t} className="tech-tag">{t}</span>
                       ))}
                     </div>
-
                     <div className="project-links">
                       {project.caseStudy && (
-                        <StarButton
-                          as="a"
-                          primary
-                          href={project.caseStudy}
-                          onClick={() => soundFx.playPop()}
-                        >
+                        <StarButton as="a" primary href={project.caseStudy} onClick={() => soundFx.playPop()}>
                           <FiArrowRight size={14} />
                           <span>Read Case Study</span>
                         </StarButton>
                       )}
                       {project.github && (
-                        <StarButton
-                          as="a"
-                          href={project.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() => soundFx.playPop()}
-                        >
+                        <StarButton as="a" href={project.github} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>
                           <FiGithub size={14} />
                           <span>Source Code</span>
                         </StarButton>
                       )}
                       {project.live && (
-                        <StarButton
-                          as="a"
-                          href={project.live}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() => soundFx.playPop()}
-                        >
+                        <StarButton as="a" href={project.live} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>
                           <FiExternalLink size={14} />
                           <span>Live Demo</span>
                         </StarButton>

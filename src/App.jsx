@@ -6,6 +6,7 @@ import { PortfolioContent } from './components/Content/PortfolioContent';
 import { AboutPage } from './components/About/AboutPage';
 import { ContactPage } from './components/Pages/ContactPage';
 import { GmdcCaseStudy } from './components/Pages/GmdcCaseStudy';
+import { ProjectCaseStudy, CASE_STUDIES } from './components/Pages/ProjectCaseStudy';
 import { Footer } from './components/Footer/Footer';
 import { getPage } from './utils/pages';
 import './styles/global.css';
@@ -36,6 +37,7 @@ function App() {
 
           {page === 'about' && <AboutPage />}
           {page === 'gmdc' && <GmdcCaseStudy />}
+          {CASE_STUDIES[page] && <ProjectCaseStudy data={CASE_STUDIES[page]} />}
           {page === 'contact' && <ContactPage />}
           {(page === 'projects' || page === 'skills' || page === 'experience') && (
             <main id="main-content">

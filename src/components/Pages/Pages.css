@@ -93,3 +93,28 @@ a.pg-channel:hover { transform: translateY(-2px); border-color: var(--color-prim
 }
 
 .pg-form .pg-submit { justify-self: start; }
+
+/* ── Rich case study sections ───────────────────────────────────────────── */
+.pg-media--single { grid-template-columns: 1fr; }
+.pg-media--single img { aspect-ratio: auto; }
+.pg-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .75rem; margin-bottom: 1.5rem; }
+.pg-stats div { padding: 1rem; border-radius: 14px; text-align: center; background: var(--color-cloud-100); border: 1px solid var(--color-gray-200, #8883); }
+.pg-stats strong { display: block; font-size: 2rem; font-weight: 800; line-height: 1; color: var(--color-primary); }
+.pg-stats span { display: block; margin-top: .4rem; font-size: .8rem; color: var(--color-text-muted); }
+.pg-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.pg-steps li { display: flex; gap: 1rem; align-items: flex-start; }
+.pg-step-n { flex: none; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; font-weight: 700; font-size: .9rem; color: #fff; background: var(--color-primary); }
+.pg-steps h3, .pg-card h3, .pg-problem h3 { margin: 0 0 .2rem; font-size: 1rem; color: var(--color-text); }
+.pg-steps p { margin: 0; }
+.pg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.pg-card { padding: 1rem 1.1rem; border-radius: 14px; background: var(--color-cloud-100); border: 1px solid var(--color-gray-200, #8883); }
+.pg-card code, .pg-table code { font-family: var(--font-mono); font-size: .85rem; font-weight: 700; color: var(--color-primary); }
+.pg-card p { margin-top: .35rem; font-size: .92rem; }
+.pg-problems { display: grid; gap: .85rem; }
+.pg-problem { padding: 1.1rem 1.25rem; border-radius: 14px; border: 1px solid var(--color-gray-200, #8883); border-left: 4px solid var(--color-primary); background: var(--color-cloud-100); }
+.pg-problem p + p { margin-top: .4rem; }
+.pg-problem b { color: var(--color-text); }
+.pg-table { width: 100%; margin-top: 1rem; border-collapse: collapse; font-size: .9rem; }
+.pg-table th, .pg-table td { padding: .6rem .75rem; text-align: left; border-bottom: 1px solid var(--color-gray-200, #8883); color: var(--color-text-secondary); }
+.pg-table th { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-muted); }
+.pg-credit { margin: 0 0 2rem; padding: .9rem 1.1rem; border-radius: 12px; font-size: .9rem; line-height: 1.6; color: var(--color-text-secondary); background: var(--color-cloud-100); border: 1px dashed var(--color-gray-300, #8885); }

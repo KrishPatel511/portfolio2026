@@ -5,8 +5,9 @@ import { soundFx } from '../../utils/soundEffects';
 
 const SAMPLE_POSTS = [
   { title: 'GMDC Mining Dispatch System', category: 'Project', href: '#gmdc', desc: 'Sole developer of a 9-checkpoint government truck dispatch system with RFID, weighbridge and camera integration.' },
-  { title: 'AI GitHub Coding Agent', category: 'Project', href: '#projects', desc: 'Agentic AI that connects Gemini and GitHub APIs to read, analyze, fix, commit and raise pull requests.' },
-  { title: 'Waldor Clinic Website', category: 'Project', href: '#projects', desc: 'Full-stack Next.js 16 site with headless WordPress CMS and 15+ dynamic pages.' },
+  { title: 'RepoSentry AI Coding Agent', category: 'Project', href: '#reposentry', desc: 'Agentic AI that connects Gemini and GitHub APIs to read, analyze, fix, commit and raise pull requests.' },
+  { title: 'Auralyx Clinic Website', category: 'Project', href: '#waldor', desc: 'Full-stack Next.js 16 clinic site with a headless WordPress blog, secure forms and 20 pages.' },
+  { title: 'Krish Patel Portfolio', category: 'Project', href: '#portfolio', desc: 'This site: a hand-built React portfolio with a WebGL cursor, a real map, synthesized sound and an animated theme.' },
   { title: 'AMNEX Infotechnologies', category: 'Experience', href: '#experience', desc: 'Software Developer: government API integrations, AWS deployments, 3+ client projects delivered end-to-end.' },
   { title: 'BeyonData Solutions', category: 'Experience', href: '#experience', desc: 'Junior Software Developer: 15+ React dashboards and backend automation with stored procedures.' },
   { title: 'React.js and Next.js', category: 'Skill', href: '#skills', desc: 'Production-grade interfaces with TypeScript, Tailwind CSS, GSAP and Framer Motion.' },

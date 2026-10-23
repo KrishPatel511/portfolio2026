@@ -16,6 +16,9 @@ const HASH_TO_PAGE = {
   about: 'about',
   projects: 'projects',
   gmdc: 'gmdc',
+  reposentry: 'reposentry',
+  waldor: 'waldor',
+  portfolio: 'portfolio',
   skills: 'skills',
   experience: 'experience',
   education: 'experience',
@@ -26,4 +29,4 @@ const HASH_TO_PAGE = {
 export const getPage = (hash) => HASH_TO_PAGE[(hash || '').replace('#', '')] ?? 'about';
 
 /* The nav item to highlight for a page (the case study belongs to Projects). */
-export const getNavPage = (page) => (page === 'gmdc' ? 'projects' : page);
+export const getNavPage = (page) => (['gmdc', 'reposentry', 'waldor', 'portfolio'].includes(page) ? 'projects' : page);

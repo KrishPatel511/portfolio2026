@@ -34,7 +34,7 @@ const CATEGORIES_COL_2 = [
 const COURSES = [
   ['GMDC Mining Dispatch', '#gmdc'],
   ['AI GitHub Coding Agent', '#projects'],
-  ['Waldor Clinic Website', '#projects'],
+  ['Auralyx Clinic Website', '#waldor'],
 ];
 
 const GENERAL = [

@@ -153,167 +153,23 @@ export const HeaderActions = ({ onOpenSearch, onToggleMobile }) => {
             width="1.25rem"
             height="1.25rem"
             viewBox="0 0 24 24"
-            className="smm9umv"
-            style={{
-              transform: isDark ? 'rotate(40deg)' : 'rotate(90deg)',
-              transition: 'transform 500ms ease',
-            }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className={`smm9umv theme-icon ${isDark ? 'is-dark' : 'is-light'}`}
           >
-            <mask id="sun-dot-mask-r0">
-              <rect x="-10" y="-10" width="44" height="44" fill="#FFF" />
-              <circle r="6" cx="12" cy="12" fill="#000" />
-            </mask>
-            <mask id="moon-cutout-mask-r0">
-              <rect x="0" y="0" width="24" height="24" fill="#FFF" />
-              <circle cx="12" cy="-4" r="8" fill="#000" />
-            </mask>
-            <mask id="moon-crescent-mask-r0">
-              <rect x="0" y="0" width="24" height="24" fill="#000" />
-              <circle r="7" cx="12" cy="12" fill="#FFF" />
-            </mask>
-
-            {/* Sun Rays: visible in light mode */}
-            <g
-              mask="url(#sun-dot-mask-r0)"
-              style={{
-                opacity: isDark ? 0 : 1,
-                transition: 'opacity 300ms ease',
-              }}
-            >
-              <circle
-                data-include-enter-animation="true"
-                cx="22"
-                cy="12"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '480ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="19.0711"
-                cy="19.0711"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '400ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="12"
-                cy="22"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '320ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="4.9289"
-                cy="19.0711"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '240ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="2"
-                cy="12"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '200ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="4.9289"
-                cy="4.9289"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '280ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="12"
-                cy="2"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '360ms',
-                  transform: 'scale(1)',
-                }}
-              />
-              <circle
-                data-include-enter-animation="true"
-                cx="19.0711"
-                cy="4.9289"
-                r="1.5"
-                fill="currentColor"
-                className="s5z4at1"
-                style={{
-                  transformOrigin: 'center center',
-                  '--enter-animation-delay': '440ms',
-                  transform: 'scale(1)',
-                }}
-              />
+            {/* Sun: shown in light mode */}
+            <g className="theme-icon__sun">
+              <circle cx="12" cy="12" r="4.5" />
+              <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77" />
             </g>
-
-            {/* Sun Body Circle */}
-            <g mask="url(#moon-cutout-mask-r0)">
-              <circle
-                cx="12"
-                cy="12"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                r="6"
-              />
-            </g>
-
-            {/* Moon Crescent: visible in dark mode */}
-            <g
-              mask="url(#moon-crescent-mask-r0)"
-              style={{
-                opacity: isDark ? 1 : 0,
-                transition: 'opacity 300ms ease',
-              }}
-            >
-              <circle
-                cx="12"
-                cy="-4"
-                r="8"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-              />
+            {/* Moon: shown in dark mode */}
+            <g className="theme-icon__moon">
+              <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z" fill="currentColor" />
+              <path d="M17.5 3.5v2.4M16.3 4.7h2.4" strokeWidth="1.6" />
             </g>
           </svg>
           <span className="wlgbkjj">

@@ -31,7 +31,7 @@ const PROCESS = [
 export const GmdcCaseStudy = () => (
   <div className="pg-wrapper">
     <div className="pg-container pg-container--narrow">
-      <a className="pg-back" href="#projects" onClick={() => soundFx.playPop()}>
+      <a className="pg-back" href="/projects" onClick={() => soundFx.playPop()}>
         <FiArrowLeft size={15} /> All projects
       </a>
 
@@ -102,8 +102,8 @@ export const GmdcCaseStudy = () => (
       </section>
 
       <div className="pg-actions">
-        <StarButton as="a" primary href="#contact" onClick={() => soundFx.playPop()}>Discuss a project</StarButton>
-        <StarButton as="a" href="#projects" onClick={() => soundFx.playPop()}>See other projects</StarButton>
+        <StarButton as="a" primary href="/contact" onClick={() => soundFx.playPop()}>Discuss a project</StarButton>
+        <StarButton as="a" href="/projects" onClick={() => soundFx.playPop()}>See other projects</StarButton>
       </div>
     </div>
   </div>

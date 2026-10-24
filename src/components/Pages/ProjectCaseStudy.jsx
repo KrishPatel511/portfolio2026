@@ -268,11 +268,11 @@ export const CASE_STUDIES = {
       ['Tooling', 'Oxlint for linting, Vite for fast builds, and Git for version control.'],
     ],
     endpoints: [
-      ['#about', 'Story, interactive cards, map and drum pad'],
-      ['#projects', 'Showcase cards and in-depth case studies'],
-      ['#experience', 'Timeline, education and certifications'],
-      ['#skills', 'Flip cards grouped by category'],
-      ['#contact', 'Email, links, resume and message form'],
+      ['/', 'Story, interactive cards, map and drum pad'],
+      ['/projects', 'Showcase cards and in-depth case studies'],
+      ['/experience', 'Timeline, education and certifications'],
+      ['/skills', 'Flip cards grouped by category'],
+      ['/contact', 'Email, links, resume and message form'],
     ],
     endpointsHead: ['Route', 'Page'],
     outcome: 'The portfolio is a complete, working product that I designed, built and maintain alone. It shows the full range of my front-end work: architecture, design systems, animation, graphics, audio, accessibility and performance, all in one codebase of 14,000+ lines. Most importantly it is the proof behind everything else on this site.',
@@ -297,7 +297,7 @@ const Checks = ({ items }) => (
 export const ProjectCaseStudy = ({ data }) => (
   <div className="pg-wrapper">
     <div className="pg-container pg-container--narrow">
-      <a className="pg-back" href="#projects" onClick={() => soundFx.playPop()}>
+      <a className="pg-back" href="/projects" onClick={() => soundFx.playPop()}>
         <FiArrowLeft size={15} /> All projects
       </a>
 
@@ -413,7 +413,7 @@ export const ProjectCaseStudy = ({ data }) => (
         <StarButton as="a" primary={!data.live} href={data.github} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>
           <FiGithub size={14} /><span>Source Code</span>
         </StarButton>
-        <StarButton as="a" href="#projects" onClick={() => soundFx.playPop()}>See other projects</StarButton>
+        <StarButton as="a" href="/projects" onClick={() => soundFx.playPop()}>See other projects</StarButton>
       </div>
     </div>
   </div>

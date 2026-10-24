@@ -1,32 +1,34 @@
-/* Hash-based page routing: maps the URL hash to one of the site's pages. */
+/* Page routing: maps the URL path to one of the site's pages. */
 
 export const NAV_LINKS = [
-  { page: 'about', label: 'About', href: '#about' },
-  { page: 'projects', label: 'Projects', href: '#projects' },
-  { page: 'experience', label: 'Experience', href: '#experience' },
-  { page: 'skills', label: 'Skills', href: '#skills' },
-  { page: 'contact', label: 'Contact', href: '#contact' },
+  { page: 'about', label: 'About', href: '/' },
+  { page: 'projects', label: 'Projects', href: '/projects' },
+  { page: 'experience', label: 'Experience', href: '/experience' },
+  { page: 'skills', label: 'Skills', href: '/skills' },
+  { page: 'contact', label: 'Contact', href: '/contact' },
 ];
 
 export const RESUME_URL = '/cv/Patel_Krish.pdf';
 export const RESUME_FILENAME = 'Krish_Patel_Resume.pdf';
 
-const HASH_TO_PAGE = {
-  '': 'about',
-  about: 'about',
-  projects: 'projects',
-  gmdc: 'gmdc',
-  reposentry: 'reposentry',
-  waldor: 'waldor',
-  portfolio: 'portfolio',
-  skills: 'skills',
-  experience: 'experience',
-  education: 'experience',
-  certifications: 'experience',
-  contact: 'contact',
+/* path -> page key */
+export const PATH_TO_PAGE = {
+  '/': 'about',
+  '/projects': 'projects',
+  '/projects/gmdc': 'gmdc',
+  '/projects/reposentry': 'reposentry',
+  '/projects/auralyx': 'waldor',
+  '/projects/portfolio': 'portfolio',
+  '/skills': 'skills',
+  '/experience': 'experience',
+  '/contact': 'contact',
 };
 
-export const getPage = (hash) => HASH_TO_PAGE[(hash || '').replace('#', '')] ?? 'about';
+export const isKnownPath = (path) => path in PATH_TO_PAGE;
 
-/* The nav item to highlight for a page (the case study belongs to Projects). */
-export const getNavPage = (page) => (['gmdc', 'reposentry', 'waldor', 'portfolio'].includes(page) ? 'projects' : page);
+export const getPage = (path) => PATH_TO_PAGE[path] ?? 'notfound';
+
+const CASE_STUDY_PAGES = ['gmdc', 'reposentry', 'waldor', 'portfolio'];
+
+/* The nav item to highlight for a page (case studies belong to Projects). */
+export const getNavPage = (page) => (CASE_STUDY_PAGES.includes(page) ? 'projects' : page);

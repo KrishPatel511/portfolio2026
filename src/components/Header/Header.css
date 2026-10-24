@@ -558,162 +558,7 @@ html[data-color-mode="light"] .s1qsi09f {
   line-height: 1.4;
 }
 
-/* ==========================================================================
-   Search Modal
-   ========================================================================== */
 
-.search-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 15, 25, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 2000;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 12vh;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.search-dialog {
-  width: 100%;
-  max-width: 620px;
-  background: var(--dropdown-bg, #fff);
-  border: 1px solid var(--dropdown-border, #e2e8f0);
-  border-radius: 18px;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-}
-
-.search-input-wrapper {
-  display: flex;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--color-gray-100);
-  gap: 0.75rem;
-}
-
-.search-input-icon {
-  color: var(--color-text-muted);
-}
-
-.search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  font-size: 1.1rem;
-  color: var(--color-text);
-  outline: none;
-}
-
-.search-clear-btn {
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-}
-
-.search-clear-btn:hover {
-  color: var(--color-text);
-}
-
-.search-kbd {
-  font-size: 0.75rem;
-  font-family: var(--font-mono, monospace);
-  background: var(--color-gray-100);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-gray-200);
-  padding: 3px 6px;
-  border-radius: 4px;
-}
-
-.search-results {
-  max-height: 420px;
-  overflow-y: auto;
-  padding: 1rem;
-}
-
-.search-results-label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.75rem;
-  padding-left: 0.5rem;
-}
-
-.search-results-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.search-result-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1rem;
-  border-radius: 12px;
-  background: transparent;
-  transition: all var(--transition-fast, 150ms ease);
-  text-decoration: none;
-}
-
-.search-result-item:hover {
-  background: var(--header-nav-hover-bg, rgba(79, 70, 229, 0.08));
-  transform: translateX(4px);
-}
-
-.result-badge-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.result-category {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  background: var(--header-nav-hover-bg, rgba(79, 70, 229, 0.08));
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.result-title {
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.result-snippet {
-  font-size: 0.82rem;
-  color: var(--color-text-secondary);
-  margin-top: 0.2rem;
-  line-height: 1.4;
-}
-
-.result-arrow {
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-  margin-left: 1rem;
-  transition: transform var(--transition-fast, 150ms ease), color var(--transition-fast, 150ms ease);
-}
-
-.search-result-item:hover .result-arrow {
-  transform: translateX(3px);
-  color: var(--color-primary);
-}
-
-.search-empty {
-  padding: 2rem 1rem;
-  text-align: center;
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-}
 
 /* About page: header slides away while scrolling through the hero */
 .h1w8168s {
@@ -746,4 +591,295 @@ html[data-color-mode] .h1w8168s[data-is-over-threshold] {
     --gn-x: 8px !important;
     --gn-font: 12.5px !important;
   }
+}
+
+/* Theme toggle: sun and moon swap with a rotate and scale */
+.theme-icon { overflow: visible; }
+.theme-icon__sun, .theme-icon__moon {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 450ms cubic-bezier(0.34, 1.4, 0.64, 1), opacity 250ms ease;
+}
+.theme-icon.is-light .theme-icon__sun { opacity: 1; transform: rotate(0) scale(1); }
+.theme-icon.is-light .theme-icon__moon { opacity: 0; transform: rotate(-70deg) scale(0.3); }
+.theme-icon.is-dark .theme-icon__sun { opacity: 0; transform: rotate(70deg) scale(0.3); }
+.theme-icon.is-dark .theme-icon__moon { opacity: 1; transform: rotate(0) scale(1); }
+.theme-icon.is-dark { color: #ffd76a; }
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon__sun, .theme-icon__moon { transition: opacity 150ms ease; }
+}
+
+/* ==========================================================================
+   Search Modal: a pale panel that drops from the top with a cloud edge,
+   modelled on the search on joshwcomeau.com. Like his, it keeps its own
+   light palette, even when the site is in dark mode.
+   ========================================================================== */
+
+.sm-root {
+  --sm-bg: #fff;
+  --sm-text: #0a0c10;
+  --sm-text-muted: rgba(10, 12, 16, 0.5);
+  --sm-primary: #4242fa;
+  --sm-line: hsl(225deg 25% 20%);
+  --sm-divider: rgba(10, 12, 16, 0.28);
+  --sm-spring: cubic-bezier(0.34, 1.25, 0.64, 1);
+  --sm-spring: linear(0, 0.1407 4.43%, 0.9383 16.72%, 1.0774 20.43%, 1.1493 24.31%, 1.1629 26.95%, 1.1536 29.93%, 1.0168 43.09%, 0.9766 51%, 1.0033 76.88%, 1);
+
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  isolation: isolate;
+  pointer-events: none;
+  font-family: 'Poppins', var(--font-sans);
+}
+
+[data-color-mode="dark"] .sm-root {
+  --sm-bg: #e6ebf0;
+}
+
+.sm-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-muted-background);
+  opacity: 0.4;
+  pointer-events: auto;
+  animation: sm-fade-in 500ms ease backwards;
+  transition: opacity 400ms ease;
+}
+
+.sm-root.is-closing .sm-overlay { opacity: 0; }
+
+.sm-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  max-height: 100svh;
+  background: var(--sm-bg);
+  color: var(--sm-text);
+  pointer-events: auto;
+  animation: sm-slide-in 800ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  transition: transform 450ms cubic-bezier(0.55, 0, 0.7, 0.4);
+}
+
+.sm-root.is-closing .sm-panel { transform: translateY(calc(-100% - 160px)); }
+
+@keyframes sm-slide-in {
+  0% { transform: translateY(calc(-100% - 160px)); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes sm-fade-in {
+  0% { opacity: 0; }
+}
+
+.sm-content {
+  width: 100%;
+  max-width: 42.875rem;
+  margin-inline: auto;
+  padding: 32px 1.5rem;
+  min-height: 13rem;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.sm-row {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.sm-form {
+  --input-height: 2.5rem;
+  position: relative;
+  flex: 1 1;
+  display: flex;
+  animation: sm-fade-in 500ms 250ms ease backwards;
+}
+
+.sm-form::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 3px;
+  border-radius: 10px;
+  background: var(--sm-primary);
+}
+
+.sm-icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.sm-input {
+  flex: 1 1;
+  height: var(--input-height);
+  padding-inline: calc(var(--input-height) * 0.75);
+  border: none;
+  border-radius: 1px;
+  background: transparent;
+  color: var(--sm-text);
+  font-family: inherit;
+  font-size: 1.125rem;
+  outline: none;
+}
+
+.sm-input::placeholder { color: var(--sm-text-muted); }
+.sm-input::-webkit-search-cancel-button,
+.sm-input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+
+.sm-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-content: center;
+  width: var(--input-height);
+  border: 0;
+  border-radius: 1000px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+
+.sm-close {
+  position: fixed;
+  top: 0;
+  right: 16px;
+  display: grid;
+  place-content: center;
+  padding: 16px;
+  border: 0;
+  border-radius: 1000px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 200ms ease;
+  animation: sm-fade-in 400ms 300ms backwards;
+}
+
+.sm-close:hover { transform: rotate(90deg); }
+
+@media (max-width: 68rem) {
+  .sm-close {
+    position: static;
+    align-self: center;
+    padding: 8px;
+  }
+}
+
+.sm-results {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sm-hint {
+  margin: 0;
+  padding-top: 8px;
+  text-align: center;
+  font-style: italic;
+  color: var(--sm-text);
+  animation: sm-fade-in 500ms 350ms backwards;
+}
+
+.sm-result {
+  display: block;
+  padding: 24px 0 26px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--sm-divider);
+}
+
+.sm-result:first-child { padding-top: 8px; }
+.sm-result:last-child { border-bottom: 0; }
+
+.sm-category {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--sm-primary);
+}
+
+.sm-title {
+  margin: 0 0 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sm-text);
+}
+
+.sm-snippet {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--sm-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sm-result:hover .sm-title,
+.sm-result:focus-visible .sm-title { color: var(--sm-primary); }
+
+.sm-mark {
+  padding: 0 2px;
+  border-radius: 4px;
+  background: hsl(52deg 100% 85%);
+  box-shadow: 0 0 0 1px hsl(48deg 80% 70%);
+  color: #0a0c10;
+}
+
+/* The cloud grows out of the bottom edge once the panel has landed */
+.sm-cloud-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  transform: translateY(calc(100% - 2px));
+  pointer-events: none;
+}
+
+.sm-cloud {
+  display: block;
+  min-width: 2000px;
+  width: 100%;
+  aspect-ratio: 4113 / 146;
+  height: auto;
+  transform-origin: top center;
+  transform: scaleY(2) translateY(-30%);
+  animation: sm-fade-in 500ms 300ms ease backwards;
+}
+
+@keyframes sm-cloud-in {
+  0% { transform: scale(0.8, 0) translate(0); }
+  100% { transform: scaleY(2) translateY(-30%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sm-panel, .sm-overlay, .sm-cloud, .sm-form, .sm-close, .sm-hint { animation: none; }
+  .sm-close:hover { transform: none; }
 }

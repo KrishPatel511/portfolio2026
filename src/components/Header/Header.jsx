@@ -47,13 +47,15 @@ export const Header = () => {
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
-    window.addEventListener('hashchange', onHash);
+    window.addEventListener('popstate', onHash);
+    window.addEventListener('routechange', onHash);
     const handleOpenSearch = () => setIsSearchOpen(true);
     window.addEventListener('open-search-modal', handleOpenSearch);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
-      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('popstate', onHash);
+      window.removeEventListener('routechange', onHash);
       window.removeEventListener('open-search-modal', handleOpenSearch);
     };
   }, []);

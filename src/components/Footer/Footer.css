@@ -501,3 +501,64 @@
   color: var(--color-text);
   transform: translateY(-1px);
 }
+
+/* ==========================================================================
+   Footer typography: bold, geometric, close to joshwcomeau.com's footer.
+   (His font, Wotfard, is paid, so Poppins is used as the closest free match.)
+   ========================================================================== */
+
+.site-footer {
+  --footer-font: 'Poppins', var(--font-sans);
+  font-family: var(--footer-font);
+}
+
+.site-footer :is(p, a, h3, li, input, button, span) {
+  font-family: var(--footer-font);
+}
+
+.footer-tagline {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+.newsletter-text-lines {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.newsletter-pill-input {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.footer-col-heading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--secondary-text);
+}
+
+.footer-link {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.footer-link:hover {
+  font-weight: 500;
+}
+
+.footer-col-general .footer-link { text-align: right; }
+.footer-col-general .footer-col-heading { text-align: right; }
+
+.footer-legal-area {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.footer-legal-links a { font-weight: 400; }

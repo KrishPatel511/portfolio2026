@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { soundFx } from '../../utils/soundEffects';
 import { NAV_LINKS, getPage, getNavPage } from '../../utils/pages';
 import { useTheme } from '../../context/ThemeContext';
+import { usePath } from '../../utils/router';
 import GooeyNav from '../GooeyNav/GooeyNav';
 
 const ITEMS = NAV_LINKS.map(({ label, href }) => ({ label, href }));
 const PILL_COLORS = { light: '#4f46e5', dark: '#809bff' };
 
-const indexFor = (hash) => {
-  const page = getNavPage(getPage(hash));
+const indexFor = (path) => {
+  const page = getNavPage(getPage(path));
   return Math.max(0, NAV_LINKS.findIndex((link) => link.page === page));
 };
 
 export const Navigation = () => {
   const { isDark } = useTheme();
-  const [current, setCurrent] = useState(() => indexFor(window.location.hash));
+  const path = usePath();
+  const [current, setCurrent] = useState(() => indexFor(path));
 
   useEffect(() => {
-    const onHash = () => setCurrent(indexFor(window.location.hash));
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+    setCurrent(indexFor(path));
+  }, [path]);
 
   return (
     <div className="swt4a33 w1nm8v5u" aria-label="Main Navigation">

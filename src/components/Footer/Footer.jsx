@@ -18,29 +18,30 @@ import { RESUME_URL } from '../../utils/pages';
 import './Footer.css';
 
 const CATEGORIES_COL_1 = [
-  ['React.js', '#skills'],
-  ['Next.js', '#skills'],
-  ['TypeScript', '#skills'],
-  ['Node.js', '#skills'],
+  ['React.js', '/skills'],
+  ['Next.js', '/skills'],
+  ['TypeScript', '/skills'],
+  ['Node.js', '/skills'],
 ];
 
 const CATEGORIES_COL_2 = [
-  ['PostgreSQL', '#skills'],
-  ['AWS', '#skills'],
-  ['REST APIs', '#skills'],
-  ['Gov Integrations', '#skills'],
+  ['PostgreSQL', '/skills'],
+  ['AWS', '/skills'],
+  ['REST APIs', '/skills'],
+  ['Gov Integrations', '/skills'],
 ];
 
 const COURSES = [
-  ['GMDC Mining Dispatch', '#gmdc'],
-  ['AI GitHub Coding Agent', '#projects'],
-  ['Auralyx Clinic Website', '#waldor'],
+  ['GMDC Mining Dispatch', '/projects/gmdc'],
+  ['RepoSentry AI Agent', '/projects/reposentry'],
+  ['Auralyx Clinic Website', '/projects/auralyx'],
+  ['This Portfolio', '/projects/portfolio'],
 ];
 
 const GENERAL = [
-  ['About Me', '#about'],
-  ['Experience & Education', '#experience'],
-  ['Contact', '#contact'],
+  ['About Me', '/'],
+  ['Experience & Education', '/experience'],
+  ['Contact', '/contact'],
   ['Resume (PDF)', RESUME_URL],
 ];
 
@@ -327,8 +328,6 @@ export const Footer = () => {
                 <li key={label}>
                   <a
                     href={href}
-                    target="_blank"
-                    rel="noreferrer"
                     className="footer-link"
                     onClick={() => soundFx.playPop()}
                   >

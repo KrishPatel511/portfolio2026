@@ -37,10 +37,10 @@ const GROUPS = [
     label: 'Projects',
     Icon: FiLayers,
     items: [
-      { label: 'All Projects', href: '#projects', Icon: FiGrid },
-      { label: 'GMDC Mining', href: '#gmdc', Icon: FiTruck },
-      { label: 'AI GitHub Agent', href: '#projects', Icon: FiGitBranch },
-      { label: 'Auralyx', href: '#waldor', Icon: FiHeart },
+      { label: 'All Projects', href: '/projects', Icon: FiGrid },
+      { label: 'GMDC Mining', href: '/projects/gmdc', Icon: FiTruck },
+      { label: 'RepoSentry AI', href: '/projects/reposentry', Icon: FiGitBranch },
+      { label: 'Auralyx', href: '/projects/auralyx', Icon: FiHeart },
     ],
   },
   {
@@ -48,11 +48,11 @@ const GROUPS = [
     label: 'Skills',
     Icon: FiZap,
     items: [
-      { label: 'Frontend', href: '#skills', Icon: FiLayout },
-      { label: 'Backend', href: '#skills', Icon: FiTerminal },
-      { label: 'Database', href: '#skills', Icon: FiDatabase },
-      { label: 'Cloud & Tools', href: '#skills', Icon: FiCloud },
-      { label: 'AI & APIs', href: '#skills', Icon: FiCpu },
+      { label: 'Frontend', href: '/skills', Icon: FiLayout },
+      { label: 'Backend', href: '/skills', Icon: FiTerminal },
+      { label: 'Database', href: '/skills', Icon: FiDatabase },
+      { label: 'Cloud & Tools', href: '/skills', Icon: FiCloud },
+      { label: 'AI & APIs', href: '/skills', Icon: FiCpu },
     ],
   },
   {
@@ -60,18 +60,18 @@ const GROUPS = [
     label: 'Experience',
     Icon: FiBriefcase,
     items: [
-      { label: 'AMNEX', href: '#experience', Icon: FiTrendingUp },
-      { label: 'BeyonData', href: '#experience', Icon: FiBarChart2 },
-      { label: 'Education', href: '#education', Icon: FiBookOpen },
-      { label: 'Certificates', href: '#certifications', Icon: FiAward },
+      { label: 'AMNEX', href: '/experience', Icon: FiTrendingUp },
+      { label: 'BeyonData', href: '/experience', Icon: FiBarChart2 },
+      { label: 'Education', href: '/experience#education', Icon: FiBookOpen },
+      { label: 'Certificates', href: '/experience#certifications', Icon: FiAward },
     ],
   },
 ];
 
 const SKY_LINKS = [
-  ['About Me', '#about'],
-  ['Experience', '#experience'],
-  ['Contact', '#contact'],
+  ['About Me', '/'],
+  ['Experience', '/experience'],
+  ['Contact', '/contact'],
 ];
 
 export const MobileMenu = ({ isOpen, onClose, onOpenSearch }) => {

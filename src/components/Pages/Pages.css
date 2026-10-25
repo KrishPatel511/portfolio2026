@@ -118,3 +118,7 @@ a.pg-channel:hover { transform: translateY(-2px); border-color: var(--color-prim
 .pg-table th, .pg-table td { padding: .6rem .75rem; text-align: left; border-bottom: 1px solid var(--color-gray-200, #8883); color: var(--color-text-secondary); }
 .pg-table th { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-muted); }
 .pg-credit { margin: 0 0 2rem; padding: .9rem 1.1rem; border-radius: 12px; font-size: .9rem; line-height: 1.6; color: var(--color-text-secondary); background: var(--color-cloud-100); border: 1px dashed var(--color-gray-300, #8885); }
+
+.pg-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.pg-error { color: #e5484d; }
+.pg-error a { color: inherit; text-decoration: underline; }

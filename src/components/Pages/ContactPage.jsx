@@ -20,15 +20,31 @@ const CHANNELS = [
 
 export const ContactPage = () => {
   const { isDark } = useTheme();
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '', website: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [error, setError] = useState('');
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    if (status === 'sending') return;
     soundFx.playPop();
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n${form.name}\n${form.email}`);
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    setStatus('sending');
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
+      setStatus('success');
+      setForm({ name: '', email: '', message: '', website: '' });
+    } catch (err) {
+      setError(err.message || 'Something went wrong.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -97,7 +113,7 @@ export const ContactPage = () => {
             <h2 className="pg-form-title">Send a message</h2>
             <label>
               <span>Your name</span>
-              <input required value={form.name} onChange={set('name')} placeholder="Your name" />
+              <input required maxLength={100} value={form.name} onChange={set('name')} placeholder="Your name" />
             </label>
             <label>
               <span>Your email</span>
@@ -105,12 +121,28 @@ export const ContactPage = () => {
             </label>
             <label>
               <span>Message</span>
-              <textarea required rows={5} value={form.message} onChange={set('message')} placeholder="Tell me about the role or project..." />
+              <textarea required rows={5} maxLength={2000} value={form.message} onChange={set('message')} placeholder="Tell me about the role or project..." />
             </label>
-            <StarButton type="submit" primary className="pg-submit">
-              <FiSend size={16} /> Send via email
+            {/* Honeypot: hidden from people, bots fill it in */}
+            <input
+              className="pg-hp"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={form.website}
+              onChange={set('website')}
+            />
+            <StarButton type="submit" primary className="pg-submit" disabled={status === 'sending'}>
+              <FiSend size={16} /> {status === 'sending' ? 'Sending...' : 'Send message'}
             </StarButton>
-            <p className="pg-note">This opens your email app with the message ready to send.</p>
+            <p className="pg-note" role="status" aria-live="polite">
+              {status === 'success' && 'Thanks! Your message has been sent. I will get back to you soon.'}
+              {status === 'error' && (
+                <span className="pg-error">{error} You can also email me at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</span>
+              )}
+              {(status === 'idle' || status === 'sending') && 'I usually reply within a day.'}
+            </p>
           </form>
         </div>
       </div>

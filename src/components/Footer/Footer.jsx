@@ -57,7 +57,7 @@ export const Footer = () => {
   const { isDark, toggleTheme } = useTheme();
   const { soundEnabled, toggleSound } = useSound();
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
   // Hide-and-Seek scroll animation state
   // -226px: hidden behind cloud ceiling
@@ -106,15 +106,24 @@ export const Footer = () => {
     });
   };
 
-  const handleNewsletterSubmit = (e) => {
+  const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || status === 'sending') return;
     soundFx.playPop();
-    const subject = encodeURIComponent('Opportunity for Krish Patel');
-    const body = encodeURIComponent(`Hi Krish,\n\nI came across your portfolio and would like to connect.\n\nMy email: ${email}`);
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
-    setEmail('');
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'footer' }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setStatus('error');
+    }
   };
 
   const handleOpenSearch = () => {
@@ -253,13 +262,19 @@ export const Footer = () => {
               <button
                 type="submit"
                 className="newsletter-pill-submit"
+                disabled={status === 'sending'}
                 aria-label="Get in touch"
               >
                 <FiArrowRight size={18} />
               </button>
             </div>
-            {submitted && (
-              <p className="newsletter-success">Opening your email app. Looking forward to it! 🎉</p>
+            {status === 'success' && (
+              <p className="newsletter-success">Thanks! I will get back to you soon. 🎉</p>
+            )}
+            {status === 'error' && (
+              <p className="newsletter-success">
+                Could not send. Please email me at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              </p>
             )}
           </form>
         </div>

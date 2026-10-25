@@ -47,9 +47,13 @@ export default async function handler(req, res) {
   // Honeypot: real users never fill this hidden field. Pretend success to bots.
   if (body.website) return json(res, 200, { ok: true });
 
-  const name = String(body.name ?? '').trim();
+  // The footer form only collects an email, so it gets a default name and message.
+  const fromFooter = body.source === 'footer';
+  const name = String(body.name ?? '').trim() || (fromFooter ? 'Website visitor' : '');
   const email = String(body.email ?? '').trim();
-  const message = String(body.message ?? '').trim();
+  const message =
+    String(body.message ?? '').trim() ||
+    (fromFooter ? 'Would like to connect (sent from the footer form).' : '');
 
   if (!name || name.length > 100) return json(res, 400, { ok: false, error: 'Please enter a valid name.' });
   if (!EMAIL_RE.test(email) || email.length > 254) return json(res, 400, { ok: false, error: 'Please enter a valid email.' });
@@ -110,7 +114,7 @@ export default async function handler(req, res) {
         reply_to: CONTACT_TO_EMAIL,
         subject: 'Thanks for reaching out - Krish Patel',
         html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#111">
-          <p>Hi ${escapeHtml(name)},</p>
+          <p>Hi ${fromFooter ? 'there' : escapeHtml(name)},</p>
           <p>Thanks for getting in touch. I've received your message and will get back to you as soon as possible.</p>
           <p>Best regards,<br>Krish Patel<br>Full Stack Developer</p>
         </div>`,

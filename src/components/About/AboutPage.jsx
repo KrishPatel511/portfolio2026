@@ -880,6 +880,11 @@ export const AboutPage = () => {
               I&apos;m a Full Stack Developer from Ahmedabad, building government systems with React, Next.js,
               TypeScript and Node.js. Right now I&apos;m the sole developer of a live truck dispatch platform for GMDC Mining.
             </p>
+            <a className="ab-open" href="/contact">
+              <span className="ab-open-dot" aria-hidden="true" />
+              <span className="ab-open-label">Open to work</span>
+              <span className="ab-open-cta">Let&apos;s talk &rarr;</span>
+            </a>
           </motion.div>
         </div>
       </section>

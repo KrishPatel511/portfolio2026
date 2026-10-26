@@ -500,3 +500,25 @@ html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold=
 [data-color-mode="dark"] .ab-map-gl .maplibregl-ctrl-attrib { background: rgb(16 22 31 / 0.82); color: #cbd5e1; }
 [data-color-mode="dark"] .ab-map-gl .maplibregl-ctrl-attrib a { color: #cbd5e1; }
 .ab-map-gl .maplibregl-ctrl-attrib a { text-decoration: underline; font-weight: 400; }
+
+/* "Open to work" badge under the intro. It sits on the sky in both themes, so it keeps its own light fill and dark text. */
+.ab-open {
+  display: inline-flex; align-items: center; gap: .6rem; margin-top: .4rem;
+  padding: .5rem 1rem .5rem .8rem; border-radius: 999px; text-decoration: none;
+  font-size: .9rem; font-weight: 700; color: hsl(222deg 30% 14%);
+  background: hsl(0deg 0% 100% / .82); border: 1px solid hsl(0deg 0% 100% / .9);
+  box-shadow: 0 6px 18px hsl(222deg 60% 30% / .16);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.ab-open:hover { transform: translateY(-2px); box-shadow: 0 10px 24px hsl(222deg 60% 30% / .22); }
+.ab-open:focus-visible { outline: 3px solid var(--color-action); outline-offset: 3px; }
+.ab-open-dot {
+  position: relative; width: .65rem; height: .65rem; border-radius: 50%; background: #16a34a;
+}
+.ab-open-dot::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; background: #16a34a;
+  animation: ab-open-pulse 1.8s ease-out infinite;
+}
+.ab-open-cta { font-weight: 600; color: hsl(240deg 60% 38%); }
+@keyframes ab-open-pulse { from { transform: scale(1); opacity: .7; } to { transform: scale(2.8); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ab-open-dot::after { animation: none; } .ab-open { transition: none; } }

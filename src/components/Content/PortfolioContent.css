@@ -1052,25 +1052,3 @@
 .showcase-media { padding: 0; }
 .showcase-media::before { display: none; }
 .showcase-frame { background: none; border: 0; box-shadow: none; border-radius: 16px; }
-
-/* ── Testimonials ─────────────────────────────────── */
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-}
-.testi-card {
-  margin: 0; padding: 1.6rem 1.4rem 1.4rem; border-radius: 14px;
-  display: flex; flex-direction: column; gap: 1.1rem;
-  background-color: var(--color-gray-50); border: 1px solid var(--color-gray-200);
-  position: relative;
-}
-[data-color-mode="dark"] .testi-card { background-color: var(--color-cloud-100); border-color: var(--color-gray-300); }
-.testi-card::before {
-  content: '\201C'; position: absolute; top: .2rem; left: 1rem;
-  font-family: var(--font-display); font-size: 3.6rem; line-height: 1; color: var(--color-action); opacity: .35;
-}
-.testi-quote { margin: 1.4rem 0 0; font-size: .98rem; line-height: 1.65; color: var(--color-text); }
-.testi-by { margin-top: auto; display: flex; flex-direction: column; gap: .15rem; }
-.testi-name { font-family: var(--font-display); font-weight: 700; font-size: .95rem; color: var(--color-text); }
-.testi-role { font-size: .83rem; font-weight: 600; color: var(--color-text-secondary); }

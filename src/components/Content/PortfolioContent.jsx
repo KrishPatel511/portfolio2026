@@ -267,6 +267,36 @@ const CERTIFICATIONS = [
   { title: 'React.js', issuer: 'Scaler', year: '2026', color: '#0F5BFF', logo: '/certifications/scaler.png' },
 ];
 
+/* DRAFT testimonials: written from facts already on this site, with the name and role left blank.
+   They stay hidden (approved: false) until the real person has read and agreed to the text.
+   To publish one: replace name and role, edit the quote with them, then set approved: true. */
+const TESTIMONIALS = [
+  {
+    id: 'gmdc',
+    quote: 'Krish was the only developer on our checkpoint system and he treated it like his own. He came to the mine, tested the gates and weighbridges with us on site, and kept every change simple to explain.',
+    name: 'Name to add',
+    role: 'Role to add',
+    company: 'GMDC Mining',
+    approved: false,
+  },
+  {
+    id: 'amnex',
+    quote: 'He takes a project from the first requirements call to go-live without needing to be chased, and his integrations with the government systems were fast and dependable.',
+    name: 'Name to add',
+    role: 'Role to add',
+    company: 'AMNEX Infotechnologies',
+    approved: false,
+  },
+  {
+    id: 'beyondata',
+    quote: 'The dashboards he built were clear enough for our teams to use on day one, and his database automation took a real chunk of manual work off us.',
+    name: 'Name to add',
+    role: 'Role to add',
+    company: 'BeyonData Solutions',
+    approved: false,
+  },
+];
+
 const PAGE_HEADERS = {
   projects: {
     kicker: 'Projects',
@@ -494,6 +524,27 @@ export const PortfolioContent = ({ page = 'projects' }) => {
                     </ul>
                   </div>
                 </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Testimonials (only approved ones are shown) ── */}
+        {page === 'experience' && TESTIMONIALS.some((t) => t.approved) && (
+          <section className="pc-section" aria-labelledby="testimonials-heading" id="testimonials">
+            <header className="section-kicker-header">
+              <span className="section-kicker">WHAT PEOPLE SAY</span>
+            </header>
+
+            <div className="testi-grid">
+              {TESTIMONIALS.filter((t) => t.approved).map((t) => (
+                <figure key={t.id} className="testi-card">
+                  <blockquote className="testi-quote">{t.quote}</blockquote>
+                  <figcaption className="testi-by">
+                    <span className="testi-name">{t.name}</span>
+                    <span className="testi-role">{t.role}, {t.company}</span>
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </section>

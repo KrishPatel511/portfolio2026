@@ -535,7 +535,8 @@ html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold=
   .ab-mascot { top: -2.6rem; right: 0.4rem; }
   .ab-mascot img { width: 5.6rem; }
   .ab-hero-text { max-width: none; }
-  .ab-hero-inner { padding-bottom: 14rem; }
+  /* room for the rainbow: it grows with the screen, like the art itself (--rb-scale is set in RainbowArt.jsx) */
+  .ab-hero-inner { padding-bottom: calc(14rem + var(--rb-scale, 0.4) * 235px); }
   .ab-cloud-svg { height: calc(12rem + 22vw); }
   .ab-hero { margin-bottom: -1.5rem; }
 }

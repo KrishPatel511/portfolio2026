@@ -398,9 +398,9 @@
 @media (max-width: 48rem) {
   .footer-links-area {
     justify-content: start;
-    grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
-    gap: 32px 32px;
-    max-width: 20.625rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px 24px;
+    max-width: 28rem;
   }
 }
 
@@ -564,3 +564,10 @@
 }
 
 .footer-legal-links a { font-weight: 400; }
+
+/* Phones: the Explore column is only about 150px wide, so its longer links wrap inside the column
+   instead of running out of it (this sits at the end so it wins over the nowrap rule above). */
+@media (max-width: 48rem) {
+  .footer-col-general { min-width: 0; }
+  .footer-col-general .footer-link { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+}

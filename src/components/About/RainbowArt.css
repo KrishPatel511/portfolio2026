@@ -578,3 +578,9 @@
   .rb-cover, .rb-cover-shadow, .rb-door-wrap, .rb-door, .rb-door-shadow { animation-duration: 1ms; animation-delay: 0s; }
   .rb-gear-icon, .rb-close-icon line { transition: none; }
 }
+
+@media (max-width: 36rem) {
+  /* Phones: raise the rainbow and mascot (in proportion to their size) so the arch sits on top of the clouds */
+  .rb-art { padding-bottom: calc(var(--rb-art-bottom) - 1rem + var(--rb-scale, 0.4) * 320px); }
+  .rb-mascot { bottom: calc(var(--rb-josh-bottom) - 1rem + var(--rb-scale, 0.4) * 110px); }
+}

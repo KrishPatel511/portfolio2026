@@ -386,3 +386,29 @@ html[data-over-hero="true"] body:has(.bl-sky) .h1w8168s[data-is-over-threshold="
 @media (prefers-reduced-motion: reduce) {
   .bl-card, .bl-chip, .bl-like, .bl-more a svg { transition: none; }
 }
+
+/* Phones */
+@media (max-width: 36rem) {
+  .bl-head { padding-left: 1.1rem; padding-right: 1.1rem; }
+  .bl-title { font-size: 1.9rem; line-height: 1.3; }
+  .bl-subtitle { margin-bottom: 1.6rem; }
+  .bl-article { padding-left: 1.1rem; padding-right: 1.1rem; margin-top: 3rem; }
+  .bl-article h2 { margin: 3rem 0 1.4rem; }
+  /* the file name becomes a small header row instead of sitting on top of the code */
+  .bl-code { padding-top: 2.4rem; }
+  .bl-code-file { left: 1.2rem; right: auto; top: 0.7rem; max-width: calc(100% - 7rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bl-copy { top: 0.4rem; min-height: 36px; opacity: 1; }
+  .bl-code pre { padding: 1rem 1.1rem 1.2rem; }
+  .bl-aside { padding: 1.7rem 1.2rem 1.3rem; margin-top: 2.6rem; }
+  .bl-aside-icon { top: -1.05rem; left: 0.9rem; }
+  .bl-aside-icon::after { display: none; }
+  .bl-aside { border-left-width: 0; border-top: 3px solid var(--tone); border-radius: 0 0 6px 6px; }
+  .bl-frame-btn { flex: 1; min-width: 0; min-height: 46px; }
+  .bl-play-tabs button { min-height: 44px; }
+  .bl-end { flex-direction: column; align-items: flex-start; }
+  .bl-end-right { text-align: left; }
+  .bl-end-btn { min-height: 44px; }
+  .bl-list-wrap { padding: 0 1.1rem; }
+  .bl-card { padding: 1.5rem 1.3rem; }
+  .bl-chip { min-height: 40px; }
+}

@@ -36,6 +36,7 @@
   color: var(--color-text-secondary); text-decoration: none; font-weight: 600; font-size: 0.9rem;
 }
 .pg-back:hover { color: var(--color-primary); }
+.pg-back { min-height: 44px; padding-right: 0.75rem; }
 
 /* Contact */
 .pg-contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; align-items: start; }
@@ -122,3 +123,13 @@ a.pg-channel:hover { transform: translateY(-2px); border-color: var(--color-prim
 .pg-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .pg-error { color: #e5484d; }
 .pg-error a { color: inherit; text-decoration: underline; }
+
+/* Phones: buttons fill the row, and form controls are comfortable to tap */
+@media (max-width: 36rem) {
+  .pg-actions { flex-direction: column; align-items: stretch; }
+  .pg-actions > * { width: 100%; justify-content: center; }
+  .pg-wrapper { padding-top: 3.5rem; padding-bottom: 5rem; }
+  .pg-container { padding: 0 1.1rem; }
+  .pg-header { margin-left: -1.1rem; margin-right: -1.1rem; padding-left: 1.1rem; padding-right: 1.1rem; }
+  .pg-form input, .pg-form textarea { font-size: 1rem; min-height: 46px; }
+}

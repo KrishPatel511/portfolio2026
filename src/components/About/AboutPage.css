@@ -522,3 +522,23 @@ html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold=
 .ab-open-cta { font-weight: 600; color: hsl(240deg 60% 38%); }
 @keyframes ab-open-pulse { from { transform: scale(1); opacity: .7; } to { transform: scale(2.8); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .ab-open-dot::after { animation: none; } .ab-open { transition: none; } }
+
+/* Phones: bigger tap areas for the little controls, and the "courses" text gets its full width back */
+@media (max-width: 52rem) {
+  .ab-slider-dots button { position: relative; }
+  .ab-slider-dots button::after { content: ''; position: absolute; inset: -14px -7px; }
+  .ab-flip::after { content: ''; position: absolute; inset: -12px -6px; }
+}
+@media (max-width: 36rem) {
+  .ab-courses .ab-first { margin-right: 0; }
+  .ab-courses { padding-top: 3.6rem; }
+  .ab-mascot { top: -2.6rem; right: 0.4rem; }
+  .ab-mascot img { width: 5.6rem; }
+  .ab-hero-text { max-width: none; }
+  .ab-hero-inner { padding-bottom: 14rem; }
+  .ab-cloud-svg { height: calc(12rem + 22vw); }
+  .ab-hero { margin-bottom: -1.5rem; }
+}
+@media (min-width: 36.0625rem) and (max-width: 52rem) {
+  .ab-hero-inner { padding-bottom: 19rem; }
+}

@@ -562,9 +562,16 @@
 @keyframes rb-slide-h { to { transform: translateX(var(--slide-val, 100%)); } }
 @keyframes rb-slide-v { to { transform: translateY(var(--slide-val, 100%)); } }
 
-/* The art is desktop-only, like the original: below this width the hero is just text. */
+/* On tablets and phones the art is shown smaller (--rb-scale is set in RainbowArt.jsx from the
+   screen width), and the settings button and panel stay desktop-only. */
 @media (max-width: 56rem) {
-  .rb-art, .rb-mascot, .rb-gear-pos, .rb-panel-pos { display: none; }
+  .rb-gear-pos, .rb-panel-pos { display: none; }
+  .rb-art { align-items: center; overflow: hidden; padding-bottom: calc(var(--rb-art-bottom) - 1rem); }
+  .rb-art-wrap { transform: scale(var(--rb-scale, 0.4)); transform-origin: 50% 100%; pointer-events: none; }
+  .rb-mascot {
+    left: 50%; right: auto; margin: 0; width: 137.5px; justify-content: center; bottom: calc(var(--rb-josh-bottom) - 1rem);
+    transform: translateX(-50%) scale(calc(var(--rb-scale, 0.4) * 1.7)); transform-origin: 50% 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

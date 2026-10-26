@@ -658,6 +658,17 @@ export const RainbowArt = ({ isDark }) => {
   const hasHovered = useRef(false);
   const gearRef = useRef(null);
 
+  // Below the desktop width, the art is drawn smaller: tell the CSS how much
+  useEffect(() => {
+    const fit = () => document.documentElement.style.setProperty('--rb-scale', String(Math.min(window.innerWidth >= 576 ? 0.55 : 1, Math.max(0.3, (window.innerWidth - 24) / 1000))));
+    fit();
+    window.addEventListener('resize', fit);
+    return () => {
+      window.removeEventListener('resize', fit);
+      document.documentElement.style.removeProperty('--rb-scale');
+    };
+  }, []);
+
   const interactive = useMemo(() => {
     if (typeof window === 'undefined') return false;
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;

@@ -179,8 +179,9 @@ const Block = ({ block }) => {
 /* ── The heart ────────────────────────────────────────────────────────────────
    It stays out of the way: hidden at the top of the page, it fades in once you start reading,
    fades away again when you stop moving or scrolling, and comes back on the next movement.
-   Each click fills it a little more (up to 16). Nothing is counted or sent anywhere. */
-const MAX_LIKES = 16;
+   Each click fills it a little more, and there is no limit on how many times you can click.
+   The number only lives in your own browser; nothing is counted or sent anywhere. */
+const FULL_AT = 12; // clicks until the heart is completely pink; after that it just keeps counting
 
 const HEART_PATH = 'M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z';
 
@@ -204,11 +205,11 @@ const useLikes = (slug) => {
   const key = `likes:${slug}`;
   const [count, setCount] = useState(0);
   useEffect(() => {
-    try { setCount(Math.min(MAX_LIKES, Number(localStorage.getItem(key)) || 0)); } catch { /* storage blocked */ }
+    try { setCount(Math.max(0, Math.floor(Number(localStorage.getItem(key)) || 0))); } catch { /* storage blocked */ }
   }, [key]);
   const add = () => {
     setCount((c) => {
-      const next = Math.min(MAX_LIKES, c + 1);
+      const next = c + 1;
       try { localStorage.setItem(key, String(next)); } catch { /* storage blocked */ }
       return next;
     });
@@ -216,10 +217,15 @@ const useLikes = (slug) => {
   return [count, add];
 };
 
-const burst = (event) => {
+let lastBurst = 0;
+const burst = (event, count) => {
+  // Fast clickers get a lighter burst, so hundreds of clicks never pile up on the page
+  const now = performance.now();
+  if (now - lastBurst < 90) return;
+  lastBurst = now;
   const rect = event.currentTarget.getBoundingClientRect();
   confetti({
-    particleCount: 24, spread: 70, startVelocity: 22, scalar: 0.75, ticks: 90,
+    particleCount: count < 12 ? 24 : 12, spread: 70, startVelocity: 22, scalar: 0.75, ticks: 90,
     origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight },
     colors: ['#f43f5e', '#ec4899', '#818cf8', '#fbbf24'],
   });
@@ -255,7 +261,7 @@ const LikeButton = ({ slug, floating }) => {
 
   const click = (event) => {
     soundFx.playPop();
-    if (count < MAX_LIKES) burst(event);
+    burst(event, count);
     add();
     setBounce(true);
     setTimeout(() => setBounce(false), 260);
@@ -267,10 +273,10 @@ const LikeButton = ({ slug, floating }) => {
       onMouseEnter={() => { hovering.current = true; }}
       onMouseLeave={() => { hovering.current = false; }}
     >
-      <button type="button" className={`bl-like ${bounce ? 'is-bouncing' : ''}`} onClick={click} aria-label={`Like this post. You have liked it ${count} of ${MAX_LIKES} times.`}>
-        <HeartIcon fill={count / MAX_LIKES} happy={count > 0} />
+      <button type="button" className={`bl-like ${bounce ? 'is-bouncing' : ''}`} onClick={click} aria-label={`Like this post. You have liked it ${count} ${count === 1 ? 'time' : 'times'}.`}>
+        <HeartIcon fill={Math.min(1, count / FULL_AT)} happy={count > 0} />
       </button>
-      <span className="bl-like-count" aria-hidden="true">{count > 0 ? `${count}/${MAX_LIKES}` : 'Like'}</span>
+      <span className="bl-like-count" aria-hidden="true">{count > 0 ? count.toLocaleString('en-US') : 'Like'}</span>
     </div>
   );
 };

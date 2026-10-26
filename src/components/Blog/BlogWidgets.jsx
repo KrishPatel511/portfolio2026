@@ -81,41 +81,86 @@ export const CodeFrame = ({ title, code, themes }) => {
 const PLAYGROUND_FILES = [
   {
     name: 'index.html',
-    code: '<div class="wave" id="wave"></div>',
+    code: `<div class="stage">
+  <div class="pole"></div>
+  <div class="flag" id="flag"></div>
+</div>`,
   },
   {
     name: 'styles.css',
-    code: `.wave {
+    code: `.stage {
   display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  height: 150px;
+  align-items: flex-start;
 }
 
-.bar {
-  width: 16px;
-  border-radius: 8px;
-  background: linear-gradient(to top, #818cf8, #f43f5e);
-  animation: rise 1.4s ease-in-out infinite;
-  /* Each bar starts a little later than the one before it */
-  animation-delay: calc(var(--i) * 90ms);
+.pole {
+  width: 7px;
+  height: 250px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #b8bcc6, #6b7280);
 }
 
-@keyframes rise {
-  0%, 100% { height: 24px; }
-  50% { height: 140px; }
+.flag {
+  display: flex;
+  margin-top: 6px;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
+}
+
+/* Every slice of the flag moves up and down a little later than its neighbour */
+.col {
+  flex: none;
+  animation: wave 1.6s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(calc(var(--billow) * -1px));
+    filter: brightness(1.08);
+  }
+  50% {
+    transform: translateY(calc(var(--billow) * 1px));
+    filter: brightness(0.88);
+  }
 }`,
   },
   {
     name: 'script.js',
-    code: `const wave = document.getElementById('wave');
-const COUNT = 12;
+    code: `const flag = document.getElementById('flag');
 
-for (let i = 0; i < COUNT; i++) {
-  const bar = document.createElement('div');
-  bar.className = 'bar';
-  bar.style.setProperty('--i', i);
-  wave.appendChild(bar);
+const COLUMNS = 30; // how many slices the flag is cut into
+const WIDTH = 270;
+const HEIGHT = 180; // the flag is 3:2
+const DELAY = 80; // ms between one slice and the next
+const BILLOW = 7; // how high the wave goes, in px
+
+// One flag, drawn once as an SVG: three bands and the Ashoka Chakra
+let spokes = '';
+for (let i = 0; i < 24; i++) {
+  spokes += "<line x1='15' y1='10' x2='15' y2='7' transform='rotate(" + i * 15 + " 15 10)'/>";
+}
+const svg =
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20' preserveAspectRatio='none'>" +
+  "<rect width='30' height='6.67' fill='#FF9933'/>" +
+  "<rect y='6.67' width='30' height='6.66' fill='#FFFFFF'/>" +
+  "<rect y='13.33' width='30' height='6.67' fill='#138808'/>" +
+  "<g stroke='#000080' stroke-width='0.14' fill='none'>" +
+  "<circle cx='15' cy='10' r='3'/>" + spokes + "</g>" +
+  "<circle cx='15' cy='10' r='0.4' fill='#000080'/></svg>";
+const image = 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+
+// Every column shows one slice of that same picture
+for (let i = 0; i < COLUMNS; i++) {
+  const col = document.createElement('div');
+  col.className = 'col';
+  col.style.width = WIDTH / COLUMNS + 'px';
+  col.style.height = HEIGHT + 'px';
+  col.style.backgroundImage = image;
+  col.style.backgroundSize = WIDTH + 'px ' + HEIGHT + 'px';
+  col.style.backgroundPosition = -i * (WIDTH / COLUMNS) + 'px 0';
+  // The edge on the pole stays put; the free end waves the most
+  col.style.setProperty('--billow', (i / (COLUMNS - 1)) * BILLOW);
+  col.style.animationDelay = (i - COLUMNS) * DELAY + 'ms';
+  flag.appendChild(col);
 }`,
   },
 ];

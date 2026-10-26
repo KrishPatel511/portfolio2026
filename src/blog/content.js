@@ -67,9 +67,11 @@ export const BODIES = {
     ['p', 'The frame above shows the same snippet in both themes. Toggle between them, or expand it to compare.'],
 
     ['h2', 'Code playgrounds'],
-    ['p', 'In addition to snippets, I wanted little Codepen-style editors, where you can change the code and watch the result. This one is made from a textarea laid over a highlighted copy of the same text, and the result runs in a sandboxed `iframe`, so nothing you type can touch this page.'],
-    ['p', 'Try changing the `COUNT` in the script, or the `animation-delay` in the stylesheet:'],
+    ['p', 'Besides snippets, I wanted little Codepen-style editors, where you can change the code and watch the result run. Here is a real example: a waving Indian flag, made with plain HTML, CSS and a few lines of JavaScript, with no libraries and no image files.'],
+    ['p', 'The trick is simple. The flag is drawn once, as one small picture. The script then cuts it into thirty thin columns, and each column shows just its own slice of that picture. The CSS moves every column up and down, and each one starts a little later than the one before it, so the movement travels across the flag like a wave. The column next to the pole barely moves, and the free end moves the most.'],
+    ['p', 'This editor is a textarea laid over a highlighted copy of the same text, and the result runs in a sandboxed `iframe`, so nothing you type can touch this page. Go ahead and break it: try `COLUMNS = 60`, `BILLOW = 16`, or `DELAY = 20`.'],
     ['playground'],
+    ['aside', 'info', 'Why slices?', 'A flag is one flat picture, and CSS cannot bend a picture on its own. Cutting it into columns and moving each one separately is a cheap way to fake the bend, and the chakra in the middle stretches and ripples with the cloth for free.'],
 
     ['h2', 'The magic of pre-rendering'],
     ['p', 'A client-side React app starts as an empty page, which is not great for search engines or for people on slow phones. So, at build time, a script renders every route to real HTML. It runs a server build, calls `renderToString` once per page, and writes each result to its own folder.'],

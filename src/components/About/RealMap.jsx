@@ -138,7 +138,7 @@ export const RealMap = ({ isDark, onLocation, onReady }) => {
       meEl.className = 'ab-mk-me';
       const meImg = document.createElement('img');
       meImg.alt = 'A marker showing where I live on the map';
-      meImg.src = `/images/josh/josh-happy-${state.theme}.png`;
+      meImg.src = `/images/krish/krish-${state.theme}.svg`;
       meEl.appendChild(meImg);
       state.me = meImg;
 
@@ -150,7 +150,7 @@ export const RealMap = ({ isDark, onLocation, onReady }) => {
       new maplibregl.Marker({ element: meEl, anchor: 'bottom', offset: [0, 6] }).setLngLat(ORIGIN).addTo(map);
       state.meEl = meEl;
       if (hasRoute) new maplibregl.Marker({ element: pinEl, anchor: 'bottom' }).setLngLat(dest).addTo(map);
-      else meEl.classList.add('show'); // nothing to animate: just show where Josh is
+      else meEl.classList.add('show'); // nothing to animate: just show where I am
 
       let progress = 0;
       let animationStarted = false;
@@ -194,7 +194,7 @@ export const RealMap = ({ isDark, onLocation, onReady }) => {
         });
       };
 
-      // zoom out from the visitor's city, reveal Josh, then draw the line towards Ahmedabad
+      // zoom out from the visitor's city, reveal me, then draw the line towards Ahmedabad
       const playIntro = () => {
         if (animationStarted || !hasRoute) return;
         animationStarted = true;
@@ -269,7 +269,7 @@ export const RealMap = ({ isDark, onLocation, onReady }) => {
     const theme = isDark ? 'dark' : 'light';
     if (state.theme === theme) return;
     state.theme = theme;
-    if (state.me) state.me.src = `/images/josh/josh-happy-${theme}.png`;
+    if (state.me) state.me.src = `/images/krish/krish-${theme}.svg`;
     if (state.pin) state.pin.innerHTML = PIN_SVG(COLORS[theme].pin);
     if (state.map) {
       // The new style loads from scratch (diff: false), which would flash the canvas blank.

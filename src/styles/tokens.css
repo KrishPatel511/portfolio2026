@@ -4,7 +4,7 @@
   --font-display: 'Outfit', var(--font-sans);
   --font-mono: 'Fira Code', monospace;
 
-  /* Josh W. Comeau Color Palette (Light Mode Default) */
+  /* Colour palette (light mode is the default) */
   --color-text: hsl(222deg 22% 15%);
   --color-text-secondary: hsl(222deg 15% 42%);
   --color-text-muted: hsl(222deg 10% 44%);

@@ -187,29 +187,29 @@ html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold=
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
-.ab-josh-layer { position: relative; display: block; }
-.ab-josh-layer picture { display: block; }
-.ab-josh-layer picture + picture { position: absolute; top: 0; left: 0; width: 100%; animation: ab-head-in 200ms ease-out both; }
+.ab-mascot-layer { position: relative; display: block; }
+.ab-mascot-layer picture { display: block; }
+.ab-mascot-layer picture + picture { position: absolute; top: 0; left: 0; width: 100%; animation: ab-head-in 200ms ease-out both; }
 @keyframes ab-head-in { from { opacity: 0; } to { opacity: 1; } }
-.ab-josh-light {
+.ab-mascot-light {
   position: absolute; inset: 0;
   opacity: 0;
   transition: opacity calc(var(--color-swap-duration) + 0.5s) var(--color-swap-timing-function);
 }
-[data-color-mode="light"] .ab-josh-light { opacity: 1; }
-.ab-josh { position: relative; display: block; filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.28)); animation: ab-josh-in 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both 250ms; }
-.ab-josh img {
+[data-color-mode="light"] .ab-mascot-light { opacity: 1; }
+.ab-mascot-art { position: relative; display: block; filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.28)); animation: ab-mascot-in 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both 250ms; }
+.ab-mascot-art img {
   display: block;
   width: 100%;
   height: auto;
 }
 .ab-mascot-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 12px; }
-@keyframes ab-josh-in {
+@keyframes ab-mascot-in {
   from { opacity: 0; transform: translateY(26px) scale(0.92); }
   to { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ab-josh { animation: none; }
+  .ab-mascot-art { animation: none; }
 }
 
 /* ─── Grid ─────────────────────────────────────────────────────────────── */

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Header Glassmorphism, Layout & Navigation (Josh W. Comeau 1:1)
+   Header glassmorphism, layout and navigation
    ========================================================================== */
 
 /* In-flow placeholder: the header itself is fixed so it can slide away and back */
@@ -611,8 +611,7 @@ html[data-color-mode] .h1w8168s[data-is-over-threshold] {
 
 /* ==========================================================================
    Search Modal: a pale panel that drops from the top with a cloud edge,
-   modelled on the search on joshwcomeau.com. Like his, it keeps its own
-   light palette, even when the site is in dark mode.
+   It keeps its own light palette, even when the site is in dark mode.
    ========================================================================== */
 
 .sm-root {

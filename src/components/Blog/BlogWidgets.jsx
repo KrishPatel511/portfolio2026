@@ -368,14 +368,14 @@ export const RainbowDemo = () => {
   const hoverOut = () => { clearTimeout(hoverTimer.current); hoverTimer.current = setTimeout(() => setCanEdit(false), 2200); };
   useEffect(() => () => clearTimeout(hoverTimer.current), []);
   const set = useCallback((key) => (value) => setCfg((c) => ({ ...c, [key]: value })), []);
-  const mascot = useMemo(() => (isDark ? '/portfolio_image_back_dark.png' : '/portfolio_image_back_light.png'), [isDark]);
+  const mascot = useMemo(() => (isDark ? '/images/krish/krish-dark.svg' : '/images/krish/krish-light.svg'), [isDark]);
 
   return (
     <>
       <div className="bl-rb bl-wide" onPointerEnter={hoverIn} onPointerLeave={hoverOut}>
         <div className="bl-rb-stage" ref={stage}>
           <canvas ref={canvas} aria-hidden="true" />
-          <img className="bl-rb-mascot" src={mascot} alt="A 3D character of me, sitting under the rainbow" loading="lazy" />
+          <img className="bl-rb-mascot" src={mascot} alt="An illustration of me sitting under the rainbow" loading="lazy" />
           <button type="button" className={`bl-rb-edit ${canEdit || open ? 'is-visible' : ''}`} onClick={() => { soundFx.playPop(); setOpen(true); }} tabIndex={canEdit || open ? 0 : -1}>
             Edit
           </button>

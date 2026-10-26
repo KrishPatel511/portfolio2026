@@ -780,7 +780,7 @@ const CoursesCard = () => {
       animate={{ y: [0, -5, 0] }}
       transition={{ y: { repeat: Infinity, duration: 3, ease: 'easeInOut' } }}
     >
-      <img src="/images/josh/star_moon.webp" alt="" />
+      <img src="/images/krish/star.svg" alt="" />
       {boxOpen && <motion.span className="ab-mascot-msg" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>Hello! 👋</motion.span>}
     </motion.button>
     <p className="ab-first">

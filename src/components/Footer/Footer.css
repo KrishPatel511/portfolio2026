@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Footer Cloudscape & Whimsical Upside-Down Mascot (Josh W. Comeau 1:1)
+   Footer clouds and the upside-down mascot
    ========================================================================== */
 
 .site-footer {
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-top: 192px; /* Josh exact padding-top */
+  padding-top: 192px; 
   background: linear-gradient(
     to bottom,
     var(--color-sky-from),
@@ -25,7 +25,7 @@
 }
 
 /* ==========================================================================
-   1. Upside-Down Mascot Container & Anchor (Josh exact .mzwsl9m & .scefed4)
+   1. Upside-Down Mascot Container & Anchor 
    ========================================================================== */
 
 .footer-mascot-container {
@@ -93,7 +93,7 @@
   pointer-events: none;
 }
 
-/* Head reaction overlay matching Josh's .hjm134z */
+/* Head reaction overlay for the mascot */
 .footer-mascot-head-overlay {
   position: absolute;
   top: 0;
@@ -116,7 +116,7 @@
 }
 
 /* ==========================================================================
-   2. Bottom Soft Cloud Layer (Josh exact .wfzqr02)
+   2. Bottom Soft Cloud Layer 
    ========================================================================== */
 
 .footer-bottom-cloud-svg {
@@ -139,7 +139,7 @@
 }
 
 /* ==========================================================================
-   3. Top Cloud Ceiling SVG (Josh exact .w1r7oec7 & 5120px scalloped clouds)
+   3. Top Cloud Ceiling SVG 
    ========================================================================== */
 
 .footer-cloud-top {
@@ -469,7 +469,7 @@
   color: var(--color-text);
 }
 
-/* Controls & Socials Row below Courses & General (Josh exact .s1jnxy9z) */
+/* Controls & Socials Row below Courses & General  */
 .footer-controls-row {
   grid-area: social;
   display: flex;
@@ -503,8 +503,7 @@
 }
 
 /* ==========================================================================
-   Footer typography: bold, geometric, close to joshwcomeau.com's footer.
-   (His font, Wotfard, is paid, so Poppins is used as the closest free match.)
+   Footer typography: bold and geometric (Poppins).
    ========================================================================== */
 
 .site-footer {

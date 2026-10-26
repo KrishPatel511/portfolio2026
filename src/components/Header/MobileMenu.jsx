@@ -221,10 +221,7 @@ export const MobileMenu = ({ isOpen, onClose, onOpenSearch }) => {
                     fill="#dcecf7"
                   />
                 </svg>
-                <picture>
-                  <source type="image/webp" srcSet="/images/josh/josh-happy-light.webp" />
-                  <img className="mm-sky-mascot" src="/images/josh/josh-happy-light.png" alt="" />
-                </picture>
+                <img className="mm-sky-mascot" src="/images/krish/krish-light.svg" alt="" />
                 <svg viewBox="0 0 740 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="mm-sky-front" aria-hidden="true">
                   <path
                     d="M230 74.9998C221.5 71.9995 190.5 22.4998 69 18.4998C45.6329 17.7305 25.6317 19.3469 8.56594 22.4598C4.15502 23.2644 0 19.9389 0 15.4552V108H740V60.9843C740 65.0822 736.496 68.3004 732.408 68.01C729.819 67.8261 727.184 67.6558 724.5 67.4998C595.5 59.9998 582 95 573.5 94.9998C565 94.9995 532 58.9998 406 47.4998C280 35.9998 238.5 78 230 74.9998Z"

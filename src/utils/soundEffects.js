@@ -1,6 +1,5 @@
 /**
  * Audio synthesis utility for playful micro-interactions
- * Inspired by Josh W Comeau's audio touches
  */
 
 class SoundController {

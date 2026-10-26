@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { soundFx } from '../utils/soundEffects';
 
-/* A small, dependency-free take on Josh's `use-sound`.
+/* A small, dependency-free sound hook.
 
    const [play, { stop }] = useSound(source, { volume, playbackRate });
 

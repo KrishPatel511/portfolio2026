@@ -4,8 +4,8 @@ import './RainbowArt.css';
 
 /* ==========================================================================
    Generative rainbow behind the hero mascot, plus the "Rainbow Configurator".
-   A port of the interaction on joshwcomeau.com: a canvas of dashes laid out on
-   concentric arcs, steered by the mouse, with a small panel to tweak it.
+   A canvas of dashes laid out on concentric arcs, steered by the mouse,
+   with a small panel to tweak it.
    ========================================================================== */
 
 /* ─── tiny math helpers ──────────────────────────────────────────────────── */
@@ -621,21 +621,15 @@ const Mascot = ({ isDark, mood }) => {
       type="button"
       className="ab-mascot-btn"
       onClick={() => soundFx.playPop()}
-      aria-label="Say hi to Josh"
+      aria-label="Say hi to Krish"
     >
-      {/* both themes stay mounted and cross-fade, so switching theme never makes Josh blink */}
-      <span className="ab-josh">
+      {/* both themes stay mounted and cross-fade, so switching theme never makes the mascot blink */}
+      <span className="ab-mascot-art">
         {['dark', 'light'].map((t) => (
-          <span key={t} className={t === 'light' ? 'ab-josh-layer ab-josh-light' : 'ab-josh-layer'}>
-            <picture>
-              <source type="image/webp" srcSet={`/images/josh/josh-happy-${t}.webp`} />
-              <img src={`/images/josh/josh-happy-${t}.png`} alt={t === theme ? 'A cartoon of me sitting cross-legged on a cloud' : ''} width="137.5" height="232" />
-            </picture>
+          <span key={t} className={t === 'light' ? 'ab-mascot-layer ab-mascot-light' : 'ab-mascot-layer'}>
+            <img src={`/images/krish/krish-${t}.svg`} alt={t === theme ? 'An illustration of me sitting cross-legged with a laptop' : ''} width="137.5" height="232" />
             {mood === 'very-happy' && (
-              <picture>
-                <source type="image/webp" srcSet={`/images/josh/head-very-happy-${t}.webp`} />
-                <img className="rb-head" src={`/images/josh/head-very-happy-${t}.png`} alt="" />
-              </picture>
+              <img className="rb-head" src={`/images/krish/krish-happy-${t}.svg`} alt="" />
             )}
           </span>
         ))}

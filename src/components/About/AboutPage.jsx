@@ -874,6 +874,7 @@ export const AboutPage = () => {
               align="left"
               style={{ fontFamily: 'var(--font-display)', margin: '0 0 1.5rem' }}
             />
+            <h2 className="sr-only">Krish Patel, Full Stack Developer in Ahmedabad, India</h2>
             <p>I write code for the web, and these days for trucks, weighbridges and boom barriers too.</p>
             <p>
               I&apos;m a Full Stack Developer from Ahmedabad, building government systems with React, Next.js,

@@ -1,7 +1,7 @@
 /* Everything search engines and link previews need to know about each page.
    Used at build time (prerender) and at runtime (client-side navigation). */
 
-export const SITE_URL = 'https://krishpatel.website';
+export const SITE_URL = 'https://www.krishpatel.website';
 export const SITE_NAME = 'Krish Patel';
 export const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 

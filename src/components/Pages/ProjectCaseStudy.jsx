@@ -253,8 +253,8 @@ export const CASE_STUDIES = {
       ['Audio without audio files', 'Sound effects add weight and licensing questions.', 'The Web Audio API synthesizes each sound from oscillators and gain envelopes, with a global on and off switch.'],
       ['A real map with no API key', 'Map services often need paid keys and tokens.', 'MapLibre GL with free CARTO basemaps, a theme-aware style and a simple distance calculation, with a "you are right here" case for nearby visitors.'],
       ['Heavy visuals on weak devices', 'Fluid simulation and canvas art can drop frames.', 'Quality tiers for the simulation, passive scroll listeners and cleanup of every listener on unmount keep it smooth.'],
-      ['Routing without a library', 'A tiny site does not need a full router.', 'A hash map resolves pages, falls back to About, scrolls to the top and keeps the nav highlight correct.'],
-      ['A contact form with no backend', 'Running a server only for one form is overkill.', 'The form builds a pre-filled mailto message, and the resume is a direct PDF download.'],
+      ['Routing without a library', 'A tiny site does not need a full router.', 'A small path-to-page map resolves clean URLs, shows a real 404 for unknown paths, scrolls to the top and keeps the nav highlight correct.'],
+      ['A contact form that cannot be abused', 'Public forms attract spam, and a mailto link loses the message if no mail app is set up.', 'A single Vercel function validates the message, saves it to Supabase and emails it through Resend, and the resume is a direct PDF download.'],
     ],
     architectureTitle: 'Architecture',
     architecture: [

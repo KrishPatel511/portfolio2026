@@ -8,6 +8,8 @@ const loaders = {
   contact: () => import('./components/Pages/ContactPage').then((m) => ({ default: m.ContactPage })),
   gmdc: () => import('./components/Pages/GmdcCaseStudy').then((m) => ({ default: m.GmdcCaseStudy })),
   caseStudy: () => import('./components/Pages/CaseStudyRoute'),
+  blog: () => import('./components/Blog/BlogPage').then((m) => ({ default: m.BlogPage })),
+  blogpost: () => import('./components/Blog/BlogPostPage').then((m) => ({ default: m.BlogPostPage })),
   list: () => import('./components/Content/PortfolioContent').then((m) => ({ default: m.PortfolioContent })),
 };
 
@@ -19,6 +21,8 @@ const LOADER_FOR_PAGE = {
   reposentry: 'caseStudy',
   waldor: 'caseStudy',
   portfolio: 'caseStudy',
+  blog: 'blog',
+  blogpost: 'blogpost',
   projects: 'list',
   skills: 'list',
   experience: 'list',
@@ -47,6 +51,8 @@ export const ContactPage = makePage('contact');
 export const GmdcCaseStudy = makePage('gmdc');
 export const CaseStudyRoute = makePage('caseStudy');
 export const PortfolioContent = makePage('list');
+export const BlogPage = makePage('blog');
+export const BlogPostPage = makePage('blogpost');
 
 /* Starts downloading a page's file (a repeat call is free: the browser keeps the module). */
 export const preloadPage = (page) => {

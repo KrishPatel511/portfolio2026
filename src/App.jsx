@@ -4,7 +4,7 @@ import { SoundProvider } from './context/SoundContext';
 import { Header } from './components/Header/Header';
 import { NotFoundPage } from './components/Pages/NotFoundPage';
 import { Footer } from './components/Footer/Footer';
-import { AboutPage, ContactPage, GmdcCaseStudy, CaseStudyRoute, PortfolioContent } from '#pages';
+import { AboutPage, BlogPage, BlogPostPage, ContactPage, GmdcCaseStudy, CaseStudyRoute, PortfolioContent } from '#pages';
 import { getPage, isCaseStudyPage } from './utils/pages';
 import { splitLocation, useLocationKey } from './utils/router';
 import { useSeo } from './utils/seo';
@@ -36,6 +36,8 @@ function App() {
             {page === 'gmdc' && <GmdcCaseStudy />}
             {isCaseStudyPage(page) && <CaseStudyRoute page={page} />}
             {page === 'contact' && <ContactPage />}
+            {page === 'blog' && <BlogPage />}
+            {page === 'blogpost' && <BlogPostPage />}
             {(page === 'projects' || page === 'skills' || page === 'experience') && (
               <main id="main-content">
                 <PortfolioContent page={page} />

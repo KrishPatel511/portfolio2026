@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { FiSearch, FiX, FiTrash2 } from 'react-icons/fi';
 import { soundFx } from '../../utils/soundEffects';
 import { navigate } from '../../utils/router';
+import { POSTS, postPath } from '../../blog/meta';
 
 const SAMPLE_POSTS = [
   { title: 'GMDC Mining Dispatch System', category: 'Project', href: '/projects/gmdc', desc: 'Sole developer of a 9-checkpoint government truck dispatch system with RFID, weighbridge and camera integration.' },
@@ -12,6 +13,8 @@ const SAMPLE_POSTS = [
   { title: 'BeyonData Solutions', category: 'Experience', href: '/experience', desc: 'Junior Software Developer: 15+ React dashboards and backend automation with stored procedures.' },
   { title: 'React.js and Next.js', category: 'Skill', href: '/skills', desc: 'Production-grade interfaces with TypeScript, Tailwind CSS, GSAP and Framer Motion.' },
   { title: 'Node.js and REST APIs', category: 'Skill', href: '/skills', desc: 'Express and NestJS services with JWT authentication and role-based access control.' },
+  { title: 'Blog', category: 'Blog', href: '/blog', desc: 'Write-ups on AI agents, government integrations and React performance.' },
+  ...POSTS.map((p) => ({ title: p.title, category: 'Blog', href: postPath(p.slug), desc: p.description })),
   { title: 'Contact and Resume', category: 'Contact', href: '/contact', desc: 'Email, LinkedIn, GitHub and a downloadable PDF resume.' },
   { title: 'Education and Certifications', category: 'Education', href: '/experience#education', desc: 'MCA (2025), BCA (2022), Oracle Cloud Certified Professional, HackerRank SQL.' }
 ];

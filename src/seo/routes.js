@@ -1,6 +1,8 @@
 /* Everything search engines and link previews need to know about each page.
    Used at build time (prerender) and at runtime (client-side navigation). */
 
+import { POSTS, postPath } from '../blog/meta.js';
+
 export const SITE_URL = 'https://www.krishpatel.website';
 export const SITE_NAME = 'Krish Patel';
 export const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
@@ -143,6 +145,56 @@ export const ROUTES = {
     schema: [crumbs([['Home', '/'], ['Contact', '/contact']])],
   },
 };
+
+const blogRoutes = Object.fromEntries(
+  POSTS.map((post) => [
+    postPath(post.slug),
+    {
+      title: `${post.title} | Krish Patel`,
+      description: post.description,
+      priority: 0.7,
+      type: 'article',
+      schema: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.description,
+          datePublished: post.date,
+          dateModified: post.date,
+          image: OG_IMAGE,
+          keywords: post.tags.join(', '),
+          inLanguage: 'en',
+          mainEntityOfPage: SITE_URL + postPath(post.slug),
+          author: { '@id': PERSON_ID },
+          publisher: { '@id': PERSON_ID },
+        },
+        crumbs([['Home', '/'], ['Blog', '/blog'], [post.title, postPath(post.slug)]]),
+      ],
+    },
+  ])
+);
+
+Object.assign(ROUTES, {
+  '/blog': {
+    title: 'Blog | Krish Patel, Full Stack Developer',
+    description:
+      'Write-ups by Krish Patel on building AI agents, government system integrations and fast React websites, with real numbers and lessons learned.',
+    priority: 0.8,
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        name: 'Krish Patel Blog',
+        url: SITE_URL + '/blog',
+        author: { '@id': PERSON_ID },
+        blogPost: POSTS.map((post) => ({ '@type': 'BlogPosting', headline: post.title, url: SITE_URL + postPath(post.slug), datePublished: post.date })),
+      },
+      crumbs([['Home', '/'], ['Blog', '/blog']]),
+    ],
+  },
+  ...blogRoutes,
+});
 
 export const NOT_FOUND = {
   title: 'Page not found | Krish Patel',

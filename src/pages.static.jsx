@@ -3,6 +3,8 @@ export { AboutPage } from './components/About/AboutPage';
 export { ContactPage } from './components/Pages/ContactPage';
 export { GmdcCaseStudy } from './components/Pages/GmdcCaseStudy';
 export { default as CaseStudyRoute } from './components/Pages/CaseStudyRoute';
+export { BlogPage } from './components/Blog/BlogPage';
+export { BlogPostPage } from './components/Blog/BlogPostPage';
 export { PortfolioContent } from './components/Content/PortfolioContent';
 
 export const preloadPage = () => Promise.resolve();

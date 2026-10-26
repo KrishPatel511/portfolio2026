@@ -41,6 +41,7 @@ const COURSES = [
 const GENERAL = [
   ['About Me', '/'],
   ['Experience & Education', '/experience'],
+  ['Blog', '/blog'],
   ['Contact', '/contact'],
   ['Resume (PDF)', RESUME_URL],
 ];

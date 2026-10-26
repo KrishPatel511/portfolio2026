@@ -34,7 +34,7 @@ export const applySeo = (path) => {
   meta('property', 'og:title', seo.title);
   meta('property', 'og:description', seo.description);
   meta('property', 'og:url', url);
-  meta('property', 'og:type', path === '/' ? 'profile' : 'website');
+  meta('property', 'og:type', path === '/' ? 'profile' : seo.type === 'article' ? 'article' : 'website');
   meta('property', 'og:site_name', SITE_NAME);
   meta('property', 'og:image', OG_IMAGE);
   meta('name', 'twitter:card', 'summary_large_image');

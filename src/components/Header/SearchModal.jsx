@@ -8,6 +8,7 @@ const SAMPLE_POSTS = [
   { title: 'GMDC Mining Dispatch System', category: 'Project', href: '/projects/gmdc', desc: 'Sole developer of a 9-checkpoint government truck dispatch system with RFID, weighbridge and camera integration.' },
   { title: 'RepoSentry AI Coding Agent', category: 'Project', href: '/projects/reposentry', desc: 'Agentic AI that connects Gemini and GitHub APIs to read, analyze, fix, commit and raise pull requests.' },
   { title: 'Auralyx Clinic Website', category: 'Project', href: '/projects/auralyx', desc: 'Full-stack Next.js 16 clinic site with a headless WordPress blog, secure forms and 20 pages.' },
+  { title: 'EMBERLEAF Platformer Game', category: 'Project', href: '/projects/emberleaf', desc: 'A browser 8-bit platformer with 10 heroes, 4 worlds and 16 stages, built with React, TypeScript and Phaser.' },
   { title: 'Krish Patel Portfolio', category: 'Project', href: '/projects/portfolio', desc: 'This site: a hand-built React portfolio with a WebGL cursor, a real map, synthesized sound and an animated theme.' },
   { title: 'AMNEX Infotechnologies', category: 'Experience', href: '/experience', desc: 'Software Developer: government API integrations, AWS deployments, 3+ client projects delivered end-to-end.' },
   { title: 'BeyonData Solutions', category: 'Experience', href: '/experience', desc: 'Junior Software Developer: 15+ React dashboards and backend automation with stored procedures.' },

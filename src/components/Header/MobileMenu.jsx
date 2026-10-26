@@ -14,6 +14,7 @@ import {
   FiTruck,
   FiGitBranch,
   FiHeart,
+  FiPlay,
   FiGrid,
   FiLayout,
   FiTerminal,
@@ -41,6 +42,7 @@ const GROUPS = [
       { label: 'GMDC Mining', href: '/projects/gmdc', Icon: FiTruck },
       { label: 'RepoSentry AI', href: '/projects/reposentry', Icon: FiGitBranch },
       { label: 'Auralyx', href: '/projects/auralyx', Icon: FiHeart },
+      { label: 'EMBERLEAF Game', href: '/projects/emberleaf', Icon: FiPlay },
     ],
   },
   {

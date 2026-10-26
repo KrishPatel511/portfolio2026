@@ -56,6 +56,7 @@ const LEGACY_HASHES = {
   gmdc: '/projects/gmdc',
   reposentry: '/projects/reposentry',
   waldor: '/projects/auralyx',
+  emberleaf: '/projects/emberleaf',
   portfolio: '/projects/portfolio',
   education: '/experience#education',
   certifications: '/experience#certifications',

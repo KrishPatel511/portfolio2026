@@ -20,6 +20,7 @@ const LOADER_FOR_PAGE = {
   gmdc: 'gmdc',
   reposentry: 'caseStudy',
   waldor: 'caseStudy',
+  emberleaf: 'caseStudy',
   portfolio: 'caseStudy',
   blog: 'blog',
   blogpost: 'blogpost',

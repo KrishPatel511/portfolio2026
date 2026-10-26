@@ -79,7 +79,7 @@ export const ROUTES = {
   '/projects': {
     title: 'Projects | Krish Patel, Full Stack Developer',
     description:
-      'Projects by Krish Patel: a government truck dispatch system for GMDC Mining, RepoSentry (an AI GitHub coding agent), the Auralyx clinic website and this interactive portfolio.',
+      'Projects by Krish Patel: a government truck dispatch system for GMDC Mining, RepoSentry (an AI GitHub coding agent), the Auralyx clinic website, EMBERLEAF (a browser platformer game) and this interactive portfolio.',
     priority: 0.9,
     schema: [crumbs([['Home', '/'], ['Projects', '/projects']])],
   },
@@ -111,6 +111,16 @@ export const ROUTES = {
     schema: [
       work('Auralyx Clinic Website', '/projects/auralyx', 'A 20-page Next.js clinic website with a headless WordPress blog and secure forms.'),
       crumbs([['Home', '/'], ['Projects', '/projects'], ['Auralyx', '/projects/auralyx']]),
+    ],
+  },
+  '/projects/emberleaf': {
+    title: 'EMBERLEAF Browser Platformer Game Case Study | Krish Patel',
+    description:
+      'EMBERLEAF is a fan-style 8-bit platformer built with React, TypeScript and Phaser: 10 heroes, 4 worlds and 16 stages that play on desktop, tablet and phone.',
+    priority: 0.8,
+    schema: [
+      work('EMBERLEAF Platformer Game', '/projects/emberleaf', 'A browser 8-bit platformer with 10 heroes, 4 worlds and 16 stages, built with React, TypeScript and Phaser.'),
+      crumbs([['Home', '/'], ['Projects', '/projects'], ['EMBERLEAF', '/projects/emberleaf']]),
     ],
   },
   '/projects/portfolio': {

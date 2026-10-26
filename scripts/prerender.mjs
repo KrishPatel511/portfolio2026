@@ -27,6 +27,7 @@ const PAGE_SOURCE = {
   gmdc: 'src/components/Pages/GmdcCaseStudy.jsx',
   reposentry: 'src/components/Pages/CaseStudyRoute.jsx',
   waldor: 'src/components/Pages/CaseStudyRoute.jsx',
+  emberleaf: 'src/components/Pages/CaseStudyRoute.jsx',
   portfolio: 'src/components/Pages/CaseStudyRoute.jsx',
   blog: 'src/components/Blog/BlogPage.jsx',
   blogpost: 'src/components/Blog/BlogPostPage.jsx',

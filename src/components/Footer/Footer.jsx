@@ -35,6 +35,7 @@ const COURSES = [
   ['GMDC Mining Dispatch', '/projects/gmdc'],
   ['RepoSentry AI Agent', '/projects/reposentry'],
   ['Auralyx Clinic Website', '/projects/auralyx'],
+  ['EMBERLEAF Game', '/projects/emberleaf'],
   ['This Portfolio', '/projects/portfolio'],
 ];
 

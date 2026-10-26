@@ -21,6 +21,7 @@ export const PATH_TO_PAGE = {
   '/projects/gmdc': 'gmdc',
   '/projects/reposentry': 'reposentry',
   '/projects/auralyx': 'waldor',
+  '/projects/emberleaf': 'emberleaf',
   '/projects/portfolio': 'portfolio',
   '/skills': 'skills',
   '/experience': 'experience',
@@ -33,7 +34,7 @@ export const isKnownPath = (path) => path in PATH_TO_PAGE;
 
 export const getPage = (path) => PATH_TO_PAGE[path] ?? 'notfound';
 
-const CASE_STUDY_PAGES = ['gmdc', 'reposentry', 'waldor', 'portfolio'];
+const CASE_STUDY_PAGES = ['gmdc', 'reposentry', 'waldor', 'emberleaf', 'portfolio'];
 
 /* Case studies that share the ProjectCaseStudy template (GMDC has its own page). */
 export const isCaseStudyPage = (page) => page !== 'gmdc' && CASE_STUDY_PAGES.includes(page);

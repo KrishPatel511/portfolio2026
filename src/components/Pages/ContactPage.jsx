@@ -4,7 +4,7 @@ import { soundFx } from '../../utils/soundEffects';
 import { RESUME_URL, RESUME_FILENAME } from '../../utils/pages';
 import { PageTitle } from '../MaskedHeading/PageTitle';
 import { StarButton } from '../StarBorder/StarButton';
-import SplashCursor from '../SplashCursor/SplashCursor';
+import SplashCursor from '../SplashCursor/LazySplashCursor';
 import { useTheme } from '../../context/ThemeContext';
 import './Pages.css';
 

@@ -30,5 +30,8 @@ export const getPage = (path) => PATH_TO_PAGE[path] ?? 'notfound';
 
 const CASE_STUDY_PAGES = ['gmdc', 'reposentry', 'waldor', 'portfolio'];
 
+/* Case studies that share the ProjectCaseStudy template (GMDC has its own page). */
+export const isCaseStudyPage = (page) => page !== 'gmdc' && CASE_STUDY_PAGES.includes(page);
+
 /* The nav item to highlight for a page (case studies belong to Projects). */
 export const getNavPage = (page) => (CASE_STUDY_PAGES.includes(page) ? 'projects' : page);

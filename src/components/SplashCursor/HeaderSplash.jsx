@@ -1,4 +1,4 @@
-import SplashCursor from './SplashCursor';
+import SplashCursor from './LazySplashCursor';
 import { useTheme } from '../../context/ThemeContext';
 import './HeaderSplash.css';
 

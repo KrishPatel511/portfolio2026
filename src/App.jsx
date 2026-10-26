@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { SoundProvider } from './context/SoundContext';
 import { Header } from './components/Header/Header';
-import { PortfolioContent } from './components/Content/PortfolioContent';
-import { AboutPage } from './components/About/AboutPage';
-import { ContactPage } from './components/Pages/ContactPage';
-import { GmdcCaseStudy } from './components/Pages/GmdcCaseStudy';
-import { ProjectCaseStudy, CASE_STUDIES } from './components/Pages/ProjectCaseStudy';
 import { NotFoundPage } from './components/Pages/NotFoundPage';
 import { Footer } from './components/Footer/Footer';
-import { getPage } from './utils/pages';
+import { AboutPage, ContactPage, GmdcCaseStudy, CaseStudyRoute, PortfolioContent } from '#pages';
+import { getPage, isCaseStudyPage } from './utils/pages';
 import { splitLocation, useLocationKey } from './utils/router';
 import { useSeo } from './utils/seo';
 import './styles/global.css';
@@ -34,16 +30,18 @@ function App() {
         <div className="portfolio-app">
           <Header />
 
-          {page === 'about' && <AboutPage />}
-          {page === 'gmdc' && <GmdcCaseStudy />}
-          {CASE_STUDIES[page] && <ProjectCaseStudy data={CASE_STUDIES[page]} />}
-          {page === 'contact' && <ContactPage />}
+          <Suspense fallback={null}>
+            {page === 'about' && <AboutPage />}
+            {page === 'gmdc' && <GmdcCaseStudy />}
+            {isCaseStudyPage(page) && <CaseStudyRoute page={page} />}
+            {page === 'contact' && <ContactPage />}
+            {(page === 'projects' || page === 'skills' || page === 'experience') && (
+              <main id="main-content">
+                <PortfolioContent page={page} />
+              </main>
+            )}
+          </Suspense>
           {page === 'notfound' && <NotFoundPage />}
-          {(page === 'projects' || page === 'skills' || page === 'experience') && (
-            <main id="main-content">
-              <PortfolioContent page={page} />
-            </main>
-          )}
 
           <Footer />
         </div>

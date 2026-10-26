@@ -5,43 +5,17 @@
 
 export const POSTS = [
   {
-    slug: 'ai-agent-github-safe-write-access',
-    title: 'How I Gave an AI Agent Write Access to GitHub',
-    subtitle: 'Four rules for letting a model change real repositories',
+    slug: 'how-i-built-my-portfolio',
+    title: 'How I Built My Portfolio',
+    subtitle: '2026 “Hand-Built” Edition',
     description:
-      'Four rules I used while building RepoSentry, an AI coding agent that fixes bugs and opens pull requests: enforce safety in code, keep deterministic work out of the model, bound every loop and track usage from day one.',
+      'How this portfolio is built: a hand-written React and Vite stack, a tiny router, pre-rendered pages, a WebGL cursor, a serverless contact form, and the real numbers from making it fast and accessible.',
     date: '2026-10-26',
     updated: '2026-10-26',
-    readTime: '6 min read',
-    category: 'AI Agents',
-    tags: ['AI Agents', 'Node.js', 'GitHub API', 'Gemini'],
-    project: { label: 'Read the RepoSentry case study', href: '/projects/reposentry' },
-  },
-  {
-    slug: 'making-a-react-portfolio-load-fast',
-    title: 'Making My React Portfolio Load Faster',
-    subtitle: 'A real before-and-after, with Lighthouse numbers',
-    description:
-      'A real before and after on this site: one 2.2 MB image, code splitting with lazy loading, two bugs that lazy loading caused, and one fix I had to revert. With Lighthouse numbers.',
-    date: '2026-10-26',
-    updated: '2026-10-26',
-    readTime: '7 min read',
-    category: 'Performance',
-    tags: ['Performance', 'React', 'Vite', 'Lighthouse'],
+    readTime: '14 min read',
+    category: 'General',
+    tags: ['React', 'Vite', 'Performance', 'Accessibility'],
     project: { label: 'Read the portfolio case study', href: '/projects/portfolio' },
-  },
-  {
-    slug: 'building-a-truck-checkpoint-system-for-a-government-mine',
-    title: 'Building a Truck Checkpoint System for a Government Mine',
-    subtitle: 'Lessons from being the only developer on a live system',
-    description:
-      'Lessons from being the only developer on a live RFID, weighbridge and boom barrier platform for GMDC Mining: go and see the real workflow, treat hardware as part of the product and test on site.',
-    date: '2026-10-26',
-    updated: '2026-10-26',
-    readTime: '5 min read',
-    category: 'Case Notes',
-    tags: ['Government Tech', 'RFID', 'Node.js', 'React'],
-    project: { label: 'Read the GMDC case study', href: '/projects/gmdc' },
   },
 ];
 

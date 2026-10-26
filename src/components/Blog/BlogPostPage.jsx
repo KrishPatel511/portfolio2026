@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
-import { FiAlertOctagon, FiAlertTriangle, FiArrowRight, FiCheck, FiCheckCircle, FiCopy, FiHeart, FiInfo, FiLink } from 'react-icons/fi';
-import { SiFramer, SiGooglegemini, SiGreensock, SiLighthouse, SiMaplibre, SiNodedotjs, SiPostgresql, SiReact, SiVite } from 'react-icons/si';
+import {
+  FiAlertOctagon, FiAlertTriangle, FiArrowRight, FiCheck, FiCheckCircle, FiCopy, FiExternalLink, FiGift, FiInfo, FiLink, FiPackage,
+} from 'react-icons/fi';
+import {
+  SiFramer, SiGreensock, SiLighthouse, SiMaplibre, SiOxc, SiReact, SiResend, SiSupabase, SiVercel, SiVite,
+} from 'react-icons/si';
 import { soundFx } from '../../utils/soundEffects';
 import { usePath } from '../../utils/router';
 import { BODIES } from '../../blog/content';
@@ -11,19 +15,30 @@ import './Blog.css';
 
 const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-/* ── Inline text: **bold**, *italic*, `code` and [text](link) ─────────────── */
+/* ── Inline text: **bold**, `code` and [text](link) ───────────────────────── */
 const INLINE = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
 const Inline = ({ text }) =>
   text.split(INLINE).map((part, i) => {
     if (part.startsWith('**')) return <strong key={i}>{part.slice(2, -2)}</strong>;
     if (part.startsWith('`')) return <code key={i}>{part.slice(1, -1)}</code>;
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (link) return <a key={i} href={link[2]}>{link[1]}</a>;
+    if (link) {
+      const external = /^https?:/.test(link[2]);
+      return external ? (
+        <a key={i} href={link[2]} target="_blank" rel="noreferrer" className="bl-ext">
+          {link[1]}
+          <FiExternalLink size={14} aria-hidden="true" />
+          <span className="bl-sr">(opens in new tab)</span>
+        </a>
+      ) : (
+        <a key={i} href={link[2]}>{link[1]}</a>
+      );
+    }
     return part;
   });
 
 /* ── Code: a small colouring pass (comments, strings, keywords, numbers) ───── */
-const TOKEN = /(\/\/.*$|\/\*[\s\S]*?\*\/)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|\b(const|let|var|if|else|throw|new|from|import|export|return|await|async|function|for|of|in|true|false|null)\b|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_$][\w$]*)(?=\s*:)/gm;
+const TOKEN = /(\/\/.*$|\/\*[\s\S]*?\*\/)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|\b(const|let|var|if|else|throw|new|from|import|export|return|await|async|function|for|of|in|true|false|null|default)\b|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_$][\w$-]*)(?=\s*:)/gm;
 
 const Highlighted = ({ code }) => {
   const out = [];
@@ -40,7 +55,7 @@ const Highlighted = ({ code }) => {
   return out;
 };
 
-const CodeBlock = ({ code }) => {
+const CodeBlock = ({ code, file }) => {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     soundFx.playPop();
@@ -54,6 +69,7 @@ const CodeBlock = ({ code }) => {
   };
   return (
     <div className="bl-code bl-wide">
+      {file && <span className="bl-code-file">{file}</span>}
       <button type="button" className="bl-copy" onClick={copy} aria-label="Copy code to clipboard">
         {copied ? <FiCheck size={14} /> : <FiCopy size={14} />} {copied ? 'Copied' : 'Copy'}
       </button>
@@ -77,13 +93,13 @@ const Aside = ({ kind, title, text }) => {
 
 /* ── Tool cards (a wide grid, like a "my stack" list) ─────────────────────── */
 const STACK_ICONS = {
-  react: SiReact, vite: SiVite, gsap: SiGreensock, framer: SiFramer, maplibre: SiMaplibre,
-  lighthouse: SiLighthouse, node: SiNodedotjs, postgres: SiPostgresql, gemini: SiGooglegemini,
+  react: SiReact, vite: SiVite, gsap: SiGreensock, framer: SiFramer, maplibre: SiMaplibre, supabase: SiSupabase,
+  resend: SiResend, vercel: SiVercel, lighthouse: SiLighthouse, oxc: SiOxc, confetti: FiGift, icons: FiPackage,
 };
 const Stack = ({ items }) => (
-  <ul className="bl-stack" style={{ '--cols': items.length === 6 ? 3 : Math.min(items.length, 4) }}>
+  <ul className="bl-stack" style={{ '--cols': items.length % 4 === 0 ? 4 : items.length % 3 === 0 ? 3 : Math.min(items.length, 4) }}>
     {items.map(([name, note, icon]) => {
-      const Icon = STACK_ICONS[icon] || FiInfo;
+      const Icon = STACK_ICONS[icon] || FiPackage;
       return (
         <li key={name}>
           <Icon size={44} aria-hidden="true" />
@@ -95,57 +111,180 @@ const Stack = ({ items }) => (
   </ul>
 );
 
+const Figure = ({ src, alt, caption }) => (
+  <figure className="bl-figure bl-wide">
+    <img src={src} alt={alt} loading="lazy" />
+    <figcaption>{caption}</figcaption>
+  </figure>
+);
+
+/* ── Live demos, in a small bordered shell ────────────────────────────────── */
+const SOUNDS = [
+  ['Pop', () => soundFx.playPop()],
+  ['Chime', () => soundFx.playChime()],
+  ['Whoosh', () => soundFx.playWhoosh()],
+  ['Toggle', () => soundFx.playToggle()],
+];
+const SoundDemo = () => {
+  const [on, setOn] = useState(true);
+  useEffect(() => {
+    const tick = setInterval(() => setOn(soundFx.enabled), 500);
+    return () => clearInterval(tick);
+  }, []);
+  const fire = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    confetti({
+      particleCount: 45, spread: 65, scalar: 0.85,
+      origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight },
+      colors: ['#38bdf8', '#818cf8', '#f43f5e', '#fbbf24', '#34d399'],
+    });
+  };
+  return (
+    <div className="bl-demo bl-wide">
+      <p className="bl-demo-title">Synthesized sounds</p>
+      <div className="bl-demo-row">
+        {SOUNDS.map(([label, play]) => (
+          <button key={label} type="button" className="bl-demo-btn" onClick={play}>{label}</button>
+        ))}
+        <button type="button" className="bl-demo-btn bl-demo-btn--alt" onClick={fire}>Confetti</button>
+      </div>
+      <p className="bl-demo-note">
+        {on ? 'No audio files: each sound is generated in your browser.' : 'Sound is off. Turn it on with the speaker icon in the header.'}
+      </p>
+    </div>
+  );
+};
+const DEMOS = { sound: SoundDemo };
+
 const Heading = ({ text }) => {
   const id = slugify(text);
   return (
     <h2 id={id}>
-      <a className="bl-anchor" href={`#${id}`} aria-label={`Link to ${text}`}><FiLink size={18} /></a>
+      <a className="bl-anchor" href={`#${id}`}>
+        <FiLink size={18} aria-hidden="true" />
+        <span className="bl-sr">Link to this heading</span>
+      </a>
       {text}
     </h2>
   );
 };
 
 const Block = ({ block }) => {
-  const [type, a, b, c] = block;
+  const [type, a, b, c, d] = block;
   if (type === 'h2') return <Heading text={a} />;
+  if (type === 'h3') return <h3 id={slugify(a)}>{a}</h3>;
   if (type === 'p') return <p><Inline text={a} /></p>;
   if (type === 'ul') return <ul className="bl-ul">{a.map((item) => <li key={item}><Inline text={item} /></li>)}</ul>;
   if (type === 'ol') return <ol className="bl-ol">{a.map((item) => <li key={item}><Inline text={item} /></li>)}</ol>;
-  if (type === 'code') return <CodeBlock code={b} />;
+  if (type === 'code') return <CodeBlock code={b} file={c} />;
   if (type === 'aside') return <Aside kind={a} title={b} text={c} />;
   if (type === 'stack') return <Stack items={a} />;
+  if (type === 'figure') return <Figure src={a} alt={b} caption={c} />;
+  if (type === 'demo') {
+    const Demo = DEMOS[a];
+    return Demo ? <Demo /> : null;
+  }
+  void d;
   return null;
 };
 
-/* ── A heart that pops confetti. Nothing is counted or sent anywhere. ────── */
-const LikeButton = ({ slug }) => {
-  const key = `liked:${slug}`;
-  const [liked, setLiked] = useState(false);
+/* ── The heart ────────────────────────────────────────────────────────────────
+   It stays out of the way: hidden at the top of the page, it fades in once you start reading,
+   fades away again when you stop moving or scrolling, and comes back on the next movement.
+   Each click fills it a little more (up to 16). Nothing is counted or sent anywhere. */
+const MAX_LIKES = 16;
+
+const HeartIcon = ({ fill }) => (
+  <svg viewBox="0 0 50 42" width="48" height="40" fill="none" aria-hidden="true">
+    <defs>
+      <clipPath id="bl-heart-clip"><rect x="0" y={42 - 42 * fill} width="50" height="42" /></clipPath>
+    </defs>
+    <path
+      className="bl-heart-shape"
+      d="M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z"
+      stroke="currentColor" strokeWidth="3" strokeLinejoin="round"
+    />
+    <path
+      className="bl-heart-fill"
+      clipPath="url(#bl-heart-clip)"
+      d="M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+const useLikes = (slug) => {
+  const key = `likes:${slug}`;
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    try { setCount(Math.min(MAX_LIKES, Number(localStorage.getItem(key)) || 0)); } catch { /* storage blocked */ }
+  }, [key]);
+  const add = () => {
+    setCount((c) => {
+      const next = Math.min(MAX_LIKES, c + 1);
+      try { localStorage.setItem(key, String(next)); } catch { /* storage blocked */ }
+      return next;
+    });
+  };
+  return [count, add];
+};
+
+const burst = (event) => {
+  const rect = event.currentTarget.getBoundingClientRect();
+  confetti({
+    particleCount: 24, spread: 70, startVelocity: 22, scalar: 0.75, ticks: 90,
+    origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight },
+    colors: ['#f43f5e', '#ec4899', '#818cf8', '#fbbf24'],
+  });
+};
+
+const LikeButton = ({ slug, floating }) => {
+  const [count, add] = useLikes(slug);
+  const [bounce, setBounce] = useState(false);
+  const [shown, setShown] = useState(!floating);
+  const hovering = useRef(false);
 
   useEffect(() => {
-    try { setLiked(localStorage.getItem(key) === '1'); } catch { /* storage blocked */ }
-  }, [key]);
+    if (!floating) return undefined;
+    let idle;
+    const update = () => {
+      const article = document.getElementById('article-body');
+      const rect = article ? article.getBoundingClientRect() : null;
+      const reading = window.scrollY > 320 && rect && rect.bottom > window.innerHeight * 0.45;
+      clearTimeout(idle);
+      if (!reading) { setShown(false); return; }
+      setShown(true);
+      idle = setTimeout(() => { if (!hovering.current) setShown(false); }, 3200);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('mousemove', update, { passive: true });
+    return () => {
+      clearTimeout(idle);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('mousemove', update);
+    };
+  }, [floating]);
 
-  const toggle = (event) => {
+  const click = (event) => {
     soundFx.playPop();
-    const next = !liked;
-    setLiked(next);
-    try { localStorage.setItem(key, next ? '1' : '0'); } catch { /* storage blocked */ }
-    if (next) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      confetti({
-        particleCount: 40, spread: 70, startVelocity: 25, scalar: 0.8,
-        origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight },
-        colors: ['#f43f5e', '#ec4899', '#818cf8', '#fbbf24'],
-      });
-    }
+    if (count < MAX_LIKES) burst(event);
+    add();
+    setBounce(true);
+    setTimeout(() => setBounce(false), 260);
   };
 
   return (
-    <button type="button" className={`bl-like ${liked ? 'is-liked' : ''}`} onClick={toggle} aria-pressed={liked} aria-label="Like this post">
-      <FiHeart size={34} />
-      <span>{liked ? 'Thanks!' : 'Like'}</span>
-    </button>
+    <div
+      className={`bl-like-wrap ${floating ? 'is-floating' : 'is-inline'} ${shown ? 'is-shown' : ''}`}
+      onMouseEnter={() => { hovering.current = true; }}
+      onMouseLeave={() => { hovering.current = false; }}
+    >
+      <button type="button" className={`bl-like ${bounce ? 'is-bouncing' : ''}`} onClick={click} aria-label={`Like this post. You have liked it ${count} of ${MAX_LIKES} times.`}>
+        <HeartIcon fill={count / MAX_LIKES} />
+      </button>
+      <span className="bl-like-count" aria-hidden="true">{count > 0 ? `${count}/${MAX_LIKES}` : 'Like'}</span>
+    </div>
   );
 };
 
@@ -183,12 +322,10 @@ export const BlogPostPage = () => {
         <p className="bl-filed">
           <em>Filed under</em> <strong>{post.category}</strong> <em>on</em> <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
-        {post.updated !== post.date && (
-          <p className="bl-filed"><em>Last updated on</em> <time dateTime={post.updated}>{formatDate(post.updated)}</time></p>
-        )}
+        <p className="bl-filed"><em>Last updated on</em> <time dateTime={post.updated}>{formatDate(post.updated)}</time></p>
       </header>
 
-      <article className="bl-article">
+      <article id="article-body" className="bl-article">
         {body.map((block, i) => <Block key={i} block={block} />)}
 
         <footer className="bl-end">
@@ -202,6 +339,8 @@ export const BlogPostPage = () => {
           </div>
         </footer>
 
+        <LikeButton slug={post.slug} floating={false} />
+
         <section className="bl-more" aria-labelledby="more-heading">
           <h2 id="more-heading" className="bl-more-title">Keep reading</h2>
           <ul>
@@ -214,13 +353,16 @@ export const BlogPostPage = () => {
               </li>
             ))}
             <li>
+              <a href="/projects" onClick={() => soundFx.playPop()}><FiArrowRight size={18} /> Browse my projects</a>
+            </li>
+            <li>
               <a href="/contact" onClick={() => soundFx.playPop()}><FiArrowRight size={18} /> Work with me</a>
             </li>
           </ul>
         </section>
       </article>
 
-      <LikeButton slug={post.slug} />
+      <LikeButton slug={post.slug} floating />
     </main>
   );
 };

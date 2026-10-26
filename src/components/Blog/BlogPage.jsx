@@ -22,6 +22,7 @@ export const BlogPage = () => {
           <p className="bl-count">{shown.length} {shown.length === 1 ? 'Article' : 'Articles'}</p>
         </header>
 
+        {CATEGORIES.length > 2 && (
         <div className="bl-filters" role="group" aria-label="Filter posts by topic">
           {CATEGORIES.map((c) => (
             <button
@@ -35,6 +36,7 @@ export const BlogPage = () => {
             </button>
           ))}
         </div>
+        )}
 
         <div className="bl-cards">
           {shown.map((post) => (

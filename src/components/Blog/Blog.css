@@ -336,8 +336,10 @@ html[data-over-hero="true"] body:has(.bl-sky) .h1w8168s[data-is-over-threshold="
 @media (prefers-reduced-motion: reduce) { .bl-rb-edit, .bl-frame-btn { transition: none; } }
 
 /* ── The list page ────────────────────────────────── */
-.bl-main--list { background: hsl(212deg 80% 96%); padding-top: 6.5rem; }
-[data-color-mode="dark"] .bl-main--list { background: var(--color-background); }
+/* Same page background as every other page: the footer's cloud ceiling is filled with --color-background,
+   so a tinted list background showed up as a mismatched white cloud. */
+.bl-main--list { background: var(--color-background); padding-top: 6.5rem; }
+.bl-main--list .bl-card { border: 1px solid var(--bl-line); }
 .bl-list-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 .bl-list-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem; }
 .bl-list-title { margin: 0; font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 2.8rem); font-weight: 700; line-height: 1.2; color: var(--bl-text); }

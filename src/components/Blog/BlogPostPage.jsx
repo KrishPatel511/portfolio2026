@@ -11,6 +11,8 @@ import { usePath } from '../../utils/router';
 import { BODIES } from '../../blog/content';
 import { POSTS, formatDate, getPost, postPath } from '../../blog/meta';
 import { SITE_URL } from '../../seo/routes';
+import { Highlighted } from './BlogCode';
+import { CodeFrame, Compare, Playground, RainbowDemo } from './BlogWidgets';
 import './Blog.css';
 
 const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -36,24 +38,6 @@ const Inline = ({ text }) =>
     }
     return part;
   });
-
-/* ── Code: a small colouring pass (comments, strings, keywords, numbers) ───── */
-const TOKEN = /(\/\/.*$|\/\*[\s\S]*?\*\/)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|\b(const|let|var|if|else|throw|new|from|import|export|return|await|async|function|for|of|in|true|false|null|default)\b|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_$][\w$-]*)(?=\s*:)/gm;
-
-const Highlighted = ({ code }) => {
-  const out = [];
-  let last = 0;
-  let m;
-  TOKEN.lastIndex = 0;
-  while ((m = TOKEN.exec(code))) {
-    if (m.index > last) out.push(code.slice(last, m.index));
-    const cls = m[1] ? 'c' : m[2] ? 's' : m[3] ? 'k' : m[4] ? 'n' : 'p';
-    out.push(<span key={m.index} className={`bl-tok-${cls}`}>{m[0]}</span>);
-    last = m.index + m[0].length;
-  }
-  out.push(code.slice(last));
-  return out;
-};
 
 const CodeBlock = ({ code, file }) => {
   const [copied, setCopied] = useState(false);
@@ -180,6 +164,10 @@ const Block = ({ block }) => {
   if (type === 'aside') return <Aside kind={a} title={b} text={c} />;
   if (type === 'stack') return <Stack items={a} />;
   if (type === 'figure') return <Figure src={a} alt={b} caption={c} />;
+  if (type === 'compare') return <Compare title={a} items={b} />;
+  if (type === 'codeframe') return <CodeFrame title={a} code={b} themes={c} />;
+  if (type === 'playground') return <Playground />;
+  if (type === 'rainbow') return <RainbowDemo />;
   if (type === 'demo') {
     const Demo = DEMOS[a];
     return Demo ? <Demo /> : null;
@@ -194,22 +182,21 @@ const Block = ({ block }) => {
    Each click fills it a little more (up to 16). Nothing is counted or sent anywhere. */
 const MAX_LIKES = 16;
 
-const HeartIcon = ({ fill }) => (
-  <svg viewBox="0 0 50 42" width="48" height="40" fill="none" aria-hidden="true">
+const HEART_PATH = 'M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z';
+
+/* A round little heart with a sleepy face. It starts grey and fills with pink from the bottom as you click. */
+const HeartIcon = ({ fill, happy }) => (
+  <svg viewBox="0 0 50 44" width="52" height="46" fill="none" aria-hidden="true">
     <defs>
-      <clipPath id="bl-heart-clip"><rect x="0" y={42 - 42 * fill} width="50" height="42" /></clipPath>
+      <clipPath id="bl-heart-clip"><rect x="0" y={42 - 40 * fill} width="50" height="44" /></clipPath>
     </defs>
-    <path
-      className="bl-heart-shape"
-      d="M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z"
-      stroke="currentColor" strokeWidth="3" strokeLinejoin="round"
-    />
-    <path
-      className="bl-heart-fill"
-      clipPath="url(#bl-heart-clip)"
-      d="M25 40 C 8 28, 2 20, 2 12.5 C 2 6.5, 6.5 2, 12.5 2 C 17.5 2, 22 5, 25 10 C 28 5, 32.5 2, 37.5 2 C 43.5 2, 48 6.5, 48 12.5 C 48 20, 42 28, 25 40 Z"
-      fill="currentColor"
-    />
+    <path className="bl-heart-base" d={HEART_PATH} />
+    <path className="bl-heart-fill" d={HEART_PATH} clipPath="url(#bl-heart-clip)" />
+    <g className="bl-heart-face">
+      <ellipse cx="18" cy="20" rx="2.2" ry={happy ? 2.6 : 1.4} />
+      <ellipse cx="32" cy="20" rx="2.2" ry={happy ? 2.6 : 1.4} />
+      <path d={happy ? 'M21 25 Q25 30 29 25' : 'M22 26 Q25 28 28 26'} strokeWidth="1.8" strokeLinecap="round" />
+    </g>
   </svg>
 );
 
@@ -276,12 +263,12 @@ const LikeButton = ({ slug, floating }) => {
 
   return (
     <div
-      className={`bl-like-wrap ${floating ? 'is-floating' : 'is-inline'} ${shown ? 'is-shown' : ''}`}
+      className={`bl-like-wrap ${floating ? 'is-floating' : 'is-inline'} ${shown ? 'is-shown' : ''} ${count > 0 ? 'has-likes' : ''}`}
       onMouseEnter={() => { hovering.current = true; }}
       onMouseLeave={() => { hovering.current = false; }}
     >
       <button type="button" className={`bl-like ${bounce ? 'is-bouncing' : ''}`} onClick={click} aria-label={`Like this post. You have liked it ${count} of ${MAX_LIKES} times.`}>
-        <HeartIcon fill={count / MAX_LIKES} />
+        <HeartIcon fill={count / MAX_LIKES} happy={count > 0} />
       </button>
       <span className="bl-like-count" aria-hidden="true">{count > 0 ? `${count}/${MAX_LIKES}` : 'Like'}</span>
     </div>

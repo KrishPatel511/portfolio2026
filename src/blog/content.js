@@ -8,14 +8,21 @@
      ['aside', 'info', 'Title', 'Text']     a side note; kinds: info, success, warning, error
      ['stack', [['Name', 'v1.0', 'react']]] a wide grid of tool cards (icon keys are in BlogPostPage.jsx)
      ['figure', '/image.jpg', 'Alt', 'Caption']   a picture with a caption
+     ['compare', 'Title', [['Light', '/a.jpg', 'Alt'], ['Dark', '/b.jpg', 'Alt']]]   a before/after frame with Toggle and Expand
+     ['codeframe', 'Title', 'code', ['Light', 'Dark']]   one snippet shown in two colour themes
+     ['playground']                         an editable HTML, CSS and JS playground
+     ['rainbow']                            the interactive rainbow with its settings panel
      ['demo', 'sound']                      a live demo box (kinds are in BlogPostPage.jsx)
    Keep it in the first person and only write what really happened. */
 
 export const BODIES = {
   'how-i-built-my-portfolio': [
     ['p', 'This portfolio started as a simple page and slowly became a small application: eleven pages, a WebGL cursor, a generative rainbow, a real map, sounds made from nothing but math, a pre-rendering build step and a serverless contact form. It is about 16,000 lines of code, and I wrote every component and every line of CSS by hand.'],
-    ['p', 'Here is the home page, in light mode:'],
-    ['figure', '/projects/portfolio.jpg', 'The portfolio home page with a blue sky, clouds and a rainbow', 'The home page: a hand-drawn sky, clouds and a rainbow that bends toward your cursor.'],
+    ['p', 'Here is the home page, in light and dark mode. Use the buttons to switch between them, or expand the frame to see both side by side:'],
+    ['compare', 'Home page', [
+      ['Light', '/blog/home-light.jpg', 'The portfolio home page in light mode, with a blue sky and a 3D character'],
+      ['Dark', '/blog/home-dark.jpg', 'The portfolio home page in dark mode, with a night sky and a 3D character'],
+    ]],
     ['p', 'In this post I want to share how the whole thing fits together, what I would do the same way again, and the mistakes I made along the way. If you are planning your own portfolio, or you are curious how a site like this works under the hood, I hope it helps.'],
     ['aside', 'info', 'A note on inspiration', 'The look and feel of this portfolio, and of this blog, are inspired by [joshwcomeau.com](https://www.joshwcomeau.com/). Several interactions started as rebuilds of things I admired there, written in my own code as a way to learn. The text, the code and the numbers in this post are mine.'],
 
@@ -56,7 +63,13 @@ export const BODIES = {
     ['h2', 'Code snippets'],
     ['p', 'The code blocks on this page are coloured by a few dozen lines of my own code. A single regular expression finds comments, strings, keywords and numbers, and each match is wrapped in a colored `span`. It is nowhere near as capable as a real syntax highlighter, but it adds almost nothing to the page, and it covers everything I need for short snippets.'],
     ['p', 'Hover over any block to find the copy button. The colors come from the same tokens as the rest of the site, so the snippets change with the theme too:'],
-    ['code', 'js', "// A comment, a string, a number and a few keywords\nconst greeting = 'Hello, world';\nconst year = 2026;\n\nif (year > 2025) {\n  console.log(greeting);\n}", 'example.js'],
+    ['codeframe', 'Code Snippets', "// A comment, a string, a number and a few keywords\nconst greeting = 'Hello, world';\nconst year = 2026;\n\nfunction welcome(name) {\n  if (year > 2025) {\n    return greeting + ', ' + name;\n  }\n}\n\n.card {\n  padding: 1.5rem;\n  color: #818cf8;\n}", ['Light', 'Dark']],
+    ['p', 'The frame above shows the same snippet in both themes. Toggle between them, or expand it to compare.'],
+
+    ['h2', 'Code playgrounds'],
+    ['p', 'In addition to snippets, I wanted little Codepen-style editors, where you can change the code and watch the result. This one is made from a textarea laid over a highlighted copy of the same text, and the result runs in a sandboxed `iframe`, so nothing you type can touch this page.'],
+    ['p', 'Try changing the `COUNT` in the script, or the `animation-delay` in the stylesheet:'],
+    ['playground'],
 
     ['h2', 'The magic of pre-rendering'],
     ['p', 'A client-side React app starts as an empty page, which is not great for search engines or for people on slow phones. So, at build time, a script renders every route to real HTML. It runs a server build, calls `renderToString` once per page, and writes each result to its own folder.'],
@@ -94,7 +107,9 @@ export const BODIES = {
     ['p', 'Switch the theme with the sun icon in the header and watch all four change together.'],
 
     ['h3', 'The rainbow'],
-    ['p', 'On the home page, a rainbow is drawn on a canvas, one dash at a time. Each dash bends toward your cursor like iron filings near a magnet. It is my version of an effect I loved, built from scratch so I could learn how it works.'],
+    ['p', 'On the home page, a rainbow is drawn on a canvas, one dash at a time. Each dash bends toward your cursor like iron filings near a magnet. It is my version of an effect I loved, built from scratch so I could learn how it works. Move your mouse over this one:'],
+    ['rainbow'],
+    ['p', 'There is a little easter egg too: if you hover over the rainbow for a moment, an "Edit" button appears. It opens a small settings panel where you can change the number of rows, the density, the bend and the thickness. Your changes only affect your own screen, since I do not run a server that could share them between visitors.'],
 
     ['h3', 'A real map'],
     ['p', 'The map on the home page uses MapLibre GL with free map tiles, so there is no API key to protect. It shows where I am and, when it can tell, where you are, and it is imported lazily, so the map\'s code only loads if that part of the page is used.'],

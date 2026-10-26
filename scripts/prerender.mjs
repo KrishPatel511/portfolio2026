@@ -4,7 +4,7 @@
 
    Run after `vite build` and `vite build --ssr` (see the "build" script in package.json). */
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -122,3 +122,6 @@ await write(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
 );
 console.log(`sitemap.xml written for ${SITE_URL}`);
+
+// The manifest was only needed above; do not publish it
+await rm(join(dist, '.vite'), { recursive: true, force: true });

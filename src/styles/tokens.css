@@ -7,7 +7,7 @@
   /* Josh W. Comeau Color Palette (Light Mode Default) */
   --color-text: hsl(222deg 22% 15%);
   --color-text-secondary: hsl(222deg 15% 42%);
-  --color-text-muted: hsl(222deg 10% 60%);
+  --color-text-muted: hsl(222deg 10% 44%);
   --color-background: hsl(0deg 0% 100%);
   --color-blurred-background: hsl(0deg 0% 98% / 0.75);
   --color-muted-background: hsl(200deg 45% 76% / 0.85);

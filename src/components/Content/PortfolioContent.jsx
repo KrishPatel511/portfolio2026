@@ -426,7 +426,7 @@ export const PortfolioContent = ({ page = 'projects' }) => {
                       </TiltedCardLayer>
                       <TiltedCardLayer depth={34}>
                         <div className="skill-tilt__icon" style={{ color }}>
-                          <Icon size={44} />
+                          <Icon size={44} aria-hidden="true" />
                         </div>
                       </TiltedCardLayer>
                       <TiltedCardLayer depth={20}>
@@ -439,7 +439,7 @@ export const PortfolioContent = ({ page = 'projects' }) => {
             ))}
 
             <div className="skills-soft-section">
-              <h3 className="aside-heading">SOFT SKILLS</h3>
+              <h2 className="aside-heading">SOFT SKILLS</h2>
               <div className="soft-skills-grid">
                 {[
                   'Problem Solving',

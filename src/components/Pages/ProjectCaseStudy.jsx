@@ -297,7 +297,7 @@ const Checks = ({ items }) => (
 );
 
 export const ProjectCaseStudy = ({ data }) => (
-  <div className="pg-wrapper">
+  <main id="main-content" className="pg-wrapper">
     <div className="pg-container pg-container--narrow">
       <a className="pg-back" href="/projects" onClick={() => soundFx.playPop()}>
         <FiArrowLeft size={15} /> All projects
@@ -418,5 +418,5 @@ export const ProjectCaseStudy = ({ data }) => (
         <StarButton as="a" href="/projects" onClick={() => soundFx.playPop()}>See other projects</StarButton>
       </div>
     </div>
-  </div>
+  </main>
 );

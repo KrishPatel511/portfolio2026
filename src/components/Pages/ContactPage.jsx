@@ -48,7 +48,7 @@ export const ContactPage = () => {
   };
 
   return (
-    <div className="pg-wrapper">
+    <main id="main-content" className="pg-wrapper">
       {/* Fluid ink that follows the cursor, drawn behind the page content */}
       <SplashCursor
         rainbow
@@ -146,6 +146,6 @@ export const ContactPage = () => {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 };

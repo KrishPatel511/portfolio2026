@@ -650,7 +650,7 @@ const OwlCard = () => {
   };
   return (
     <Card area="cat" className="ab-cat" index={7}>
-      <button className="ab-cat-btn" onClick={nudge}>
+      <button className="ab-cat-btn" onClick={nudge} aria-label="Poke the cat">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="150" viewBox="0 0 230 240" aria-hidden="true">
           <path fill="#FFE62A" stroke="var(--ab-outline)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8" d="M150 196c14-4 38-4 52 4 6 4 4 12-4 14-14 3-34 2-48-2z" />
           <g style={{ transform: `rotate(${tilt - 10}deg)`, transformOrigin: '110px 130px', transition: 'transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
@@ -849,7 +849,7 @@ export const AboutPage = () => {
         <div className="ab-hero-inner">
           <motion.div
             className="ab-hero-text"
-            initial={{ opacity: 0, y: 24 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >

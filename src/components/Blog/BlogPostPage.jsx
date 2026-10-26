@@ -295,6 +295,26 @@ const CloudBanner = () => (
 export const BlogPostPage = () => {
   const path = usePath();
   const post = getPost(path.replace('/blog/', ''));
+
+  // While the sky banner is behind the header, let the header bar match it (see Blog.css)
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () => {
+      const sky = document.querySelector('.bl-sky');
+      const bottom = sky ? sky.getBoundingClientRect().bottom : 0;
+      // the clouds fill the lower part of the banner, so stop before its bottom edge
+      root.dataset.overHero = bottom > 150 ? 'true' : 'false';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      delete root.dataset.overHero;
+    };
+  }, [path]);
+
   if (!post) return null;
 
   const body = BODIES[post.slug] || [];

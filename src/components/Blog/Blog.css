@@ -40,11 +40,19 @@
 
 /* ── Sky and clouds ───────────────────────────────── */
 .bl-sky {
-  position: absolute; top: 0; left: 0; right: 0; height: 220px; overflow: hidden;
+  /* starts 5rem higher so the sky also sits behind the fixed header (the in-flow header slot is 5rem) */
+  position: absolute; top: -5rem; left: 0; right: 0; height: calc(220px + 5rem); overflow: hidden;
   background: linear-gradient(180deg, var(--color-sky-from) 0%, var(--color-cloud-500) 100%);
   pointer-events: none;
 }
-.bl-sky svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bl-sky svg { position: absolute; top: 5rem; left: 0; width: 100%; height: 220px; }
+
+/* While the sky is behind the header bar, make the bar match it so it reads as transparent
+   (same approach as the About page; BlogPostPage sets data-over-hero on <html>). */
+html[data-over-hero="true"] body:has(.bl-sky) .h1w8168s,
+html[data-over-hero="true"] body:has(.bl-sky) .h1w8168s[data-is-over-threshold="true"] {
+  --top-color: var(--color-sky-from);
+}
 .bl-cloud--far { fill: var(--color-cloud-300); opacity: .9; }
 .bl-cloud--mid { fill: var(--color-cloud-100); }
 .bl-cloud--near { fill: var(--color-background); }

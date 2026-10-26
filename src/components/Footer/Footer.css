@@ -379,7 +379,7 @@
   grid-template-areas:
     "cats courses misc"
     "cats social social";
-  grid-template-columns: 10rem 10rem 6.5rem;
+  grid-template-columns: 10rem 10rem max-content;
   justify-content: space-between;
   gap: 16px 64px;
 }
@@ -390,7 +390,7 @@
       "cats cats"
       "courses misc"
       "social social";
-    grid-template-columns: 10rem 6.5rem;
+    grid-template-columns: 10rem max-content;
     justify-content: end;
   }
 }
@@ -465,7 +465,6 @@
 }
 
 .footer-link:hover {
-  font-weight: 500;
   color: var(--color-text);
 }
 
@@ -549,12 +548,15 @@
   color: var(--color-text);
 }
 
+/* Hover must not change glyph widths: the Explore column is max-content wide,
+   so a 400→500 weight swap resized the grid and made the icon row jump. */
 .footer-link:hover {
-  font-weight: 500;
+  font-weight: 400;
+  text-shadow: 0.4px 0 0 currentColor, -0.4px 0 0 currentColor;
 }
 
-.footer-col-general .footer-link { text-align: right; }
-.footer-col-general .footer-col-heading { text-align: right; }
+.footer-col-general .footer-link { text-align: left; white-space: nowrap; }
+.footer-col-general .footer-col-heading { text-align: left; }
 
 .footer-legal-area {
   font-size: 0.75rem;

@@ -283,8 +283,10 @@ export const CASE_STUDIES = {
       'Studying great interactions, then rebuilding them, is the fastest way to learn',
     ],
     credit: 'Several interactions, such as the sound design, the rainbow configurator and the smooth theme switch, are rebuilds inspired by joshwcomeau.com, written in my own code as a way to learn the techniques.',
-    next: ['Add a live demo link and analytics', 'Move case-study content into data files and add a blog', 'Add automated accessibility and performance checks'],
+    next: ['Add analytics', 'Move case-study content into data files and add a blog', 'Add automated accessibility and performance checks'],
     github: 'https://github.com/KrishPatel511/portfolio2026',
+    live: 'https://www.krishpatel.website/',
+    liveLabel: 'Live Website',
   },
 };
 
@@ -407,7 +409,7 @@ export const ProjectCaseStudy = ({ data }) => (
       <div className="pg-actions">
         {data.live && (
           <StarButton as="a" primary href={data.live} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>
-            <FiExternalLink size={14} /><span>Live Demo</span>
+            <FiExternalLink size={14} /><span>{data.liveLabel || 'Live Demo'}</span>
           </StarButton>
         )}
         <StarButton as="a" primary={!data.live} href={data.github} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>

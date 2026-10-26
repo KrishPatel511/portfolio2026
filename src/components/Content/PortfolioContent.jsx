@@ -93,7 +93,8 @@ const PROJECTS = [
     tech: ['React', 'Vite', 'WebGL', 'GSAP', 'Framer Motion', 'MapLibre GL', 'Web Audio', 'CSS Tokens'],
     caseStudy: '/projects/portfolio',
     github: 'https://github.com/KrishPatel511/portfolio2026',
-    live: null,
+    live: 'https://www.krishpatel.website/',
+    liveLabel: 'Live Website',
     image: '/projects/portfolio.jpg',
     color: '#10b981',
     featured: true,
@@ -353,7 +354,7 @@ export const PortfolioContent = ({ page = 'projects' }) => {
                       {project.live && (
                         <StarButton as="a" href={project.live} target="_blank" rel="noreferrer" onClick={() => soundFx.playPop()}>
                           <FiExternalLink size={14} />
-                          <span>Live Demo</span>
+                          <span>{project.liveLabel || 'Live Demo'}</span>
                         </StarButton>
                       )}
                     </div>

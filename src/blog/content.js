@@ -24,8 +24,7 @@ export const BODIES = {
       ['Dark', '/blog/home-dark.jpg', 'The portfolio home page in dark mode, with a night sky and a 3D character'],
     ]],
     ['p', 'In this post I want to share how the whole thing fits together, what I would do the same way again, and the mistakes I made along the way. If you are planning your own portfolio, or you are curious how a site like this works under the hood, I hope it helps.'],
-    ['aside', 'info', 'A note on inspiration', 'The look and feel of this portfolio, and of this blog, are inspired by [joshwcomeau.com](https://www.joshwcomeau.com/). Several interactions started as rebuilds of things I admired there, written in my own code as a way to learn. The text, the code and the numbers in this post are mine.'],
-
+    
     ['h2', 'The core stack'],
     ['p', 'Here is the short list of the main tools I used:'],
     ['stack', [

@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Hero Cloudscape & 3D Character Display (Clean, Pure Mascot on Clouds)
+   ========================================================================== */
+
+.hero-sky-section {
+  position: relative;
+  width: 100%;
+  margin-top: -5rem;
+  background: linear-gradient(180deg,
+      var(--color-sky-from) 0%,
+
+      var(--color-sky-to) 65%,
+      var(--color-sky-subtle) 100%);
+  overflow: hidden;
+  overflow: clip;
+}
+
+/* Cloudscape container */
+.hero-cloud-wrapper {
+  position: relative;
+  width: 100%;
+  height: 33rem;
+  /* 528px: ample sky space for transparent header and clouds */
+  overflow: hidden;
+  overflow: clip;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* ==========================================================================
+   5120px Expansive Cloudscape SVGs (Seamless horizontally across all zooms)
+   ========================================================================== */
+
+.cloud-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Layer 1: Back/Mid Cloud SVGs */
+.cloud-layer-back {
+  z-index: 1;
+}
+
+/* Layer 2: Foreground Cloud SVG */
+.cloud-layer-front {
+  z-index: 2;
+}
+
+
+.cloud-layer-front path {
+  pointer-events: auto;
+}
+
+.cloud-svg {
+  max-width: revert;
+  width: 100%;
+  min-width: 320rem;
+  /* 5120px expansive scale across all screen widths & zooms */
+  height: 28.5rem;
+  /* 456px viewBox height */
+  transform: translateY(1px);
+  /* Ensures baseline touches bottom with 0 seam */
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Stage Container & Grid
+   ========================================================================== */
+
+.hero-stage-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-stage-grid {
+  width: 100%;
+  max-width: var(--max-width);
+  /* 68.75rem / 1100px */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px 80px;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.hero-stage-left-spacer {
+  height: 1px;
+}
+
+.hero-stage-right-col {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* Mascot Wrapper */
+.hero-mascot-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 68px;
+  /* Elevated so character's head touches the background cloud curve */
+}
+
+/* ==========================================================================
+   Clean Dual-Picture Character Mascot Composite
+   ========================================================================== */
+
+.mascot-composite-box {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  z-index: 5;
+}
+
+/* Static fixed position - No jumping / bouncing */
+.hero-mascot-static {
+  animation: none !important;
+  transform: none !important;
+}
+
+.mascot-dark-layer {
+  position: relative;
+  display: block;
+}
+
+/* Light Mode Overlay Layer (Yellow Hoodie!) */
+.mascot-light-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: var(--opacity, 1);
+  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+[data-color-mode="light"] .mascot-light-layer {
+  opacity: 1 !important;
+}
+
+[data-color-mode="dark"] .mascot-light-layer {
+  opacity: 0 !important;
+}
+
+.mascot-img {
+  width: 142px;
+  height: auto;
+  max-height: 250px;
+  object-fit: contain;
+  display: block;
+  filter: none;
+  transition: transform 250ms ease;
+}
+
+.mascot-composite-box:hover .mascot-img {
+  filter: none;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 52rem) {
+  .hero-cloud-wrapper {
+    height: calc(20rem + 25vw);
+  }
+
+  .cloud-svg {
+    --magic-offset: calc(-50vw + 25rem);
+    height: calc(14rem + 25vw);
+    transform: translate(var(--magic-offset), 1px);
+  }
+
+  .hero-stage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage-left-spacer {
+    display: none;
+  }
+
+  .hero-stage-right-col {
+    justify-content: center;
+  }
+
+  .mascot-img {
+    width: 126px;
+  }
+
+  .hero-mascot-wrapper {
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 36rem) {
+  .mascot-img {
+    width: 110px;
+  }
+
+  .hero-mascot-wrapper {
+    margin-bottom: 36px;
+  }
+}

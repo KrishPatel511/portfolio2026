@@ -1,4 +1,4 @@
-/* Smooth light <-> dark switch.
+/* Smooth light <-> dark switch (same technique as joshwcomeau.com).
    Every colour token is a registered <color> property, so the browser can interpolate it.
    The tokens swap on <html>, and the transition below tweens them, which animates every
    gradient, fill, border and text colour that reads them in one go, with no flash. */

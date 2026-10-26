@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Hero rainbow art + "Rainbow Configurator"
+   Hero rainbow art + "Rainbow Configurator" (ported from joshwcomeau.com)
    ========================================================================== */
 
 .ab-hero {
-  --rb-mascot-bottom: 6.3rem;
-  /* The canvas sits 44px below the mascot */
-  --rb-art-bottom: calc(var(--rb-mascot-bottom) - 44px);
+  --rb-josh-bottom: 6.3rem;
+  /* Josh's canvas sits 44px below his mascot; keep that relationship */
+  --rb-art-bottom: calc(var(--rb-josh-bottom) - 44px);
 }
 
 /* ─── rainbow canvas ───────────────────────────────────────────────────── */
@@ -43,7 +43,7 @@
   right: 0;
   margin: auto;
   width: 50rem;
-  bottom: var(--rb-mascot-bottom);
+  bottom: var(--rb-josh-bottom);
   display: flex;
   justify-content: flex-end;
   pointer-events: none;
@@ -60,7 +60,7 @@
   right: 0;
   margin: auto;
   width: 50rem;
-  bottom: var(--rb-mascot-bottom);
+  bottom: var(--rb-josh-bottom);
   display: flex;
   justify-content: flex-end;
   pointer-events: none;

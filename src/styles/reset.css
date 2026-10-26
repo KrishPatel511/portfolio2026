@@ -1,5 +1,7 @@
-/* A small CSS reset: sensible box sizing, no default margins, media that fits its box, and form
-   controls that inherit the page font. */
+/*
+  Josh W Comeau's Modern CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,10 +9,6 @@
 
 * {
   margin: 0;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -32,6 +30,24 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
-#root {
+#root, #__next {
   isolation: isolate;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }

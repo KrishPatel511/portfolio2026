@@ -282,6 +282,7 @@ export const CASE_STUDIES = {
       'Accessibility and reduced motion are part of the design, not a patch',
       'Studying great interactions, then rebuilding them, is the fastest way to learn',
     ],
+    credit: 'Several interactions, such as the sound design, the rainbow configurator and the smooth theme switch, are rebuilds inspired by joshwcomeau.com, written in my own code as a way to learn the techniques.',
     next: ['Add analytics', 'Move case-study content into data files and add a blog', 'Add automated accessibility and performance checks'],
     github: 'https://github.com/KrishPatel511/portfolio2026',
     live: 'https://www.krishpatel.website/',

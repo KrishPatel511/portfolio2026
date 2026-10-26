@@ -2,14 +2,23 @@
      ['h2', 'Heading']         a section heading (also builds the "On this page" list)
      ['p', 'Paragraph']        text; **bold**, `code` and [link](/path) work inside
      ['ul', ['one', 'two']]    a bullet list
-     ['code', 'js', 'text']    a code block
-     ['callout', 'Text']       a highlighted takeaway
+     ['ol', ['one', 'two']]    a numbered list
+     ['code', 'js', 'text']    a code block (syntax coloured, with a copy button)
+     ['aside', 'info', 'Title', 'Text']   a side note; kinds: info, success, warning, error
+     ['stack', [['Name', 'v1.0', 'react']]]   a wide grid of tool cards (icon keys are in BlogPostPage.jsx)
    Keep it in the first person and only write what really happened. */
 
 export const BODIES = {
   'ai-agent-github-safe-write-access': [
     ['p', 'RepoSentry is an AI agent that signs in with GitHub, reads your repositories, reviews code and fixes bugs on its own. The exciting part is also the dangerous part: the moment a language model can **write** to a repository, one bad answer can damage real work.'],
     ['p', 'I built it end to end on my own with React, TypeScript, Node.js, PostgreSQL and the Gemini API. These are the four rules that kept it safe and fast.'],
+
+    ['stack', [
+      ['React', 'TypeScript', 'react'],
+      ['Node.js', 'Express', 'node'],
+      ['PostgreSQL', 'Prisma', 'postgres'],
+      ['Gemini API', 'Function calling', 'gemini'],
+    ]],
 
     ['h2', 'The problem with AI that answers from memory'],
     ['p', 'Most assistants answer code questions from memory, which is risky when the answer is about **your** files. I wanted an agent that works on the real repository. So instead of guessing, it has eight GitHub tools wired to Gemini function calling: list repositories, list files, fetch the full tree, read a file, search code, create a branch, update a file and open a pull request.'],
@@ -18,13 +27,13 @@ export const BODIES = {
     ['h2', 'Rule 1: enforce safety in code, not in the prompt'],
     ['p', 'A prompt that says "never push to main" is a request, not a rule. A cleverly worded message can talk a model out of a request.'],
     ['p', 'So the rules live on the server, where the model cannot argue with them:'],
-    ['ul', [
+    ['ol', [
       'The server **refuses any write to the default branch**, even if a prompt asks for it.',
       'There is **one shared fix branch per repository**. Left alone, the model invented a new branch name for every bug. Now the name is fixed on the server and the model\'s choice is ignored.',
       'Pull requests are reused. If one is already open from the fix branch, new commits simply join it. Fixing five bugs gives five commits on one pull request, not five branches.',
     ]],
     ['code', 'js', '// Simplified idea, not the exact production code\nif (branch === repo.defaultBranch) {\n  throw new Error("Writes to the default branch are not allowed");\n}'],
-    ['callout', 'If a rule matters, put it where the model cannot talk its way around it.'],
+    ['aside', 'success', 'The rule of thumb', 'If a rule matters, put it where the model cannot talk its way around it.'],
 
     ['h2', 'Rule 2: keep deterministic work out of the model'],
     ['p', 'Models are good at reasoning and bad at boring, exact jobs. Two examples from this project:'],
@@ -42,19 +51,28 @@ export const BODIES = {
 
     ['h2', 'What I would do next'],
     ['ul', ['Syntax highlighting for file results', 'Rate limiting and abuse protection on the public endpoints']],
-    ['callout', 'The agent reads, reasons and writes, but a human always makes the final call by reviewing the pull request. That is the design I would repeat on any AI project.'],
+    ['aside', 'info', 'The human stays in charge', 'The agent reads, reasons and writes, but a human always makes the final call by reviewing the pull request. That is the design I would repeat on any AI project.'],
   ],
 
   'making-a-react-portfolio-load-fast': [
     ['p', 'This portfolio has a WebGL fluid cursor, a generative rainbow, a real map and synthesized sound. It looked great, and it loaded slowly. Here is exactly what I measured, what helped, and what I got wrong along the way.'],
     ['p', 'All numbers below come from Lighthouse in mobile mode with throttling, run on a production build. For comparisons I took the median of three runs, because a single run can swing a lot.'],
 
+    ['stack', [
+      ['React', '19', 'react'],
+      ['Vite', '8', 'vite'],
+      ['GSAP', '3', 'gsap'],
+      ['Framer Motion', '14', 'framer'],
+      ['MapLibre GL', '6', 'maplibre'],
+      ['Lighthouse', '13', 'lighthouse'],
+    ]],
+
     ['h2', 'Measure first'],
     ['p', 'Before changing anything, Lighthouse gave the Home and Projects pages a Performance score of about 50. The network panel told a clearer story than the score did: the biggest download on the Projects page was not JavaScript at all.'],
 
     ['h2', 'The biggest win was one image'],
     ['p', 'The GMDC project card used a **2.27 MB PNG**. It was the largest element on the page, so it decided how late the page felt ready. I converted it to a progressive JPEG at **239 KB**. A decorative PNG with transparency became a **34 KB** WebP, down from 214 KB. I also made the first project image load eagerly, since it is the first thing a visitor sees, and left the rest lazy.'],
-    ['callout', 'Check your largest files before you touch your bundler. It was the cheapest fix on the whole list.'],
+    ['aside', 'success', 'Cheapest fix on the list', 'Check your largest files before you touch your bundler.'],
 
     ['h2', 'Splitting the code by page'],
     ['p', 'The whole site shipped as one JavaScript file of **723 KB** (246 KB gzipped). Every visitor downloaded the map and all the case studies even if they only opened the home page.'],
@@ -69,6 +87,7 @@ export const BODIES = {
 
     ['h2', 'A fix I had to revert'],
     ['p', 'Google Fonts blocks the first paint, so I made the font stylesheet load without blocking. The first paint improved from about 4.3 s to 2.7 s, but the layout shift (CLS) went from **0 to 0.9**, because text swapped fonts and everything moved. A faster number that makes the page jump is not a win, so I reverted it. The proper fix is to self-host the fonts with preloading, which is next on my list.'],
+    ['aside', 'warning', 'Faster is not always better', 'A number that improves while the page jumps around is a regression, not a win. Always check layout shift next to speed.'],
 
     ['h2', 'Results'],
     ['ul', [
@@ -78,7 +97,7 @@ export const BODIES = {
       'Layout shift stayed at **0**, and Accessibility, Best Practices and SEO ended at or near 100',
     ]],
     ['p', 'The score is still not where I want it, and real phones will differ from a throttled lab test. But every number above is measured, not guessed.'],
-    ['callout', 'Measure, fix the biggest thing, measure again, and test the bugs your fix can create.'],
+    ['aside', 'info', 'The short version', 'Measure, fix the biggest thing, measure again, and test the bugs your fix can create.'],
   ],
 
   'building-a-truck-checkpoint-system-for-a-government-mine': [
@@ -95,7 +114,7 @@ export const BODIES = {
 
     ['h2', 'Lesson 1: go and see the real workflow'],
     ['p', 'I visited the mine in Bhavnagar and spent time with the Mining Manager and the on-site team. A requirements document cannot tell you what that visit did: how trucks actually queue, where people stand, and which steps they care about most. I gathered requirements directly with the government clients instead of through a long chain of messages.'],
-    ['callout', 'The fastest way to build the right thing is to watch the real process before you design anything.'],
+    ['aside', 'success', 'Watch first, design second', 'The fastest way to build the right thing is to watch the real process before you design anything.'],
 
     ['h2', 'Lesson 2: hardware is part of the product'],
     ['p', 'When a gate, a barrier or a weighbridge is involved, the software is not finished when the screen looks right. It has to work with real devices in real conditions. That changes how you think about every feature, because a mistake does not just show an error message, it can hold up a truck.'],
@@ -108,6 +127,6 @@ export const BODIES = {
 
     ['h2', 'Where it stands'],
     ['p', 'The system is live and processes 100+ transactions every day. If you are building something similar, I would love to talk about it.'],
-    ['callout', 'Being the only developer meant owning everything: requirements, code, hardware integration, testing and deployment. It taught me more than any tutorial could.'],
+    ['aside', 'info', 'Owning everything', 'Being the only developer meant owning requirements, code, hardware integration, testing and deployment. It taught me more than any tutorial could.'],
   ],
 };

@@ -53,7 +53,7 @@ const PROJECTS = [
     github: null,
     live: null,
     caseStudy: '/projects/gmdc',
-    image: '/images/gmdc/GMDC-logo.png',
+    image: '/images/gmdc/GMDC-logo.jpg',
     color: '#4f46e5',
     featured: true,
   },
@@ -320,7 +320,7 @@ export const PortfolioContent = ({ page = 'projects' }) => {
                 >
                   <div className="showcase-media">
                     <div className="showcase-frame">
-                      <img src={project.image} alt={`${project.title} preview`} loading="lazy" />
+                      <img src={project.image} alt={`${project.title} preview`} loading={i === 0 ? 'eager' : 'lazy'} fetchPriority={i === 0 ? 'high' : undefined} />
                     </div>
                   </div>
                   <div className="showcase-info">

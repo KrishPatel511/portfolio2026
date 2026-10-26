@@ -9,6 +9,8 @@ const pagesFile = (name) => fileURLToPath(new URL(`./src/${name}`, import.meta.u
 // build-time render that writes each page's HTML (so that HTML contains the real content).
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
+  // scripts/prerender.mjs reads the manifest to link each page's own JS and CSS in its HTML
+  build: { manifest: true },
   resolve: {
     alias: { '#pages': pagesFile(isSsrBuild ? 'pages.static.jsx' : 'pages.lazy.jsx') },
   },

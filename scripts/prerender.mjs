@@ -17,6 +17,45 @@ const { ROUTES, NOT_FOUND, SITE_URL, OG_IMAGE, SITE_NAME, canonicalFor } = await
 );
 
 const template = await readFile(join(dist, 'index.html'), 'utf8');
+const manifest = JSON.parse(await readFile(join(dist, '.vite', 'manifest.json'), 'utf8'));
+const { getPage } = await import(pathToFileURL(join(root, 'src', 'utils', 'pages.js')).href);
+
+/* page key -> the source file that holds that page (see src/pages.lazy.jsx) */
+const PAGE_SOURCE = {
+  about: 'src/components/About/AboutPage.jsx',
+  contact: 'src/components/Pages/ContactPage.jsx',
+  gmdc: 'src/components/Pages/GmdcCaseStudy.jsx',
+  reposentry: 'src/components/Pages/CaseStudyRoute.jsx',
+  waldor: 'src/components/Pages/CaseStudyRoute.jsx',
+  portfolio: 'src/components/Pages/CaseStudyRoute.jsx',
+  projects: 'src/components/Content/PortfolioContent.jsx',
+  skills: 'src/components/Content/PortfolioContent.jsx',
+  experience: 'src/components/Content/PortfolioContent.jsx',
+};
+
+/* The page's own JS and CSS are split out of the main file, so the HTML links them directly:
+   the CSS styles the pre-rendered content from the first paint, and the JS starts downloading
+   alongside the main file instead of waiting for it. */
+function assetsFor(path) {
+  const source = PAGE_SOURCE[getPage(path)];
+  if (!source || !manifest[source]) return '';
+  const seen = new Set();
+  const js = new Set();
+  const css = new Set();
+  const walk = (key) => {
+    if (seen.has(key) || !manifest[key]) return;
+    seen.add(key);
+    const chunk = manifest[key];
+    js.add(chunk.file);
+    (chunk.css || []).forEach((file) => css.add(file));
+    (chunk.imports || []).forEach(walk);
+  };
+  walk(source);
+  return [
+    ...[...css].map((file) => `<link rel="stylesheet" crossorigin href="/${file}" />`),
+    ...[...js].map((file) => `<link rel="modulepreload" crossorigin href="/${file}" />`),
+  ].join('\n    ');
+}
 
 const escapeAttr = (value) =>
   String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -53,7 +92,7 @@ function buildHtml(path, seo) {
   return template
     .replace(/<title>[\s\S]*?<\/title>/, '')
     .replace(/<meta name="description"[^>]*>/, '')
-    .replace('</head>', `    ${headFor(path, seo)}\n  </head>`)
+    .replace('</head>', `    ${headFor(path, seo)}\n    ${assetsFor(path)}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${html}</div>`);
 }
 

@@ -30,7 +30,8 @@ function App() {
         <div className="portfolio-app">
           <Header />
 
-          <Suspense fallback={null}>
+          {/* While a page's file downloads, hold the page's height so the footer does not jump up */}
+          <Suspense fallback={<div style={{ minHeight: '100vh' }} aria-hidden="true" />}>
             {page === 'about' && <AboutPage />}
             {page === 'gmdc' && <GmdcCaseStudy />}
             {isCaseStudyPage(page) && <CaseStudyRoute page={page} />}

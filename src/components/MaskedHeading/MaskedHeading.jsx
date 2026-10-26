@@ -510,6 +510,8 @@ const MaskedHeading = ({
         fontWeight: weight,
         letterSpacing: `${tracking}em`,
         lineHeight,
+        // Same size the effect computes from the width (see sync), so the pre-rendered title is already the right height
+        fontSize: `clamp(20px, calc(100cqw * ${textScale}), 200px)`,
         ...style
       }}
       {...rest}

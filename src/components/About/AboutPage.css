@@ -106,7 +106,7 @@ html[data-over-hero="true"] body:has(.ab-page) .h1w8168s[data-is-over-threshold=
 }
 
 .ab-hero-inner { pointer-events: none; } /* let the mouse reach the rainbow behind the text column */
-.ab-hero-text { max-width: 33rem; pointer-events: auto; }
+.ab-hero-text { max-width: 33rem; pointer-events: auto; container-type: inline-size; }
 /* While the rainbow is showing (56rem and up) it arcs up from the middle of the hero,
    so the text column stops short of its left edge. */
 @media (min-width: 56.0625rem) {

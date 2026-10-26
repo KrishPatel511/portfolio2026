@@ -24,16 +24,34 @@ const LOADER_FOR_PAGE = {
   experience: 'list',
 };
 
-export const AboutPage = lazy(loaders.about);
-export const ContactPage = lazy(loaders.contact);
-export const GmdcCaseStudy = lazy(loaders.gmdc);
-export const CaseStudyRoute = lazy(loaders.caseStudy);
-export const PortfolioContent = lazy(loaders.list);
+/* Pages that have finished downloading, by loader key. A page found here renders at once, with no
+   "loading" frame, which is what keeps the footer from flashing at the top of the screen. */
+const loaded = {};
+
+const load = (key) =>
+  loaders[key]().then((m) => {
+    loaded[key] = m.default;
+    return m;
+  });
+
+const makePage = (key) => {
+  const Lazy = lazy(() => load(key));
+  return function Page(props) {
+    const Ready = loaded[key];
+    return Ready ? <Ready {...props} /> : <Lazy {...props} />;
+  };
+};
+
+export const AboutPage = makePage('about');
+export const ContactPage = makePage('contact');
+export const GmdcCaseStudy = makePage('gmdc');
+export const CaseStudyRoute = makePage('caseStudy');
+export const PortfolioContent = makePage('list');
 
 /* Starts downloading a page's file (a repeat call is free: the browser keeps the module). */
 export const preloadPage = (page) => {
   const key = LOADER_FOR_PAGE[page];
-  return key ? loaders[key]() : Promise.resolve();
+  return key ? load(key) : Promise.resolve();
 };
 
 /* After the first page is up, fetch the rest quietly so later clicks feel instant. */

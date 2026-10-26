@@ -102,6 +102,8 @@
 }
 
 /* Wrapper for page titles: keeps long titles to a readable line length */
+/* container-type lets the title size itself from this box's width before any JavaScript runs */
 .page-title-wrap {
   max-width: 46rem;
+  container-type: inline-size;
 }

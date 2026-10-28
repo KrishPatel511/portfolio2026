@@ -10,6 +10,7 @@ import './RainbowArt.css';
 
 /* ─── tiny math helpers ──────────────────────────────────────────────────── */
 
+
 const normalize = (v, a, b, c = 0, d = 1) => ((v - a) / (b - a)) * (d - c) + c;
 const clamp = (v, lo = 0, hi = 1) => Math.max(Math.min(lo, hi), Math.min(Math.max(lo, hi), v));
 const mapClamped = (v, a, b, c = 0, d = 1) => clamp(normalize(v, a, b, c, d), c, d);

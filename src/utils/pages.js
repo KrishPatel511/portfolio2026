@@ -11,7 +11,7 @@ export const NAV_LINKS = [
   { page: 'contact', label: 'Contact', href: '/contact' },
 ];
 
-export const RESUME_URL = '/cv/Patel_Krish.pdf';
+export const RESUME_URL = '/cv/Krish_Patel.pdf';
 export const RESUME_FILENAME = 'Krish_Patel_Resume.pdf';
 
 /* path -> page key */

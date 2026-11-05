@@ -14,6 +14,7 @@ export const PERSON = {
   '@type': 'Person',
   '@id': PERSON_ID,
   name: 'Krish Patel',
+  alternateName: 'Krish Patel Full Stack Developer',
   url: SITE_URL,
   image: OG_IMAGE,
   jobTitle: 'Full Stack Developer',
@@ -42,7 +43,8 @@ const WEBSITE = {
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: SITE_URL,
-  name: 'Krish Patel | Full Stack Developer',
+  name: 'Krish Patel',
+  alternateName: ['Krish Patel Portfolio', 'Krish Patel Website', 'krishpatel.website'],
   inLanguage: 'en-IN',
   publisher: { '@id': PERSON_ID },
 };
@@ -70,9 +72,9 @@ const work = (name, path, description) => ({
 
 export const ROUTES = {
   '/': {
-    title: 'Krish Patel | Full Stack Developer in Ahmedabad, India',
+    title: 'Krish Patel | Portfolio Website, Full Stack Developer in Ahmedabad',
     description:
-      'Krish Patel is a Full Stack Developer from Ahmedabad, India building React, Next.js, Node.js and AI systems for government and enterprise clients. See his projects, experience and skills.',
+      'Official website of Krish Patel, a Full Stack Developer from Ahmedabad, India building React, Next.js, Node.js and AI systems for government and enterprise clients. See his projects, experience and skills.',
     priority: 1,
     schema: [PERSON, WEBSITE],
   },

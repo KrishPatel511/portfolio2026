@@ -72,9 +72,9 @@ const work = (name, path, description) => ({
 
 export const ROUTES = {
   '/': {
-    title: 'Krish Patel | Portfolio Website, Full Stack Developer in Ahmedabad',
+    title: 'Krish Patel | Full Stack Developer Portfolio, Ahmedabad',
     description:
-      'Official website of Krish Patel, a Full Stack Developer from Ahmedabad, India building React, Next.js, Node.js and AI systems for government and enterprise clients. See his projects, experience and skills.',
+      'Portfolio website of Krish Patel, a Full Stack Developer in Ahmedabad, India. React, Next.js and Node.js projects for government and enterprise clients.',
     priority: 1,
     schema: [PERSON, WEBSITE],
   },

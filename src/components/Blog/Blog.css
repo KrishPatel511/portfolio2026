@@ -216,6 +216,11 @@ html[data-over-hero="true"] body:has(.bl-sky) .h1w8168s[data-is-over-threshold="
 .bl-figure { margin-top: 2.2rem; margin-bottom: 2.4rem; }
 .bl-figure img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--bl-line); box-shadow: 0 10px 30px rgb(20 30 60 / .12); }
 .bl-figure figcaption { margin-top: .8rem; font-size: .95rem; font-style: italic; text-align: center; color: var(--bl-soft); }
+.bl-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; margin-top: 2.2rem; margin-bottom: 2.4rem; }
+.bl-gallery .bl-figure { margin: 0; }
+@media (max-width: 40rem) { .bl-gallery { grid-template-columns: 1fr; } }
+.bl-video video { display: block; width: 100%; height: auto; background: #0b0d14; border-radius: 10px; border: 1px solid var(--bl-line); box-shadow: 0 10px 30px rgb(20 30 60 / .12); }
+.bl-video--tall video { width: auto; max-width: 100%; max-height: 34rem; margin: 0 auto; }
 .bl-code-file { position: absolute; top: .8rem; right: 5.6rem; font-family: var(--font-mono); font-size: .78rem; font-style: italic; color: var(--bl-soft); }
 .bl-demo { margin-top: 2.2rem; margin-bottom: 2.4rem; padding: 1.4rem 1.6rem 1.2rem; border-radius: 10px; background: var(--bl-card); border: 1px solid var(--bl-line); box-shadow: 0 8px 22px rgb(20 30 60 / .08); }
 .bl-demo-title { margin: 0 0 1rem; font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }

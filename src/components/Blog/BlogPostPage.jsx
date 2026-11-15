@@ -4,7 +4,7 @@ import {
   FiAlertOctagon, FiAlertTriangle, FiArrowRight, FiCheck, FiCheckCircle, FiCopy, FiExternalLink, FiGift, FiInfo, FiLink, FiPackage,
 } from 'react-icons/fi';
 import {
-  SiFramer, SiGreensock, SiLighthouse, SiMaplibre, SiOxc, SiReact, SiResend, SiSupabase, SiVercel, SiVite,
+  SiFramer, SiGreensock, SiLighthouse, SiMaplibre, SiNodedotjs, SiOxc, SiReact, SiResend, SiSupabase, SiVercel, SiVite,
 } from 'react-icons/si';
 import { soundFx } from '../../utils/soundEffects';
 import { usePath } from '../../utils/router';
@@ -78,7 +78,7 @@ const Aside = ({ kind, title, text }) => {
 /* ── Tool cards (a wide grid, like a "my stack" list) ─────────────────────── */
 const STACK_ICONS = {
   react: SiReact, vite: SiVite, gsap: SiGreensock, framer: SiFramer, maplibre: SiMaplibre, supabase: SiSupabase,
-  resend: SiResend, vercel: SiVercel, lighthouse: SiLighthouse, oxc: SiOxc, confetti: FiGift, icons: FiPackage,
+  resend: SiResend, node: SiNodedotjs, vercel: SiVercel, lighthouse: SiLighthouse, oxc: SiOxc, confetti: FiGift, icons: FiPackage,
 };
 const Stack = ({ items }) => (
   <ul className="bl-stack" style={{ '--cols': items.length % 4 === 0 ? 4 : items.length % 3 === 0 ? 3 : Math.min(items.length, 4) }}>
@@ -95,12 +95,46 @@ const Stack = ({ items }) => (
   </ul>
 );
 
-const Figure = ({ src, alt, caption }) => (
+const Figure = ({ src, alt, caption, size }) => (
   <figure className="bl-figure bl-wide">
-    <img src={src} alt={alt} loading="lazy" />
+    <img src={src} alt={alt} loading="lazy" decoding="async" width={size?.[0]} height={size?.[1]} />
     <figcaption>{caption}</figcaption>
   </figure>
 );
+
+/* Two or more related pictures side by side (stacked on phones). */
+const Gallery = ({ items }) => (
+  <div className="bl-gallery bl-wide">
+    {items.map(([src, alt, caption, size]) => (
+      <figure key={src} className="bl-figure">
+        <img src={src} alt={alt} loading="lazy" decoding="async" width={size?.[0]} height={size?.[1]} />
+        <figcaption>{caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+);
+
+/* A short muted clip. Nothing is downloaded until the visitor presses play (preload="none"),
+   so the poster picture is the only cost on page load. */
+const Video = ({ src, poster, caption, size }) => {
+  const tall = size && size[1] > size[0];
+  return (
+    <figure className={`bl-figure bl-wide bl-video${tall ? ' bl-video--tall' : ''}`}>
+      <video
+        src={src}
+        poster={poster}
+        width={size?.[0]}
+        height={size?.[1]}
+        controls
+        muted
+        playsInline
+        preload="none"
+        aria-label={caption}
+      />
+      <figcaption>{caption}</figcaption>
+    </figure>
+  );
+};
 
 /* ── Live demos, in a small bordered shell ────────────────────────────────── */
 const SOUNDS = [
@@ -163,7 +197,9 @@ const Block = ({ block }) => {
   if (type === 'code') return <CodeBlock code={b} file={c} />;
   if (type === 'aside') return <Aside kind={a} title={b} text={c} />;
   if (type === 'stack') return <Stack items={a} />;
-  if (type === 'figure') return <Figure src={a} alt={b} caption={c} />;
+  if (type === 'figure') return <Figure src={a} alt={b} caption={c} size={d} />;
+  if (type === 'gallery') return <Gallery items={a} />;
+  if (type === 'video') return <Video src={a} poster={b} caption={c} size={d} />;
   if (type === 'compare') return <Compare title={a} items={b} />;
   if (type === 'codeframe') return <CodeFrame title={a} code={b} themes={c} />;
   if (type === 'playground') return <Playground />;

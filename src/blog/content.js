@@ -7,7 +7,9 @@
      ['code', 'js', 'text', 'file.js']      a code block (syntax coloured, with a copy button; file name optional)
      ['aside', 'info', 'Title', 'Text']     a side note; kinds: info, success, warning, error
      ['stack', [['Name', 'v1.0', 'react']]] a wide grid of tool cards (icon keys are in BlogPostPage.jsx)
-     ['figure', '/image.jpg', 'Alt', 'Caption']   a picture with a caption
+     ['figure', '/image.jpg', 'Alt', 'Caption', [w, h]]   a picture with a caption (size is optional)
+     ['gallery', [['/a.webp', 'Alt', 'Caption', [w, h]], ...]]   pictures side by side (stacked on phones)
+     ['video', '/clip.mp4', '/poster.webp', 'Caption', [w, h]]   a short muted clip; loads only when played
      ['compare', 'Title', [['Light', '/a.jpg', 'Alt'], ['Dark', '/b.jpg', 'Alt']]]   a before/after frame with Toggle and Expand
      ['codeframe', 'Title', 'code', ['Light', 'Dark']]   one snippet shown in two colour themes
      ['playground']                         an editable HTML, CSS and JS playground
@@ -142,5 +144,101 @@ export const BODIES = {
     ['p', 'The best part of building everything by hand is that I understand every piece of it. Adding a page means adding a path, a component and a line of SEO data. Adding a blog post means adding some text. There is nothing mysterious left to fight.'],
     ['p', 'There is still a lot I want to do: self-hosted fonts, real testimonials once I have permission to quote people, a few more posts like this one, and some basic analytics so I can see what is actually used.'],
     ['aside', 'success', 'Still have questions?', 'If you are curious how any part works, you can read the source on [GitHub](https://github.com/KrishPatel511/portfolio2026), or [send me a message](/contact). I would love to hear from you.'],
+  ],
+  'how-i-built-a-government-dispatch-system': [
+    ['p', 'In March I stood in a small cabin at a lignite mine in Bhavnagar and watched a truck driver hand over a paper token. A clerk looked at it, found the right line in a thick register, and wrote the truck number, the time and the weight by hand. Then the truck drove on to the next checkpoint, where the same thing happened again.'],
+    ['p', 'That was one of nine checkpoints. The job I had been given was to replace all of that paper with one automated dispatch system, for a government corporation, with real trucks waiting in a real queue. This is the story of how it was built, what was hard about it, and what it taught me.'],
+
+    ['h2', 'The brief'],
+    ['p', 'The client is **GMDC**, the Gujarat Mineral Development Corporation, a government enterprise. The project is its **lignite mine at Bhavnagar**, where trucks arrive every day to be checked, weighed and loaded. My company, **AMNEX Infotechnologies**, was building the dispatch system for it, and I was selected from the AMNEX side to build the software.'],
+    ['p', 'In one sentence, the ask was this: every truck passes through **9 checkpoints**, every checkpoint was recorded by hand in a register, and GMDC wanted a fully automated system instead.'],
+    ['aside', 'info', 'The project at a glance', 'Client: GMDC (government). Site: Bhavnagar lignite project. My role: the only software developer, working next to a hardware team. Scale today: 9 checkpoints and 100+ transactions a day.'],
+
+    ['h2', 'Visiting the mine before writing any code'],
+    ['p', 'Before opening an editor I went to the **Bhavnagar mining site** for a live inspection. I wanted to see the real flow with my own eyes, not a description of it in a meeting room. I also met the Mining Manager and the on-site team, because the people who run a checkpoint every day know things that no requirements document will ever contain.'],
+    ['p', 'This is what the paper world looked like. The first photo is the **truck in-out register**, kept per gate and per shift. Each row has a serial number, a token number, the truck number, the in and out time, the delivery challan details, the weight, the driver and the licence number. The second photo is a close-up of a **token slip** lying on top of it:'],
+    ['gallery', [
+      ['/blog/gmdc_03.webp', 'The GMDC Lignite Project Bhavnagar truck in-out register, filled in by hand, with a printed token slip on top', 'The in-out register at a gate, filled in by hand, with a token slip placed on it.', [1100, 825]],
+      ['/blog/gmdc_02.webp', 'Close-up of a GMDC token slip for lignite loading lying on the handwritten register', 'A close-up of the token slip: reporting date, quota date, token, grade, truck, tare weight and traffic point.', [1000, 750]],
+    ]],
+    ['p', 'The token slip is a small printout with the reporting date, the quota date, the token number, the grade of lignite, the truck number, the tare weight and the traffic point. It is printed on perforated paper, stamped by hand, and then checked against the register.'],
+    ['aside', 'warning', 'A note on the photos', 'These pictures come from a real government site, so I blurred the parts that show names, licence details, token and truck numbers, addresses and internal system addresses. The layout is real, the personal and commercial details are not.'],
+
+    ['h2', 'Understanding the current flow'],
+    ['p', 'Watching the gate for a while made the shape of the problem clear. Nine checkpoints, nine registers, and a lot of careful handwriting:'],
+    ['ul', [
+      '**Every checkpoint kept its own register.** There was no single place where anyone could ask where a given truck was right now.',
+      '**Everything depended on people reading handwriting** and copying numbers correctly, under pressure, with a queue of trucks outside.',
+      '**Checks were done by eye.** A person looked at a licence card or a slip and decided whether it was fine.',
+      '**The paperwork and the physical truck had to agree.** Each load travels with a tax invoice and a royalty pass-cum-delivery challan, and the weights, grade and truck have to match them.',
+    ]],
+    ['p', 'That last point is why the project is more than a data-entry screen. The documents that travel with each load are formal government paperwork, with a QR code, tax details and a delivery challan, and whatever the new system recorded had to line up with them.'],
+    ['p', 'I also found something useful on the token counter itself. A laptop there was already running a web screen called **GMDC Dispatch**, with Master, Transaction and Reports menus, and a token entry form with fields such as quota type, truck number, driver licence, platform, tare weight and net weight, plus a printer for the slips. It showed me the vocabulary the staff already used, which I wanted to keep:'],
+    ['gallery', [
+      ['/blog/gmdc_01.webp', 'A GMDC tax invoice and royalty pass-cum-delivery challan with a QR code, with personal and commercial details blurred', 'The paperwork that travels with every load: a tax invoice and a royalty pass-cum-delivery challan.', [900, 1200]],
+      ['/blog/gmdc_05.webp', 'A laptop at the token counter showing the GMDC Dispatch token entry screen, next to a window overlooking waiting trucks', 'The token counter: the GMDC Dispatch screen on a laptop, with the truck queue visible through the window.', [800, 1067]],
+    ]],
+
+    ['h2', 'Turning the flow into a plan'],
+    ['p', 'Back at the office, our team sat down and mapped the flow checkpoint by checkpoint. The team had a **hardware side** as well as software, and that shaped everything. The plan was to remove the register entirely and let the system do the work that people did by eye and by hand:'],
+    ['ul', [
+      '**Identify the truck automatically** with RFID, instead of reading a number off paper.',
+      '**Control the boom barrier** from the system, so a truck moves only when it has been cleared.',
+      '**Capture the weight** from the weighbridge directly, instead of copying it down.',
+      '**Log the vehicle with cameras**, so every pass has a picture attached to it.',
+      '**Book slots and generate slips** in software, instead of stamping paper by hand.',
+      '**Verify the vehicle and the driver** against national government systems.',
+    ]],
+    ['p', 'Instead of nine registers, there would be one shared system, so any checkpoint, and the people running the mine, could see the same truth at the same time.'],
+
+    ['h2', 'Software and hardware, together'],
+    ['p', 'Most of the projects I had worked on before lived entirely in a browser. This one did not. RFID readers, boom barriers, weighbridges and cameras each had their own owner on the hardware team and their own way of talking to a computer, and my job was to make all of that behave like one system on a screen.'],
+    ['p', 'It changed how I worked. I could not finish the software first and attach the hardware later, because the two decide each other\'s limits. A few short clips from the cabin show the kind of setting this software had to live in: desks full of registers, slips and stamps, with a computer in the middle of it. Press play to watch, nothing downloads until you do:'],
+    ['video', '/blog/gmdc_vid_01.mp4', '/blog/gmdc_vid_01.webp', 'A short clip from the cabin: registers, slips and a stamp pad on the desk where the work was done by hand.', [360, 640]],
+    ['video', '/blog/gmdc_vid_02.mp4', '/blog/gmdc_vid_02.webp', 'A checkpoint screen waiting for a delivery number, with the paperwork still on the desk beside it.', [640, 360]],
+
+    ['h2', 'The Mac problem'],
+    ['p', 'Then came the challenge I had not planned for. At the mining checkpoints, the operators were going to work on **MacBooks**. The machines had been chosen, and it was not something I could change.'],
+    ['p', 'The trouble is that a lot of third-party integrations are not built with macOS in mind. In my case, some of the **third-party API integrations simply were not supported on the Mac**. I develop on a Windows machine, so everything looked fine on my side, and the gap only showed up when I thought about the machines that would really run the software.'],
+    ['aside', 'warning', 'Why this one hurt', 'It is not a bug you can fix with a patch. It is a limit that comes from the hardware, the vendor and the operating system, and it only appears when you check the integration against the real target machine, not your own laptop.'],
+    ['p', 'There was no single fix. Each integration that did not work on the Mac needed its own decision, usually together with the hardware team, because the answer often meant changing how a device was connected, not only how my code called it. I faced many such challenges at that stage, and it was the part of the project that taught me the most.'],
+
+    ['h2', 'Checking vehicles and drivers with Parivahan and Sarathi'],
+    ['p', 'The part that makes a dispatch system feel serious is the verification. For this I integrated two national government systems:'],
+    ['ul', [
+      '**Parivahan** for the vehicle: the truck number from the gate is checked against the national vehicle records.',
+      '**Sarathi** for the driver: the licence number is checked against the national driving licence records.',
+    ]],
+    ['p', 'The idea is simple. A truck should not be loaded just because someone handed over a slip. Instead, the system checks that the vehicle and the driver are genuine before the flow continues. The same service layer also talks to FASTag, GST e-Invoice and e-Way Bill, which makes **five national systems** behind one set of Node.js REST services, giving real-time vehicle and compliance verification with sub-second response times.'],
+    ['p', 'Here is a clip of an entry screen at a weighbridge, where the truck, token, grade, weights and driver details all come together on a single page:'],
+    ['video', '/blog/gmdc_vid_03.mp4', '/blog/gmdc_vid_03.webp', 'The entry screen at a weighbridge: truck, token, grade, weights and driver licence fields on one page.', [640, 360]],
+
+    ['h2', 'The stack'],
+    ['p', 'The software side is deliberately plain, because the interesting part of this project is the world around the code:'],
+    ['stack', [
+      ['React.js', 'Operator screens', 'react'],
+      ['Node.js', 'REST services', 'node'],
+      ['REST APIs', 'Government systems', 'icons'],
+      ['RFID', 'Vehicle identification', 'icons'],
+      ['Weighbridge', 'Weight capture', 'icons'],
+      ['Cameras', 'Vehicle logging', 'icons'],
+    ]],
+
+    ['h2', 'On-site testing and go-live'],
+    ['p', 'I stayed involved right to the end. I gathered requirements directly with the government clients, ran the **on-site testing** myself, and handled the **deployment**. Testing in the cabin, with the real hardware and the real trucks outside, found things that no amount of testing at my desk would have.'],
+    ['p', 'I also had the chance to present the project to **Shri Roopwant Singh, IAS**, the Managing Director. Explaining a system to the person responsible for the whole operation, without hiding behind technical words, was a lesson of its own.'],
+
+    ['h2', 'The result'],
+    ['p', 'The system is **live**. It runs across **9 checkpoints** and processes **100+ transactions every day**, and I was the only software developer on it from the first visit to go-live. It is one of the biggest projects of my career so far.'],
+
+    ['h2', 'What I learned'],
+    ['ul', [
+      '**Go and see the real flow.** The register, the slip and the cabin taught me more than any document could.',
+      '**Hardware limits are software limits.** The operating system on the target machine is a requirement, and I should ask about it on day one.',
+      '**Test on the real machine early.** What works on my laptop proves very little about the checkpoint.',
+      '**Keep the staff\'s own words.** Using the vocabulary people already know makes a new system far easier to accept.',
+      '**Talk to the people at the gate.** They know where the real problems are.',
+    ]],
+    ['aside', 'success', 'Want the short version?', 'The project page has the summary and the facts in one place: [read the GMDC case study](/projects/gmdc). And if you are building something similar, I would be glad to talk. You can reach me on the [contact page](/contact).'],
   ],
 };

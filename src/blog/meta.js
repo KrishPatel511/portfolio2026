@@ -17,6 +17,19 @@ export const POSTS = [
     tags: ['React', 'Vite', 'Performance', 'Accessibility'],
     project: { label: 'Read the portfolio case study', href: '/projects/portfolio' },
   },
+  {
+    slug: 'how-i-built-a-government-dispatch-system',
+    title: 'How I Built a Government Mining Dispatch System',
+    subtitle: 'GMDC Bhavnagar: from paper registers to automated checkpoints',
+    description:
+      'How I built a government mining dispatch system for GMDC: nine manual checkpoints, RFID hardware, Mac-only machines, and Parivahan and Sarathi API checks.',
+    date: '2026-04-23',
+    updated: '2026-04-23',
+    readTime: '11 min read',
+    category: 'Case Study',
+    tags: ['Government', 'Node.js', 'React', 'RFID', 'API Integration'],
+    project: { label: 'Read the GMDC case study', href: '/projects/gmdc' },
+  },
 ];
 
 export const BLOG_TITLE = 'Blog';

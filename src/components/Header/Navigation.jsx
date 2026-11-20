@@ -33,6 +33,7 @@ export const Navigation = () => {
         }}
         theme={isDark ? 'dark' : 'light'}
         color={PILL_COLORS[isDark ? 'dark' : 'light']}
+        activeTextColor={isDark ? '#0a0e26' : undefined}
         size="md"
         frame={false}
         particleCount={15}

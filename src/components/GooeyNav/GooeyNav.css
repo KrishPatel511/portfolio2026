@@ -102,6 +102,8 @@
 
 .gooey-nav__list--active .gooey-nav__link {
   color: inherit;
+  /* Gives the selected label more weight without changing its width, so it stays aligned with the pill. */
+  -webkit-text-stroke: 0.5px currentColor;
 }
 
 .gooey-nav__item[data-active] .gooey-nav__link {
